@@ -13,7 +13,7 @@ use App\Http\Controllers\home\CartController;
 //admin
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ProdukController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\TransaksiController;
 
@@ -47,6 +47,9 @@ Route::get('/landingpage', [HomeController::class, 'index'])->name('landingpage'
 //admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('/administrator',AdminController::class);
+
+//produk
+Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
 
 //user
 Route::get('/user', [UserController::class, 'index'])->name('user');
