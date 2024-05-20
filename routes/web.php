@@ -47,3 +47,6 @@ Route::get('/landingpage', [HomeController::class, 'index'])->name('landingpage'
 //admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('/administrator',AdminController::class);
+
+//user
+Route::get('/user', [UserController::class, 'index'])->name('user');
