@@ -10,7 +10,7 @@ class Kategori extends Model
     protected $table = 'kategoris';
     
     protected $fillable = [
-        'name', 
+        'nama', 
     ];
 
     public function produk()
