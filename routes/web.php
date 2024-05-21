@@ -15,7 +15,8 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ProdukController;
 use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\admin\TransaksiController;
+use App\Http\Controllers\admin\KategoriController;
+use App\Http\Controllers\admin\PrediksiController;
 
 
 
@@ -50,6 +51,12 @@ Route::resource('/administrator',AdminController::class);
 
 //produk
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
+
+//prediksi
+Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
+
+//kategori
+Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
 
 //user
 Route::get('/user', [UserController::class, 'index'])->name('user');

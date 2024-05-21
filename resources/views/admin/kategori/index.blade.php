@@ -6,7 +6,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('admin') }}">admin</a></li>
-                    <li class="breadcrumb-item active">Produk</li>
+                    <li class="breadcrumb-item active">Kelola Kategori</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -22,7 +22,7 @@
                 @endif
 
                 <div class="card-body">
-                    <h5 class="card-title">Fashion</span></h5>
+                    <h5 class="card-title">Kategori</span></h5>
                     {{-- <a href="{{ route('obat.create') }}"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                             height="30" fill="currentColor" title="Tambah Data Film" class="bi bi-bookmark-plus"
                             viewBox="0 0 16 16">

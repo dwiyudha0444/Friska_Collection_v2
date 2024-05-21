@@ -40,26 +40,20 @@
         </ul>
       </li><!-- End Tables Nav -->
 
-      {{-- <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Permintaaan</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-layout-text-window-reverse"></i><span>Kelola Kategori</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
           <li>
-            <a href="{{ url('permintaan') }}">
-              <i class="bi bi-circle"></i><span>Permintaan</span>
-            </a>
-          </li>
-        
-          <li>
-            <a href="{{ url('permintaan-detail') }}">
-              <i class="bi bi-circle"></i><span>Permintaan Detail</span>
+            <a href="{{ url('kategori') }}">
+              <i class="bi bi-circle"></i><span>Kategori</span>
             </a>
           </li>
  
         </ul>
-      </li><!-- End Charts Nav --> --}}
+      </li><!-- End Charts Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
