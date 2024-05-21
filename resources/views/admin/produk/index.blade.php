@@ -2,7 +2,7 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Product Fashion</h1>
+            <h1>Product</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('admin') }}">admin</a></li>
@@ -22,7 +22,7 @@
                 @endif
 
                 <div class="card-body">
-                    <h5 class="card-title">Fashion</span></h5>
+                    <h5 class="card-title">Produk</span></h5>
                     {{-- <a href="{{ route('obat.create') }}"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                             height="30" fill="currentColor" title="Tambah Data Film" class="bi bi-bookmark-plus"
                             viewBox="0 0 16 16">
@@ -39,6 +39,7 @@
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Harga</th>
                                 <th scope="col">Image</th>
+                                <th scope="col">Stok</th>
                                 <th scope="col">Action</th>
                                 {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'kepala apoteker')
                                     <th scope="col">Action</th>
@@ -49,27 +50,28 @@
                             @php
                                 $no = 1;
                             @endphp
-                            {{-- @foreach ($fashion as $fash) --}}
+                            @foreach ($produk as $pro)
                                 <tr>
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
                                     
-                                    {{-- <td>{{ $fash->nama }}</td>
-                                    <td>{{ $fash->kategori }}</td>
-                                    <td>{{ $fash->harga }}</td>
-                                    <td>{{ $fash->image }}</td> --}}
+                                    <td>{{ $pro->nama }}</td>
+                                    <td>{{ $pro->kategori->nama }}</td>
+                                    <td>{{ $pro->harga }}</td>
+                                    <td>{{ $pro->image }}</td>
+                                    <td>{{ $pro->stok }}</td>
                                     
                                     {{-- <td>
 
-                                        <form method="POST" action="{{ route('obat.destroy', $fash->id) }}">
+                                        <form method="POST" action="{{ route('obat.destroy', $pro->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
 
-                                            <a class="custom-btn" href="{{ url('obat-edit', $fash->id) }}">Edit</a>
+                                            <a class="custom-btn" href="{{ url('obat-edit', $pro->id) }}">Edit</a>
                                         </form>
                                     </td> --}}
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 

@@ -2,7 +2,7 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Product Fashion</h1>
+            <h1>Kelola Kategori</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('admin') }}">admin</a></li>
