@@ -36,9 +36,6 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Kategori</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Image</th>
                                 <th scope="col">Action</th>
                                 {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'kepala apoteker')
                                     <th scope="col">Action</th>
@@ -49,27 +46,24 @@
                             @php
                                 $no = 1;
                             @endphp
-                            {{-- @foreach ($fashion as $fash) --}}
+                            @foreach ($kategori as $kate)
                                 <tr>
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
                                     
-                                    {{-- <td>{{ $fash->nama }}</td>
-                                    <td>{{ $fash->kategori }}</td>
-                                    <td>{{ $fash->harga }}</td>
-                                    <td>{{ $fash->image }}</td> --}}
+                                    <td>{{ $kate->nama }}</td>
                                     
                                     {{-- <td>
 
-                                        <form method="POST" action="{{ route('obat.destroy', $fash->id) }}">
+                                        <form method="POST" action="{{ route('obat.destroy', $kate->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
 
-                                            <a class="custom-btn" href="{{ url('obat-edit', $fash->id) }}">Edit</a>
+                                            <a class="custom-btn" href="{{ url('obat-edit', $kate->id) }}">Edit</a>
                                         </form>
                                     </td> --}}
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
