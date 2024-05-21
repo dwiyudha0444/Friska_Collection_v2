@@ -12,4 +12,6 @@ class KategoriController extends Controller
         // $produk = Produk::orderBy('id','DESC')->get();
         return view('admin.kategori.index');
     }
+
+    
 }
