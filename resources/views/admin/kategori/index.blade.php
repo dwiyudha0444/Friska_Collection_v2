@@ -11,6 +11,7 @@
             </nav>
         </div><!-- End Page Title -->
 
+
         <!-- Recent Sales -->
         <div class="col-12">
             <div class="card recent-sales overflow-auto">
@@ -23,9 +24,8 @@
 
                 <div class="card-body">
                     <h5 class="card-title">Kategori</span></h5>
-                    <a href="/form_kategori"><svg xmlns="http://www.w3.org/2000/svg" width="30"
-                            height="30" fill="currentColor" title="Tambah Data Film" class="bi bi-bookmark-plus"
-                            viewBox="0 0 16 16">
+                    <a href="/form_kategori"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                            fill="currentColor" title="Tambah Data Film" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
                             <path
                                 d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
                             <path
@@ -49,19 +49,19 @@
                             @foreach ($kategori as $kate)
                                 <tr>
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
-                                    
-                                    <td>{{ $kate->nama }}</td>
-                                    
-                                    {{-- <td>
 
-                                        <form method="POST" action="{{ route('obat.destroy', $kate->id) }}">
+                                    <td>{{ $kate->nama }}</td>
+
+                                    <td>
+
+                                        <form method="POST" action="{{ route('destroy_kategori', $kate->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
-
-                                            <a class="custom-btn" href="{{ url('obat-edit', $kate->id) }}">Edit</a>
+                                            <a class="custom-btn custom-btn-edit" href="">Edit</a>
                                         </form>
-                                    </td> --}}
+
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

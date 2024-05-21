@@ -60,5 +60,7 @@ Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
 Route::get('/form_kategori', [KategoriController::class, 'create'])->name('create_kategori');
 Route::post('/form_kategori', [KategoriController::class, 'store'])->name('store_kategori');
 
+Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])->name('destroy_kategori');
+
 //user
 Route::get('/user', [UserController::class, 'index'])->name('user');

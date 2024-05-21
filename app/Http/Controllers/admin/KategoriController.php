@@ -36,4 +36,17 @@ class KategoriController extends Controller
         return redirect('/kategori')->with('success', 'Berhasil Menambahkan Kategori');
     }
 
+    public function edit()
+    {
+        $kategori = Kategori::find($id);
+        return view('admin.kategori.form_edit',compact('kategori'));
+    }
+
+    public function destroy($id)
+    {
+        $kategori = Kategori::findOrFail($id);
+        $kategori->delete();
+        return redirect('kategori')->with('success', 'Berhasil Menghapus Kategori');
+    }
+
 }
