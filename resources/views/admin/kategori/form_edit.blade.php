@@ -32,13 +32,14 @@
                             @endif
 
                             <!-- General Form Elements -->
-                            <form method="POST" action="/form_kategori" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('update_kategori', $kategori->id) }}" enctype="multipart/form-data">
                                 @csrf
+                                @method('PUT')
 
                                 <div class="row mb-3">
                                     <label for="inputDate" class="col-sm-2 col-form-label">Nama Kategori</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="nama" class="form-control">
+                                        <input type="text" name="nama" value="{{ $kategori->nama }}" class="form-control">
                                     </div>
                                 </div>
 

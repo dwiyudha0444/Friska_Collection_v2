@@ -58,7 +58,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
-                                            <a class="custom-btn custom-btn-edit" href="">Edit</a>
+                                            <a class="custom-btn custom-btn-edit" href="{{ url('form_kategori_edit', $kate->id) }}">Edit</a>
                                         </form>
 
                                     </td>
