@@ -15,4 +15,42 @@ class ProdukController extends Controller
         return view('admin.produk.index',compact('produk'));
     }
 
+    public function create()
+    {
+        return view('admin.produk.form');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|max:45',
+            'id_kategori' => 'required',
+            'harga' => 'required',
+            'stok' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg'
+            ]);
+            //Film::create($request->all());
+            //---apakah user ingin upload image
+            if(!empty($request->image)){
+                $fileName=$request->nama.'.'.$request->image->extension();
+                //$fileName=$request->image->getClientOriginalName();
+                $request->image->move(public_path('admin/assets/image'),$fileName);
+            }
+            else{
+                $fileName = '';
+            }
+            //insert data dari request form
+            DB::table('produks')->insert(
+                [
+                    'nama' => $request->nama,
+                    'id_kategori' => $request->id_kategori,
+                    'harga' => $request->harga,
+                    'stok' => $request->stok,
+                    'image' => $fileName,
+                    'created_at' => now(),
+              ]);
+                
+            return redirect()->route('produk')
+            ->with('success','Data Berhasil Disimpan');
+    }
 }
