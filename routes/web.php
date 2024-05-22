@@ -8,7 +8,7 @@ use App\Http\Controllers\auth\RegisterController;
 
 //home
 use App\Http\Controllers\home\HomeController;
-use App\Http\Controllers\home\CartController;
+use App\Http\Controllers\home\KeranjangController;
 
 //admin
 use App\Http\Controllers\admin\DashboardController;
@@ -42,6 +42,13 @@ Route::post('/register-proses', [RegisterController::class, 'register_proses'])-
 
 //home
 Route::get('/landingpage', [HomeController::class, 'index'])->name('landingpage');
+
+//keranjang
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
+Route::post('/add-to-keranjang', [KeranjangController::class, 'store'])->name('add-to-keranjang');
+Route::post('/hapus-item', [KeranjangController::class, 'hapusItem'])->name('hapus-item');
+Route::post('/update-keranjang', [KeranjangController::class, 'update'])->name('update-keranjang');
+
 
 //admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

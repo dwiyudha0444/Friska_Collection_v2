@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class Keranjang extends Model
 {
-    protected $table = 'kategoris';
+    protected $table = 'keranjangs';
     
     protected $fillable = [
-        'nama', 
+        'nama',
+        'id_kategori',
+        'harga',
+        'image',
+        'qty', 
     ];
-
-    public function produk()
-    {
-        return $this->hasMany(Produk::class);
-    }
 }
