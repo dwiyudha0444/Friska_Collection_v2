@@ -18,33 +18,35 @@
 
                 <div class="row">
                     
+                         @foreach ($produk as $pro)
                         <div
                             class="col-lg-3 col-md-6 col-sm-12 shop-block masonry-item small-column best_seller new_arraivals">
                             <div class="shop-block-one">
                                 <div class="inner-box">
                                     <figure class="image-box">
-                                        <img src="home/assets/images/resource/shop/shop-8.jpg" alt="">
+                                        <img src="{{ url('admin/assets/image') }}/{{ $pro->image }}" alt="">
                                         <ul class="info-list clearfix">
                                             <li>
                                                 <form action="/add-to-cart" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="id_fashion" value="">
-                                                    <input type="hidden" name="nama" value="">
-                                                    <input type="hidden" name="kategori" value="">
-                                                    <input type="hidden" name="harga" value="">
+                                                    <input type="hidden" name="nama" value="{{ $pro->nama }}">
+                                                    <input type="hidden" name="id_kategori" value="{{ $pro->id_kategori }}">
+                                                    <input type="hidden" name="harga" value="{{ $pro->harga }}">
+                                                    <input type="hidden" name="stok" value="{{ $pro->stok }}">
                                                     <button type="submit"><i class="flaticon-cart"></i></button>
                                                 </form>
                                             </li>
                                         </ul>
                                     </figure>
                                     <div class="lower-content">
-                                        <a href="product-details.html"></a>
-                                        <a href="product-details.html"></a>
-                                        <span class="price"></span>
+                                        <a href="product-details.html">{{ $pro->nama }}</a>
+                                        <a href="product-details.html">{{ $pro->harga }}</a>
+                                        <span class="price">{{ $pro->harga }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    @endforeach
 
 
                 </div>
