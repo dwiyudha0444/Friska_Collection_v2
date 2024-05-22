@@ -18,7 +18,7 @@
 
                 <div class="row">
                     
-                         @foreach ($produk as $pro)
+                        @foreach ($produk as $pro)
                         <div
                             class="col-lg-3 col-md-6 col-sm-12 shop-block masonry-item small-column best_seller new_arraivals">
                             <div class="shop-block-one">
@@ -33,14 +33,14 @@
                                                     <input type="hidden" name="id_kategori" value="{{ $pro->id_kategori }}">
                                                     <input type="hidden" name="harga" value="{{ $pro->harga }}">
                                                     <input type="hidden" name="stok" value="{{ $pro->stok }}">
-                                                    <button type="submit"><i class="flaticon-cart"></i></button>
+                                                    <button type="submit" class="styled-button"><i class="flaticon-cart"></i></button>
                                                 </form>
                                             </li>
                                         </ul>
                                     </figure>
                                     <div class="lower-content">
                                         <a href="product-details.html">{{ $pro->nama }}</a>
-                                        <a href="product-details.html">{{ $pro->harga }}</a>
+                                        <a href="product-details.html">({{ $pro->id_kategori }})</a>
                                         <span class="price">{{ $pro->harga }}</span>
                                     </div>
                                 </div>
