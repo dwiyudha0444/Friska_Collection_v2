@@ -8,6 +8,12 @@ use App\Models\Keranjang;
 
 class KeranjangController extends Controller
 {
+    public function index()
+    {
+        $keranjang = Keranjang::orderBy('id','DESC')->get();
+        return view('home.keranjang.index',compact('keranjang'));
+    }
+
     public function store(Request $request)
     {
         // Validasi data form
