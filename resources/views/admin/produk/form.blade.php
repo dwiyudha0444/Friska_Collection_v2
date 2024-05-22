@@ -42,9 +42,17 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="inputDate" class="col-sm-2 col-form-label">Kategori</label>
+                                    <label class="col-sm-2 col-form-label">Kategori</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="id_kategori" class="form-control">
+                                        <select class="form-select" name="id_kategori">
+                                            <option selected>-- Pilih Kategori --</option>
+                                            @foreach($rel_kategori as $ob)
+                                            @php
+                                            $sel2 = (old('id_kategori') == $ob->id)? 'selected':'';
+                                            @endphp
+                                            <option value="{{ $ob->id }}" {{ $sel2 }}>{{ $ob->nama }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 

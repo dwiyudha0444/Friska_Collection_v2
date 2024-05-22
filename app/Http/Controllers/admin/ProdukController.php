@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Produk;
+use App\Models\Kategori;
 use DB;
 
 class ProdukController extends Controller
@@ -17,7 +18,8 @@ class ProdukController extends Controller
 
     public function create()
     {
-        return view('admin.produk.form');
+        $rel_kategori = Kategori::orderBy('id','DESC')->get();
+        return view('admin.produk.form',compact('rel_kategori'));
     }
 
     public function store(Request $request)
