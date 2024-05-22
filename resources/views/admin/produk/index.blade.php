@@ -55,7 +55,13 @@
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
                                     
                                     <td>{{ $pro->nama }}</td>
-                                    <td>{{ $pro->kategori->nama }}</td>
+
+                                    @empty($pro->kategori->nama)
+                                    <td>belum diisi</td>
+                                    @else
+                                    <td> {{ $pro->kategori->nama }} </td>
+                                    @endempty
+
                                     <td>{{ $pro->harga }}</td>
                                     <td>{{ $pro->image }}</td>
                                     <td>{{ $pro->stok }}</td>
