@@ -59,9 +59,12 @@ Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
 //add
 Route::get('/form_produk', [ProdukController::class, 'create'])->name('create_produk');
 Route::post('/form_produk', [ProdukController::class, 'store'])->name('store_produk');
+//update
+Route::get('/form_produk_edit/{id}', [ProdukController::class, 'edit'])->name('edit_produk');
+Route::put('produk/update/{id}', [ProdukController::class, 'update'])->name('update_produk');
+//delete
+Route::delete('/delete_produk/{id}', [ProdukController::class, 'destroy'])->name('destroy_produk');
 
-//prediksi
-Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
 
 //kategori
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
@@ -70,10 +73,14 @@ Route::get('/form_kategori', [KategoriController::class, 'create'])->name('creat
 Route::post('/form_kategori', [KategoriController::class, 'store'])->name('store_kategori');
 //update
 Route::get('/form_kategori_edit/{id}', [KategoriController::class, 'edit'])->name('edit_kategori');
-Route::post('/form_kategori_edit', [KategoriController::class, 'update'])->name('update_kategori');
-Route::put('kategori/{kategori}', [KategoriController::class, 'update'])->name('update_kategori');
+Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('update_kategori');
 //delete
 Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])->name('destroy_kategori');
+
+
+//prediksi
+Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
+
 
 //user
 Route::get('/user', [UserController::class, 'index'])->name('user');

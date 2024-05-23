@@ -66,16 +66,16 @@
                                     <td>{{ $pro->image }}</td>
                                     <td>{{ $pro->stok }}</td>
                                     
-                                    {{-- <td>
+                                    <td>
 
-                                        <form method="POST" action="{{ route('obat.destroy', $pro->id) }}">
+                                        <form method="POST" action="{{ route('destroy_produk', $pro->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
 
-                                            <a class="custom-btn" href="{{ url('obat-edit', $pro->id) }}">Edit</a>
+                                            <a class="custom-btn custom-btn-edit" href="{{ url('/form_produk_edit', $pro->id) }}">Edit</a>
                                         </form>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

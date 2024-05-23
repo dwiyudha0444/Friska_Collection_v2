@@ -55,4 +55,60 @@ class ProdukController extends Controller
             return redirect()->route('produk')
             ->with('success','Data Berhasil Disimpan');
     }
+
+    public function edit($id)
+    {
+        $produk = Produk::find($id);
+        $rel_kategori = Kategori::orderBy('id', 'DESC')->get();
+        return view('admin.produk.form_edit', compact('produk', 'rel_kategori'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'nama' => 'required|max:45',
+            'id_kategori' => 'required',
+            'harga' => 'required',
+            'stok' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg'
+            ]);
+            //Film::create($request->all());
+            //---ambil image lama
+            $image = DB::table('produks')->select('image')->where('id',$id)->get();
+            foreach($image as $co){
+                $namaFileFotoLama = $co->image;
+            }
+            //---aoakah user ingin ganti image lama
+            if(!empty($request->image)){
+                //jika ada image lama , hapus terlebih dahulu
+                if(!empty($ta->image)) unlink('admin/assets/image'.$ta->image);
+                //image lama ganti image baru
+                $fileName=$request->judul.'.'.$request->image->extension();
+                //$fileName=$request->image->getClientOriginalName();
+                $request->image->move(public_path('admin/assets/image'),$fileName);
+            }
+            //---user tidak ganti image lama
+            else{
+                $fileName = $namaFileFotoLama;
+            }
+            DB::table('produks')->where('id',$id)->update(
+                [
+                    'nama' => $request->nama,
+                    'id_kategori' => $request->id_kategori,
+                    'harga' => $request->harga,
+                    'stok' => $request->stok,
+                    'image' => $fileName,
+                    'updated_at' => now(),
+              ]);
+            
+            return redirect('/form_produk_edit'.'/'.$id)
+            ->with('success','Data Berhasil Diubah');
+    }
+
+    public function destroy($id)
+    {
+        $produk = Produk::findOrFail($id);
+        $produk->delete();
+        return redirect('produk')->with('success', 'Berhasil Menghapus Kategori');
+    }
 }
