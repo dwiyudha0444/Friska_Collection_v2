@@ -68,7 +68,7 @@
                             </li>
                             <li><a href="index.html"><i class="flaticon-user"></i></a></li>
                             <li class="shop-cart">
-                                <a href=""><i class="flaticon-shopping-cart-1"></i><span>3</span></a>
+                                <a href="{{ route('keranjang') }}"><i class="flaticon-shopping-cart-1"></i><span>3</span></a>
                             </li>
                         </ul>
                     </div>
