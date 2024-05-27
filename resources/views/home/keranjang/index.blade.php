@@ -30,7 +30,7 @@
                                         <td colspan="4" class="prod-column">
                                             <div class="column-box">
                                                 <div class="remove-btn">
-                                                    <form action="" method="post">
+                                                    <form action="{{ route('hapus-item') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="cart_id" value="{{ $ker->id }}">
                                                     <button type="submit"><i class="flaticon-close"></i></button>

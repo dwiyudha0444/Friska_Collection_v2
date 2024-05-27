@@ -37,4 +37,19 @@ class KeranjangController extends Controller
         // Response sukses
         return redirect('/landingpage')->with('success', 'Berhasil Menambahkan Ke Keranjang');
     }
+
+    public function hapusItem(Request $request) {
+        // Temukan item berdasarkan ID
+        $item = Keranjang::find($request->cart_id);
+    
+        // Hapus item jika ditemukan
+        if ($item) {
+            $item->delete();
+            
+            return redirect()->back()->with('success', 'Item berhasil dihapus dari keranjang.');
+        } else {
+            
+            return redirect()->back()->with('error', 'Item tidak ditemukan dalam keranjang.');
+        }
+    }
 }

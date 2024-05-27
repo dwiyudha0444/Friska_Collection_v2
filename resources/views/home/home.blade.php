@@ -34,7 +34,7 @@
                                                         value="{{ $pro->id_kategori }}">
                                                     <input type="hidden" name="harga" value="{{ $pro->harga }}">
                                                     <input type="hidden" name="image" value="{{ $pro->image }}">
-                                                    <input type="hidden" name="qty" value="{{ $pro->stok }}">
+                                                    <input type="hidden" name="qty" value=1>
                                                     <button type="submit" class="styled-button"><i
                                                             class="flaticon-cart"></i></button>
                                                 </form>
