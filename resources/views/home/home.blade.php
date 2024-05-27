@@ -27,7 +27,7 @@
                                         <img src="{{ url('admin/assets/image') }}/{{ $pro->image }}" alt="">
                                         <ul class="info-list clearfix">
                                             <li>
-                                                <form action="{{ route('add-to-keranjang') }}" method="post">
+                                                {{-- <form action="{{ route('add-to-keranjang') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="nama" value="{{ $pro->nama }}">
                                                     <input type="hidden" name="id_kategori"
@@ -37,6 +37,33 @@
                                                     <input type="hidden" name="qty" value=1>
                                                     <button type="submit" class="styled-button"><i
                                                             class="flaticon-cart"></i></button>
+                                                </form> --}}
+
+                                                <form action="{{ route('add-to-keranjang') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="nama" value="{{ $pro->nama }}">
+                                                    <input type="hidden" name="id_kategori"
+                                                        value="{{ $pro->id_kategori }}">
+                                                    <input type="hidden" name="harga" value="{{ $pro->harga }}">
+                                                    <input type="hidden" name="image" value="{{ $pro->image }}">
+                                                    <input type="hidden" name="qty" value="1">
+                                                    @php
+                                                        $inCart = false;
+                                                        foreach ($cartItems as $item) {
+                                                            if ($item->nama == $pro->nama) {
+                                                                // Sesuaikan dengan atribut yang sesuai di model Cart
+                                                                $inCart = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    @if ($inCart)
+                                                        <button type="button" class="styled-button-red" disabled>Sudah di
+                                                            Keranjang</button>
+                                                    @else
+                                                        <button type="submit" class="styled-button"><i
+                                                                class="flaticon-cart"></i> Tambahkan ke Keranjang</button>
+                                                    @endif
                                                 </form>
 
                                             </li>

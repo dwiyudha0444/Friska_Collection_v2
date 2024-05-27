@@ -64,6 +64,27 @@
   background-color: #45a049; /* Warna latar belakang saat hover */
 }
 
+.styled-button-red {
+  background-color: #d90808; /* Warna latar belakang */
+  border: none; /* Hapus border default */
+  color: white; /* Warna teks */
+  padding: 10px 20px; /* Ruang di dalam tombol */
+  text-align: center; /* Posisikan teks di tengah */
+  text-decoration: none; /* Hapus garis bawah */
+  display: inline-block; /* Agar elemen inline */
+  font-size: 16px; /* Ukuran font */
+  margin: 4px 2px; /* Margin di sekitar tombol */
+  cursor: pointer; /* Ubah kursor saat hover */
+  border-radius: 12px; /* Membuat sudut membulat */
+}
+
+.styled-button-red i {
+  margin-right: 8px; /* Ruang antara ikon dan teks */
+}
+
+.styled-button-red:hover {
+  background-color: #e42828; /* Warna latar belakang saat hover */
+}
 
 /*** 
 
