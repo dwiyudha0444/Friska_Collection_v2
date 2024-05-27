@@ -16,11 +16,6 @@
         @yield('content')
         @include('home.footer')
 
-
-        <!--Scroll to top-->
-        <button class="scroll-top scroll-to-target" data-target="html">
-            <i class="fas fa-long-arrow-alt-up"></i>
-        </button>
     </div>
 
 

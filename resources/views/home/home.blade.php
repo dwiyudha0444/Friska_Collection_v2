@@ -58,7 +58,7 @@
                                                         }
                                                     @endphp
                                                     @if ($inCart)
-                                                        <button type="button" class="styled-button-red" disabled>Sudah di
+                                                        <button type="button" class="styled-button-red" disabled>Sudah ada di
                                                             Keranjang</button>
                                                     @else
                                                         <button type="submit" class="styled-button"><i
