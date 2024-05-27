@@ -41,6 +41,8 @@
 
                                                 <form action="{{ route('add-to-keranjang') }}" method="post">
                                                     @csrf
+                                                    <input type="hidden" name="id_produk"
+                                                        value="{{ $pro->id}}">
                                                     <input type="hidden" name="nama" value="{{ $pro->nama }}">
                                                     <input type="hidden" name="id_kategori"
                                                         value="{{ $pro->id_kategori }}">

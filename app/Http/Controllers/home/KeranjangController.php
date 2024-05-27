@@ -18,6 +18,7 @@ class KeranjangController extends Controller
     {
         // Validasi data form
         $request->validate([
+            'id_produk' => 'required',
             'nama' => 'required|string|max:255',
             'id_kategori' => 'required',
             'image' => 'required',
@@ -27,6 +28,7 @@ class KeranjangController extends Controller
 
         // Simpan data ke dalam database Kategori
         Keranjang::create([
+            'id_produk' => $request->id_produk,
             'nama' => $request->nama,
             'id_kategori' => $request->id_kategori,
             'image' => $request->image,
