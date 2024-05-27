@@ -14,4 +14,9 @@ class PrediksiController extends Controller
         $produk = Produk::orderBy('id','DESC')->get();
         return view('admin.produk.index',compact('produk'));
     }
+
+    public function test()
+    {
+        return view('admin.prediksi.test');
+    }
 }

@@ -81,6 +81,8 @@ Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])-
 //prediksi
 Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
 
+Route::get('/testmv', [PrediksiController::class, 'test'])->name('testmv');
+
 
 //user
 Route::get('/user', [UserController::class, 'index'])->name('user');
