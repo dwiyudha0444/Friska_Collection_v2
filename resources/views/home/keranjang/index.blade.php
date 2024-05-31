@@ -87,8 +87,19 @@
                             <ul class="list clearfix">
                                 <li>Order Total:<span>{{ $orderTotal }}</span></li>
                             </ul>
-                            <a href="cart.html" class="theme-btn-two">Proceed to Checkout<i
-                                    class="flaticon-right-1"></i></a>
+                            <form action="{{ route('checkout') }}" method="POST">
+                                @csrf
+                                @foreach ($keranjang as $ker)
+                                    <input type="hidden" name="id_produk[]" value="{{ $ker->id_produk }}">
+                                    <input type="hidden" name="nama[]" value="{{ $ker->nama }}">
+                                    <input type="hidden" name="id_kategori[]" value="{{ $ker->id_kategori }}">
+                                    <input type="hidden" name="image[]" value="{{ $ker->image }}">
+                                    <input type="hidden" name="harga[]" value="{{ $ker->harga }}">
+                                    <input type="hidden" name="qty[]" value="{{ $ker->qty }}">
+                                @endforeach
+                                <button type="submit" class="theme-btn-two">Checkout<i
+                                        class="flaticon-right-1"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>

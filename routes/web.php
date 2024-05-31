@@ -9,6 +9,7 @@ use App\Http\Controllers\auth\RegisterController;
 //home
 use App\Http\Controllers\home\HomeController;
 use App\Http\Controllers\home\KeranjangController;
+use App\Http\Controllers\home\CheckoutController;
 
 //admin
 use App\Http\Controllers\admin\DashboardController;
@@ -53,30 +54,25 @@ Route::post('/update-keranjang', [KeranjangController::class, 'update'])->name('
 //admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
 //produk
 Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
-//add
 Route::get('/form_produk', [ProdukController::class, 'create'])->name('create_produk');
 Route::post('/form_produk', [ProdukController::class, 'store'])->name('store_produk');
-//update
 Route::get('/form_produk_edit/{id}', [ProdukController::class, 'edit'])->name('edit_produk');
 Route::put('produk/update/{id}', [ProdukController::class, 'update'])->name('update_produk');
-//delete
 Route::delete('/delete_produk/{id}', [ProdukController::class, 'destroy'])->name('destroy_produk');
 
 
 //kategori
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
-//add
 Route::get('/form_kategori', [KategoriController::class, 'create'])->name('create_kategori');
 Route::post('/form_kategori', [KategoriController::class, 'store'])->name('store_kategori');
-//update
 Route::get('/form_kategori_edit/{id}', [KategoriController::class, 'edit'])->name('edit_kategori');
 Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('update_kategori');
-//delete
 Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])->name('destroy_kategori');
 
+//checkout
+Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 //prediksi
 Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
