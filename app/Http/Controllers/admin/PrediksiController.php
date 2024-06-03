@@ -91,5 +91,29 @@ class PrediksiController extends Controller
         }
     }
     
+    public function pilihProduk(Request $request)
+    {
+        $selectedIds = $request->input('selected_ids');
+
+        // Buat array kosong untuk menyimpan id_produk yang dipilih
+        $selectedProductIds = [];
+
+        // Ambil id_produk dari data yang dipilih
+        foreach ($selectedIds as $id) {
+            $prediksi = Prediksi::find($id);
+            if ($prediksi) {
+                $selectedProductIds[] = $prediksi->id_produk;
+            }
+        }
+
+        // Ambil data berdasarkan id_produk yang dipilih
+        $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)->get();
+
+        // Lakukan sesuatu dengan data yang dipilih
+        // Misalnya, tampilkan data tersebut
+        return view('admin.prediksi.selected-prediksi', ['selectedData' => $selectedData]);
+    }
+
+
     
 }

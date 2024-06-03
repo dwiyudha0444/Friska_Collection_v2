@@ -31,37 +31,32 @@
                             <path
                                 d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z" />
                         </svg></a>
-                    <table class="table table-borderless datatable">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th> 
-                                <th scope="col">No</th>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Kategori</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @foreach ($prediksi as $pre)
+                    <form method="POST" action="{{ route('pilih-produk') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Mulai Aksi</button>
+                        <table class="table table-borderless datatable">
+                            <thead>
                                 <tr>
-                                    <td><input type="checkbox" name="selected_ids[]" value="{{ $pre->id }}"></td> <!-- Checkbox di setiap baris -->
-                                    <th scope="row"><a href="#">{{ $no++ }}</a></th>
-                                    <td>{{ $pre->nama }}</td>
-                                    <td>{{ $pre->kategori->nama }}</td>
-                                    {{-- <td>
-                                        <form method="POST" action="{{ route('obat.destroy', $pre->id) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
-                                            <a class="custom-btn" href="{{ url('obat-edit', $pre->id) }}">Edit</a>
-                                        </form>
-                                    </td> --}}
+                                    <th scope="col">#</th>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Kategori</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php $no = 1; @endphp
+                                @foreach ($prediksi as $pre)
+                                    <tr>
+                                        <td><input type="checkbox" name="selected_ids[]" value="{{ $pre->id }}"></td>
+                                        <!-- Checkbox di setiap baris -->
+                                        <th scope="row"><a href="#">{{ $no++ }}</a></th>
+                                        <td>{{ $pre->nama }}</td>
+                                        <td>{{ $pre->kategori->nama }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </form>
 
                 </div>
 
@@ -81,3 +76,5 @@
         });
     });
 </script>
+
+
