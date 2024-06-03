@@ -48,7 +48,7 @@ Route::get('/landingpage', [HomeController::class, 'index'])->name('landingpage'
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
 Route::post('/add-to-keranjang', [KeranjangController::class, 'store'])->name('add-to-keranjang');
 Route::post('/hapus-item', [KeranjangController::class, 'hapusItem'])->name('hapus-item');
-Route::post('/update-keranjang', [KeranjangController::class, 'update'])->name('update-keranjang');
+Route::post('/update-keranjang', [KeranjangController::class, 'updateKeranjang'])->name('update-keranjang');
 
 
 //admin
@@ -78,6 +78,8 @@ Route::post('/checkout2', [CheckoutController::class, 'checkout2'])->name('check
 
 //prediksi
 Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
+Route::get('/all-prediksi', [PrediksiController::class, 'create'])->name('all-prediksi');
+Route::get('/tambah-prediksi', [PrediksiController::class, 'tambahPrediksi'])->name('tambah-prediksi');
 
 Route::get('/testmv', [PrediksiController::class, 'test'])->name('testmv');
 

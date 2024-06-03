@@ -13,83 +13,83 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 table-column">
                     <div class="table-outer">
                         <form id="update-keranjang-form" action="{{ route('update-keranjang') }}" method="post">
-                            @csrf
-                            <table class="cart-table">
-                                <thead class="cart-header">
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th class="prod-column">Name</th>
-                                        <th>&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                        <th class="price">Harga</th>
-                                        <th class="quantity">Jumlah</th>
-                                        <th>Total Harga</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($keranjang as $ker)
-                                        <tr>
-                                            <td colspan="4" class="prod-column">
-                                                <div class="column-box">
-                                                    <div class="remove-btn">
-                                                        <form action="{{ route('hapus-item') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="cart_id"
-                                                                value="{{ $ker->id }}">
-                                                            <button type="submit"><i class="flaticon-close"></i></button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="prod-thumb">
-                                                        <a href="#"><img src="assets/images/resource/shop/cart-3.jpg"
-                                                                alt=""></a>
-                                                    </div>
-                                                    <div class="prod-title">{{ $ker->nama }}</div>
-                                                </div>
-                                            </td>
-                                            <td class="price">{{ $ker->harga }}</td>
-                                            <td class="qty">
-                                                <div class="item-quantity">
-                                                    <input class="quantity-spinner" type="number"
-                                                        value="{{ $ker->qty }}" name="quantity[]"
-                                                        data-id="{{ $ker->id }}">
-                                                    <input type="hidden" name="cart_id[]" value="{{ $ker->id }}">
-                                                </div>
-                                            </td>
-                                            <td class="sub-total">{{ $ker->harga * $ker->qty }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </form>
+    @csrf
+    <table class="cart-table">
+        <thead class="cart-header">
+            <tr>
+                <th>&nbsp;</th>
+                <th class="prod-column">Nama</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th class="price">Harga</th>
+                <th class="quantity">Jumlah</th>
+                <th>Total Harga</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($keranjang as $ker)
+                <tr>
+                    <td colspan="4" class="prod-column">
+                        <div class="column-box">
+                            <div class="remove-btn">
+                                <form action="{{ route('hapus-item') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="cart_id" value="{{ $ker->id }}">
+                                    <button type="submit"><i class="flaticon-close"></i></button>
+                                </form>
+                            </div>
+                            <div class="prod-thumb">
+                                <a href="#"><img src="assets/images/resource/shop/cart-3.jpg" alt=""></a>
+                            </div>
+                            <div class="prod-title">{{ $ker->nama }}</div>
+                        </div>
+                    </td>
+                    <td class="price">{{ $ker->harga }}</td>
+                    <td class="qty">
+                        <div class="item-quantity">
+                            <input class="quantity-spinner" type="number" value="{{ $ker->qty }}" name="quantity[]" data-id="{{ $ker->id }}">
+                            <input type="hidden" name="cart_id[]" value="{{ $ker->id }}">
+                        </div>
+                    </td>
+                    <td class="sub-total">{{ $ker->harga * $ker->qty }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</form>
 
-                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                        <script>
-                            $(document).ready(function() {
-                                $('.quantity-spinner').on('change', function() {
-                                    var qty = $(this).val();
-                                    var cartId = $(this).data('id');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.quantity-spinner').on('change', function() {
+            var qty = $(this).val();
+            var cartId = $(this).data('id');
 
-                                    $.ajax({
-                                        url: "{{ route('update-keranjang') }}",
-                                        method: "POST",
-                                        data: {
-                                            _token: "{{ csrf_token() }}",
-                                            cart_id: cartId,
-                                            quantity: qty
-                                        },
-                                        success: function(response) {
-                                            // Lakukan sesuatu setelah berhasil diperbarui, misalnya memperbarui subtotal
-                                            location
-                                        .reload(); // Muat ulang halaman untuk memperbarui subtotal dan total
-                                        },
-                                        error: function(xhr) {
-                                            // Tangani kesalahan di sini
-                                            alert('Terjadi kesalahan saat memperbarui keranjang.');
-                                        }
-                                    });
-                                });
-                            });
-                        </script>
+            console.log("Mengirim permintaan AJAX dengan qty:", qty, "dan cartId:", cartId);
+
+            $.ajax({
+                url: "{{ route('update-keranjang') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    cart_id: cartId,
+                    quantity: qty
+                },
+                success: function(response) {
+                    console.log("Pembaruan berhasil:", response);
+                    location.reload(); // Muat ulang halaman untuk memperbarui subtotal dan total
+                },
+                error: function(xhr, status, error) {
+                    console.error("Pembaruan gagal:", xhr.responseText);
+                    console.error("Status:", status);
+                    console.error("Error:", error);
+                    alert('Terjadi kesalahan saat memperbarui keranjang.');
+                }
+            });
+        });
+    });
+</script>
+
 
 
                     </div>

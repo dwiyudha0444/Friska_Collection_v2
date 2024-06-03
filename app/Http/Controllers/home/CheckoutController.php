@@ -86,47 +86,55 @@ class CheckoutController extends Controller
 
     public function checkout2(Request $request) {
         try {
-            foreach ($request->items as $item) {
+            // Dapatkan semua produk dari basis data
+            $allProducts = Produk::all();
+    
+            foreach ($allProducts as $product) {
+                // Cari item di keranjang yang sesuai dengan produk saat ini
+                $itemInCart = collect($request->items)->firstWhere('id_produk', $product->id);
+    
                 // Cek apakah ada entri dengan id_produk yang sama dalam filter_penjualan_bulanan
-                $filterPenjualan = FilterPenjualanPerbulan::where('id_produk', $item['id_produk'])
+                $filterPenjualan = FilterPenjualanPerbulan::where('id_produk', $product->id)
                     ->whereMonth('created_at', now()->month)
                     ->whereYear('created_at', now()->year)
                     ->first();
     
                 if ($filterPenjualan) {
                     // Jika sudah ada, tambahkan qty baru ke qty yang sudah ada
-                    $filterPenjualan->qty += $item['qty'];
+                    $filterPenjualan->qty += $itemInCart ? $itemInCart['qty'] : 0;
                     $filterPenjualan->save();
                 } else {
                     // Jika belum ada, buat entri baru
                     FilterPenjualanPerbulan::create([
-                        'id_produk' => $item['id_produk'],
-                        'nama' => $item['nama'],
-                        'id_kategori' => $item['id_kategori'], 
-                        'image' => $item['image'],
-                        'harga' => $item['harga'],
-                        'qty' => $item['qty'],
+                        'id_produk' => $product->id,
+                        'nama' => $product->nama,
+                        'id_kategori' => $product->id_kategori,
+                        'image' => $product->image,
+                        'harga' => $product->harga,
+                        'qty' => $itemInCart ? $itemInCart['qty'] : 0,
                     ]);
                 }
     
-                // Simpan data ke dalam database filter
-                Penjualan::create([
-                    'id_produk' => $item['id_produk'],
-                    'nama' => $item['nama'],
-                    'id_kategori' => $item['id_kategori'], 
-                    'image' => $item['image'],
-                    'harga' => $item['harga'],
-                    'qty' => $item['qty'],
-                ]);
+                if ($itemInCart) {
+                    // Simpan data ke dalam database penjualan hanya jika item ada di keranjang
+                    Penjualan::create([
+                        'id_produk' => $itemInCart['id_produk'],
+                        'nama' => $itemInCart['nama'],
+                        'id_kategori' => $itemInCart['id_kategori'],
+                        'image' => $itemInCart['image'],
+                        'harga' => $itemInCart['harga'],
+                        'qty' => $itemInCart['qty'],
+                    ]);
     
-                // Kurangi stok produk
-                $produk = Produk::findOrFail($item['id_produk']); 
-                $produk->stok -= $item['qty'];
-                $produk->save();
+                    // Kurangi stok produk
+                    $produk = Produk::findOrFail($itemInCart['id_produk']);
+                    $produk->stok -= $itemInCart['qty'];
+                    $produk->save();
+                }
             }
-            
-            // Hapus semua data dari keranjang (cart)
-            Keranjang::truncate(); // Jika menggunakan Eloquent, asumsikan model Cart Anda adalah Cart
+    
+            // Hapus semua data dari keranjang
+            Keranjang::truncate(); // Jika menggunakan Eloquent, asumsikan model Keranjang Anda adalah Keranjang
     
             // Response sukses
             return redirect('/keranjang')->with('success', 'Berhasil Melakukan Transaksi');
@@ -135,6 +143,7 @@ class CheckoutController extends Controller
             return redirect('/keranjang')->with('error', 'Terjadi kesalahan saat melakukan checkout');
         }
     }
+    
     
     
 

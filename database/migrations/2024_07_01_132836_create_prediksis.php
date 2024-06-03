@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('nama');
             $table->string('id_kategori');
             $table->decimal('ma')->nullable();
-            $table->decimal('mse')->nullable();
-            $table->decimal('mad')->nullable();
-            $table->decimal('mape')->nullable();
             $table->timestamps();
         });
     }

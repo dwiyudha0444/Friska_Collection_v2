@@ -68,7 +68,35 @@ class KeranjangController extends Controller
             }
         }
     
+
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Keranjang diperbarui dengan sukses.');
+    }
+
+    public function updateKeranjang(Request $request)
+    {
+        try {
+            $cartId = $request->input('cart_id');
+            $quantity = $request->input('quantity');
+
+            // Validasi input
+            if (empty($cartId) || empty($quantity)) {
+                return response()->json(['message' => 'Data tidak valid'], 400);
+            }
+
+            // Temukan item keranjang berdasarkan ID dan perbarui jumlah
+            $cartItem = Keranjang::find($cartId);
+            if (!$cartItem) {
+                return response()->json(['message' => 'Item keranjang tidak ditemukan'], 404);
+            }
+
+            $cartItem->qty = $quantity;
+            $cartItem->save();
+
+            return response()->json(['message' => 'Keranjang berhasil diperbarui'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error updating cart: ' . $e->getMessage());
+            return response()->json(['message' => 'Terjadi kesalahan saat memperbarui keranjang'], 500);
+        }
     }
 }
