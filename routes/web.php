@@ -17,6 +17,7 @@ use App\Http\Controllers\admin\ProdukController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\KategoriController;
 use App\Http\Controllers\admin\PrediksiController;
+use App\Http\Controllers\admin\PenjualanController;
 
 
 
@@ -75,6 +76,9 @@ Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])-
 Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 //checkout
 Route::post('/checkout2', [CheckoutController::class, 'checkout2'])->name('checkout2');
+
+//penjualan
+Route::get('/penjualan-perbulan', [PenjualanController::class, 'indexPeper'])->name('penjualan-perbulan');
 
 //prediksi
 Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');

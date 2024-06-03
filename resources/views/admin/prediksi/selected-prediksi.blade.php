@@ -25,7 +25,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $data->nama }}</td>
                                     <td>{{ $data->kategori->nama }}</td>
-                                    <!-- Tambahkan sel lain sesuai kebutuhan -->
+                                    <td>{{ $data->ma }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

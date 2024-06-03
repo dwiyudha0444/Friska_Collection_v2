@@ -55,19 +55,27 @@
         </ul>
       </li><!-- End Charts Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Kelola User</span><i class="bi bi-chevron-down ms-auto"></i>
+<li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ url('user') }}">
-              <i class="bi bi-circle"></i><span>User</span>
+            <a href="penjualan-perbulan">
+              <i class="bi bi-circle"></i><span>Penjualan Perbulan</span>
             </a>
           </li>
 
+          <li>
+            <a href="penjualan-peritem">
+              <i class="bi bi-circle"></i><span>Penjualan Peritem</span>
+            </a>
+          </li>
+          
         </ul>
-      </li><!-- End Icons Nav -->
+      </li><!-- End Forms Nav --> 
+
+      
 
 
       {{-- <li class="nav-heading">Nama & Kategori Obat</li>
@@ -84,40 +92,22 @@
           <i class="bi bi-menu-button-wide"></i>
           <span>Kategori</span>
         </a>
-      </li><!-- End Profile Page Nav -->
+      </li><!-- End Profile Page Nav --> --}}
 
-      <li class="nav-heading">PDF</li>
+      <li class="nav-heading">User</li>
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>Kelola User</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="pemakaian_pdf">
-              <i class="bi bi-circle"></i><span>Pemakaian PDF</span>
+            <a href="{{ url('user') }}">
+              <i class="bi bi-circle"></i><span>User</span>
             </a>
           </li>
 
-          <li>
-            <a href="persediaan_pdf">
-              <i class="bi bi-circle"></i><span>Persediaan PDF</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="permintaan_detail_pdf">
-              <i class="bi bi-circle"></i><span>Permintaan PDF</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="lplpo_pdf">
-              <i class="bi bi-circle"></i><span>Lplpo PDF</span>
-            </a>
-          </li>
-          
         </ul>
-      </li><!-- End Forms Nav --> --}}
+      </li><!-- End Icons Nav -->
 
       {{-- <li class="nav-heading">Pages</li>
 
