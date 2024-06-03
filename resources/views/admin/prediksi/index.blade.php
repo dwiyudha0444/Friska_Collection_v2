@@ -2,7 +2,7 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Product Fashion</h1>
+            <h1>Product preion</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('admin') }}">admin</a></li>
@@ -37,8 +37,10 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Kategori</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Image</th>
+                                <th scope="col">MA</th>
+                                <th scope="col">MSE</th>
+                                <th scope="col">MAD</th>
+                                <th scope="col">MAPE</th>
                                 <th scope="col">Action</th>
                                 {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'kepala apoteker')
                                     <th scope="col">Action</th>
@@ -49,27 +51,29 @@
                             @php
                                 $no = 1;
                             @endphp
-                            {{-- @foreach ($fashion as $fash) --}}
+                            @foreach ($prediksi as $pre)
                                 <tr>
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
                                     
-                                    {{-- <td>{{ $fash->nama }}</td>
-                                    <td>{{ $fash->kategori }}</td>
-                                    <td>{{ $fash->harga }}</td>
-                                    <td>{{ $fash->image }}</td> --}}
+                                    <td>{{ $pre->nama }}</td>
+                                    <td>{{ $pre->kategori->nama }}</td>
+                                    <td>{{ $pre->ma }}</td>
+                                    <td>{{ $pre->mse }}</td>
+                                    <td>{{ $pre->mad }}</td>
+                                    <td>{{ $pre->mape }}</td>
                                     
                                     {{-- <td>
 
-                                        <form method="POST" action="{{ route('obat.destroy', $fash->id) }}">
+                                        <form method="POST" action="{{ route('obat.destroy', $pre->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
 
-                                            <a class="custom-btn" href="{{ url('obat-edit', $fash->id) }}">Edit</a>
+                                            <a class="custom-btn" href="{{ url('obat-edit', $pre->id) }}">Edit</a>
                                         </form>
                                     </td> --}}
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 

@@ -14,8 +14,23 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('update:monthly-sales')->monthlyOn(1, '00:00');
 
-        // Jadwalkan UpdatePredictions untuk dijalankan setiap bulan pada tanggal 2
         $schedule->command('update:predictions')->monthlyOn(1, '00:00');
+
+        // // Update monthly sales 10 menit sebelum tengah malam pada hari terakhir bulan
+        // $schedule->command('update:monthly-sales')
+        // ->when(function () {
+        //     // Cek apakah hari ini adalah hari terakhir bulan
+        //     return \Carbon\Carbon::now()->endOfMonth()->isToday();
+        // })
+        // ->at('23:50');
+
+        // // Update predictions tepat tengah malam pada hari terakhir bulan
+        // $schedule->command('update:predictions')
+        //     ->when(function () {
+        //         // Cek apakah hari ini adalah hari terakhir bulan
+        //         return \Carbon\Carbon::now()->endOfMonth()->isToday();
+        //     })
+        //     ->at('00:00');
     }
 
     /**
