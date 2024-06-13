@@ -27,17 +27,6 @@
                                         <img src="{{ url('admin/assets/image') }}/{{ $pro->image }}" alt="">
                                         <ul class="info-list clearfix">
                                             <li>
-                                                {{-- <form action="{{ route('add-to-keranjang') }}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="nama" value="{{ $pro->nama }}">
-                                                    <input type="hidden" name="id_kategori"
-                                                        value="{{ $pro->id_kategori }}">
-                                                    <input type="hidden" name="harga" value="{{ $pro->harga }}">
-                                                    <input type="hidden" name="image" value="{{ $pro->image }}">
-                                                    <input type="hidden" name="qty" value=1>
-                                                    <button type="submit" class="styled-button"><i
-                                                            class="flaticon-cart"></i></button>
-                                                </form> --}}
 
                                                 <form action="{{ route('add-to-keranjang') }}" method="post">
                                                     @csrf

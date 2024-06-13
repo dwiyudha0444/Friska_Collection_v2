@@ -17,72 +17,92 @@
                         <table id="dataTable">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>Harga</th>
                                     <th>AKsi</th>
                                 </tr>
                             </thead>
-                            @foreach ($produk as $pro)
-                                <tbody>
+                            <tbody>
+                                @php
+                                    $no = 1;
+                                @endphp
+                                @foreach ($produk as $pro)
                                     <tr>
-                                        <td>{{ $pro->nama }}</td>
-                                        <td>{{ $pro->harga }}</td>
-                                        <td>UK</td>
+                                        <td class="text-center">{{ $no++ }}</td>
+                                        <td class="text-center">{{ $pro->nama }}</td>
+                                        <td class="text-center">{{ $pro->harga }}</td>
+                                        <td class="text-center">
+                                            <form action="{{ route('add-to-keranjang') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="id_produk" value="{{ $pro->id }}">
+                                                <input type="hidden" name="nama" value="{{ $pro->nama }}">
+                                                <input type="hidden" name="id_kategori" value="{{ $pro->id_kategori }}">
+                                                <input type="hidden" name="harga" value="{{ $pro->harga }}">
+                                                <input type="hidden" name="image" value="{{ $pro->image }}">
+                                                <input type="hidden" name="qty" value="1">
+                                                @php
+                                                    $inCart = false;
+                                                    foreach ($keranjang as $item) {
+                                                        if ($item->nama == $pro->nama) {
+                                                            // Sesuaikan dengan atribut yang sesuai di model Cart
+                                                            $inCart = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                @endphp
+                                                @if ($inCart)
+                                                    <button type="button" class="styled-button-red" disabled><i
+                                                            class="fa fa-check"></i></button>
+                                                @else
+                                                    <button type="submit" class="styled-button"><i
+                                                            class="flaticon-cart"></i></button>
+                                                @endif
+                                            </form>
+                                        </td>
                                     </tr>
-                                    <!-- Add more rows as needed -->
-                                </tbody>
-                            @endforeach
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                        <table class="cart-table">
+                            <thead class="cart-header">
+                                <tr>
+                                    <th colspan="4" class="prod-column">Nama</th>
+                                    <th class="price">Harga</th>
+                                    <th class="quantity">Jumlah</th>
+                                    <th>Total Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($keranjang as $ker)
+                                    <tr>
+                                        <td colspan="4" class="prod-column">
+                                            <div class="column-box">
+                                                <div class="remove-btn">
+                                                    <form action="{{ route('hapus-item') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="cart_id" value="{{ $ker->id }}">
+                                                        <button type="submit"><i class="flaticon-close"></i></button>
+                                                    </form>
+                                                </div>
+                                                <div class="prod-title">{{ $ker->nama }}</div>
+                                            </div>
+                                        </td>
+                                        <td class="price">{{ $ker->harga }}</td>
+                                        <td class="qty">
+                                            <div class="item-quantity">
+                                                <input class="quantity-spinner" type="number" value="{{ $ker->qty }}"
+                                                    name="quantity[]" data-id="{{ $ker->id }}">
+                                                <input type="hidden" name="cart_id[]" value="{{ $ker->id }}">
+                                            </div>
+                                        </td>
+                                        <td class="sub-total">{{ $ker->harga * $ker->qty }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
 
-                        <form id="update-keranjang-form" action="{{ route('update-keranjang') }}" method="post">
-                            @csrf
-                            <table class="cart-table">
-                                <thead class="cart-header">
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th class="prod-column">Nama</th>
-                                        <th>&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                        <th class="price">Harga</th>
-                                        <th class="quantity">Jumlah</th>
-                                        <th>Total Harga</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($keranjang as $ker)
-                                        <tr>
-                                            <td colspan="4" class="prod-column">
-                                                <div class="column-box">
-                                                    <div class="remove-btn">
-                                                        <form action="{{ route('hapus-item') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="cart_id"
-                                                                value="{{ $ker->id }}">
-                                                            <button type="submit"><i class="flaticon-close"></i></button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="prod-thumb">
-                                                        <a href="#"><img src="assets/images/resource/shop/cart-3.jpg"
-                                                                alt=""></a>
-                                                    </div>
-                                                    <div class="prod-title">{{ $ker->nama }}</div>
-                                                </div>
-                                            </td>
-                                            <td class="price">{{ $ker->harga }}</td>
-                                            <td class="qty">
-                                                <div class="item-quantity">
-                                                    <input class="quantity-spinner" type="number"
-                                                        value="{{ $ker->qty }}" name="quantity[]"
-                                                        data-id="{{ $ker->id }}">
-                                                    <input type="hidden" name="cart_id[]" value="{{ $ker->id }}">
-                                                </div>
-                                            </td>
-                                            <td class="sub-total">{{ $ker->harga * $ker->qty }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </form>
 
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                         <script>
