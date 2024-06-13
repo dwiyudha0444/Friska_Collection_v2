@@ -5,13 +5,20 @@ namespace App\Http\Controllers\home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Keranjang;
+use App\Models\Produk;
 
 class KeranjangController extends Controller
 {
     public function index()
     {
-        $keranjang = Keranjang::orderBy('id','DESC')->get();
-        return view('home.keranjang.index',compact('keranjang'));
+        // Ambil data dari model Keranjang
+        $keranjang = Keranjang::orderBy('id', 'DESC')->get();
+
+        // Ambil data dari model Produk
+        $produk = Produk::orderBy('id', 'ASC')->get();
+
+        // Kembalikan view dengan data gabungan menggunakan compact
+        return view('home.keranjang.index', compact('keranjang','produk'));
     }
 
     public function store(Request $request)

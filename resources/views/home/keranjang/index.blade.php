@@ -14,34 +14,26 @@
                     <div class="table-outer">
                         <h2>Searchable Table</h2>
                         <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for names..">
-
                         <table id="dataTable">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Age</th>
-                                    <th>Country</th>
+                                    <th>Nama</th>
+                                    <th>Harga</th>
+                                    <th>AKsi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>John Doe</td>
-                                    <td>30</td>
-                                    <td>USA</td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Smith</td>
-                                    <td>25</td>
-                                    <td>Canada</td>
-                                </tr>
-                                <tr>
-                                    <td>William Johnson</td>
-                                    <td>40</td>
-                                    <td>UK</td>
-                                </tr>
-                                <!-- Add more rows as needed -->
-                            </tbody>
+                            @foreach ($produk as $pro)
+                                <tbody>
+                                    <tr>
+                                        <td>{{ $pro->nama }}</td>
+                                        <td>{{ $pro->harga }}</td>
+                                        <td>UK</td>
+                                    </tr>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            @endforeach
                         </table>
+
                         <form id="update-keranjang-form" action="{{ route('update-keranjang') }}" method="post">
                             @csrf
                             <table class="cart-table">
