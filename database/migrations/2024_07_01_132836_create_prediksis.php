@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_produk')->unsigned()->nullable();
             $table->string('nama');
-            $table->string('id_kategori');
+            $table->bigInteger('id_kategori')->unsigned()->nullable();
+            $table->bigInteger('id_periode')->unsigned()->nullable();
             $table->decimal('ma')->nullable();
+            $table->decimal('mad')->nullable();
+            $table->decimal('mse')->nullable();
+            $table->decimal('mape')->nullable();
             $table->timestamps();
         });
     }

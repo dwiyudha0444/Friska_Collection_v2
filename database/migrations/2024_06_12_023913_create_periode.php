@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penjualans', function (Blueprint $table) {
+        Schema::create('periode', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_produk')->unsigned()->nullable();
-            $table->string('nama');
-            $table->bigInteger('id_kategori')->unsigned()->nullable();
-            $table->string('image')->default('default.jpg');
-            $table->integer('harga');
-            $table->integer('qty');
+            $table->integer('periode');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penjualans');
+        Schema::dropIfExists('periode');
     }
 };

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_produk')->unsigned()->nullable();
             $table->string('nama');
-            $table->string('id_kategori');
+            $table->bigInteger('id_kategori')->unsigned()->nullable();
             $table->string('image')->default('default.jpg');
             $table->integer('harga');
             $table->integer('qty')->default(1);
