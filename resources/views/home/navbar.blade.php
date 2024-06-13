@@ -75,21 +75,5 @@
                 </div>
             </div>
 
-            <!--sticky Header-->
-            <div class="sticky-header">
-                <div class="auto-container">
-                    <div class="outer-box clearfix">
-                        <div class="logo-box pull-left">
-                            <figure class="logo"><a href="index.html"><img src="home/assets/images/small-logo.png"
-                                        alt=""></a></figure>
-                        </div>
-                        <div class="menu-area pull-right">
-                            <nav class="main-menu clearfix">
-                                <!--Keep This Empty / Menu will come through Javascript-->
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </header>
         <!-- main-header end -->
