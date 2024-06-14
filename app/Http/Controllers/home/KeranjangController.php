@@ -44,7 +44,7 @@ class KeranjangController extends Controller
         ]);
 
         // Response sukses
-        return redirect('/landingpage')->with('success', 'Berhasil Menambahkan Ke Keranjang');
+        return redirect('/keranjang')->with('success', 'Berhasil Menambahkan Ke Keranjang');
     }
 
     public function hapusItem(Request $request) {

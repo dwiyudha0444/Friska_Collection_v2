@@ -42,6 +42,9 @@
 
 
 **********************************************/
+
+
+
 .text-center {
   text-align: center; /* Horizontal centering */
   vertical-align: middle; /* Vertical centering */
@@ -8352,7 +8355,7 @@ div#mCSB_1_container{
 .cart-section{
   position: relative;
   display: block;
-  padding: 120px 0px;
+  padding: 30px 0px;
 }
 
 .cart-section .table-outer {
@@ -8387,7 +8390,7 @@ div#mCSB_1_container{
 }
 
 .cart-section .cart-table tbody tr td.prod-column{
-  padding: 30px 0px;
+  padding: 0px 0px;
 }
 
 .cart-section .cart-table tbody tr .prod-column .column-box {

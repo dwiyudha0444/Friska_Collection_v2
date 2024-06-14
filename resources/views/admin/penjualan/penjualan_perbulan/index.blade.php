@@ -36,6 +36,9 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Nama</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col">Harga Satuan</th>
+                                <th scope="col">Total Item</th>
                                 <th scope="col">Action</th>
                                 {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'kepala apoteker')
                                     <th scope="col">Action</th>
@@ -51,6 +54,10 @@
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
 
                                     <td>{{ $peper->nama }}</td>
+                                    <td>{{ $peper->kategori->nama }}</td>
+                                    <td>{{ $peper->harga }}</td>
+                                    <td>{{ $peper->qty }}</td>
+
 
                                     {{-- <td>
 
