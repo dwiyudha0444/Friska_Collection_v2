@@ -13,6 +13,7 @@ class Prediksi extends Model
         'id_produk',
         'nama',
         'id_kategori',
+        'id_periode',
         'ma',
         'mse',
         'mad',
@@ -22,5 +23,10 @@ class Prediksi extends Model
     public function kategori()
     {
         return $this->belongsTo(Kategori::class,'id_kategori');
+    }
+
+    public function periode()
+    {
+        return $this->belongsTo(Periode::class,'id_periode');
     }
 }

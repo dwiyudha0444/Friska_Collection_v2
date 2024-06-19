@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use App\Models\Prediksi;
+use App\Models\Periode;
 use App\Helpers\MovingAverageHelper;
+use App\Helpers\MovingAverage;
 use Carbon\Carbon;
 use DB;
 
@@ -102,13 +104,21 @@ class PrediksiController extends Controller
 
     public function tambahPrediksi()
     {
+        // Ambil periode terbaru
+        $periode = Periode::latest()->first();
+    
+        // Pastikan ada periode yang ditemukan sebelum melanjutkan
+        if (!$periode) {
+            return redirect()->route('all-prediksi')->with('error', 'Periode tidak ditemukan.');
+        }
+    
         // Ambil semua produk terbaru
         $produkTerbaru = DB::table('filter_penjualan_perbulan')
             ->select('id_produk')
             ->distinct()
             ->get();
     
-        // Pastikan ada produk yang terbaru
+        // Pastikan ada produk terbaru
         if ($produkTerbaru->isNotEmpty()) {
             foreach ($produkTerbaru as $produk) {
                 // Ambil data penjualan terbaru untuk produk tertentu
@@ -117,14 +127,16 @@ class PrediksiController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->first();
     
-                // Cek apakah sudah ada data untuk bulan yang sama dalam prediksi
-                $existingData = Prediksi::where('id_produk', $dataTerbaru->id_produk)
-                    ->whereYear('created_at', Carbon::now()->year)
-                    ->whereMonth('created_at', Carbon::now()->month)
-                    ->first();
-    
-                // Hitung Moving Average (MA) menggunakan helper
+                // Hitung Moving Average (MA) menggunakan helper untuk data asli
                 $ma = MovingAverageHelper::calculateMovingAverage($produk->id_produk);
+    
+                // Hitung Moving Average (MA) kedua untuk data yang berbeda
+                $ma2 = MovingAverage::calculateMovingAverage($produk->id_produk);
+    
+                // Ambil data prediksi berdasarkan id_produk dan id_periode
+                $existingData = Prediksi::where('id_produk', $dataTerbaru->id_produk)
+                    ->where('id_periode', $periode->id)
+                    ->first();
     
                 // Jika ada data yang sama untuk bulan yang sama, perbarui data tersebut
                 if ($existingData) {
@@ -139,7 +151,31 @@ class PrediksiController extends Controller
                         'id_produk' => $dataTerbaru->id_produk,
                         'nama' => $dataTerbaru->nama,
                         'id_kategori' => $dataTerbaru->id_kategori,
+                        'id_periode' => $periode->id, // Gunakan kolom id periode yang sesuai
                         'ma' => $ma,
+                    ]);
+                }
+    
+                // Ambil kembali existing data untuk data kedua
+                $existingData2 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
+                    ->where('id_periode', $periode->id)
+                    ->first();
+    
+                // Jika ada data yang sama untuk bulan yang sama, perbarui data tersebut untuk data kedua
+                if ($existingData2) {
+                    $existingData2->update([
+                        'nama' => $dataTerbaru->nama,
+                        'id_kategori' => $dataTerbaru->id_kategori,
+                        'ma' => $ma2,
+                    ]);
+                } else {
+                    // Jika tidak ada data yang sama, tambahkan data baru untuk data kedua
+                    Prediksi::create([
+                        'id_produk' => $dataTerbaru->id_produk,
+                        'nama' => $dataTerbaru->nama,
+                        'id_kategori' => $dataTerbaru->id_kategori,
+                        'id_periode' => $periode->id, // Gunakan kolom id periode yang sesuai
+                        'ma' => $ma2,
                     ]);
                 }
             }
@@ -149,6 +185,8 @@ class PrediksiController extends Controller
             return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
         }
     }
+    
+    
     
     public function pilihProduk(Request $request)
     {

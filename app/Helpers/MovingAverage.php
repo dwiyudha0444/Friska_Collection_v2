@@ -4,18 +4,25 @@
 
 namespace App\Helpers;
 
+use App\Models\FilterPenjualanPerbulan;
+use Carbon\Carbon;
+
 class MovingAverage
 {
-    public static function calculateMovingAverage(array $data, int $period = 3)
+    public static function calculateMovingAverage($productId, $period = 4)
     {
-        $count = count($data);
-        if ($count < $period) {
-            return null; // Atau return 0 atau nilai lain jika data tidak cukup
+        $sales = FilterPenjualanPerbulan::where('id_produk', $productId)
+            ->orderBy('created_at', 'desc')
+            ->take($period)
+            ->get();
+
+        if ($sales->isEmpty()) {
+            return 0;
         }
 
-        $latestData = array_slice($data, -$period);
-        $sum = array_sum($latestData);
+        $totalQty = $sales->sum('qty');
+        $average = $totalQty / $period;
 
-        return $sum / $period;
+        return $average;
     }
 }
