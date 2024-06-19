@@ -26,21 +26,6 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Prediksi</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-          <li>
-            <a href="{{ url('prediksi') }}">
-              <i class="bi bi-circle"></i><span>Prediksi</span>
-            </a>
-          </li>
- 
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Kelola Kategori</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -57,7 +42,7 @@
 
 <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-journal-text"></i><span>Penjualan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -94,29 +79,44 @@
         </a>
       </li><!-- End Profile Page Nav --> --}}
 
+      {{-- <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Prediksi</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+          <li>
+            <a href="{{ url('prediksi') }}">
+              <i class="bi bi-circle"></i><span>Prediksi</span>
+            </a>
+          </li>
+ 
+        </ul>
+      </li><!-- End Tables Nav --> --}}
+
       <li class="nav-heading">User</li>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Kelola User</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-gem"></i><span>Prediksi</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ url('user') }}">
-              <i class="bi bi-circle"></i><span>User</span>
+            <a href="{{ url('prediksi') }}">
+              <i class="bi bi-circle"></i><span>Prediksi</span>
             </a>
           </li>
 
         </ul>
       </li><!-- End Icons Nav -->
 
-      {{-- <li class="nav-heading">Pages</li>
+      <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ url('profile') }}">
+        <a class="nav-link collapsed" href="{{ url('user') }}">
           <i class="bi bi-person"></i>
-          <span>Profile</span>
+          <span>Kelola  User</span>
         </a>
-      </li><!-- End Profile Page Nav --> --}}
+      </li><!-- End Profile Page Nav -->
 
 
     </ul>

@@ -38,7 +38,7 @@ class LoginController extends Controller
             if (Auth::user()->role == 'admin') {
                 return redirect()->route('dashboard');
             } elseif (Auth::user()->role == 'karyawan') {
-                return redirect()->route('landingpage');
+                return redirect()->route('keranjanng');
             } elseif (Auth::user()->role == 'pemilik') {
                 return redirect()->route('dashboard');
             }
