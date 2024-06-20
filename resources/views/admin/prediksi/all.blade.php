@@ -43,6 +43,8 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Kategori</th>
+                                <th scope="col">Periode</th>
+                                <th scope="col">Bulan</th>
                                 <th scope="col">MA</th>
                                 <th scope="col">MSE</th>
                                 <th scope="col">MAD</th>
@@ -58,6 +60,8 @@
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
                                     <td>{{ $pre->nama }}</td>
                                     <td>{{ $pre->kategori->nama }}</td>
+                                    <td>{{ $pre->created_at->format('F') }}</td>
+                                    <td>{{ $pre->id_periode }}</td>
                                     <td>{{ $pre->ma }}</td>
                                     {{-- <td>
                                         <form method="POST" action="{{ route('obat.destroy', $pre->id) }}">

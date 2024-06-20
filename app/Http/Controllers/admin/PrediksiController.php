@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Produk;
 use App\Models\Prediksi;
 use App\Models\Periode;
-use App\Helpers\MovingAverageHelper;
+use App\Helpers\MovingAveragePeriodeTiga;
 use App\Helpers\MovingAverage;
 use Carbon\Carbon;
 use DB;
@@ -100,7 +100,87 @@ class PrediksiController extends Controller
     //     }
     // }
     
+    public function tambahPrediksi2()
+{
+    // Mengambil semua produk
+    $products = Produk::all();
+
+    $isUpdatedOrCreated = false;
+
+    foreach ($products as $product) {
+        // Cek apakah ada entri dengan id_produk yang sama dalam prediksi untuk MA pertama
+        $prediksi1 = Prediksi::where('id_produk', $product->id)
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->where('id_periode', 3) // Periode 3 untuk MA pertama
+            ->first();
+            
+        // Cek apakah ada entri dengan id_produk yang sama dalam prediksi untuk MA kedua
+        $prediksi2 = Prediksi::where('id_produk', $product->id)
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->where('id_periode', 4) // Periode 4 untuk MA kedua
+            ->first();
+
+        // Hitung Moving Average
+        $ma = MovingAveragePeriodeTiga::calculateMovingAverage($product->id);
+        $ma2 = MovingAverage::calculateMovingAverage($product->id);
+
+        if ($prediksi1) {
+            // Jika sudah ada, update dengan data yang baru untuk MA pertama
+            $prediksi1->update([
+                'id_produk' => $product->id,
+                'nama' => $product->nama,
+                'id_kategori' => $product->id_kategori,
+                'id_periode' => 3,
+                'ma' => $ma,
+            ]);
+            $isUpdatedOrCreated = true;
+        } else {
+            // Jika belum ada, buat entri baru untuk MA pertama
+            Prediksi::create([
+                'id_produk' => $product->id,
+                'nama' => $product->nama,
+                'id_kategori' => $product->id_kategori,
+                'id_periode' => 3,
+                'ma' => $ma,
+            ]);
+            $isUpdatedOrCreated = true;
+        }
+
+        if ($prediksi2) {
+            // Jika sudah ada, update dengan data yang baru untuk MA kedua
+            $prediksi2->update([
+                'id_produk' => $product->id,
+                'nama' => $product->nama,
+                'id_kategori' => $product->id_kategori,
+                'id_periode' => 4,
+                'ma' => $ma2,
+            ]);
+            $isUpdatedOrCreated = true;
+        } else {
+            // Jika belum ada, buat entri baru untuk MA kedua
+            Prediksi::create([
+                'id_produk' => $product->id,
+                'nama' => $product->nama,
+                'id_kategori' => $product->id_kategori,
+                'id_periode' => 4,
+                'ma' => $ma2,
+            ]);
+            $isUpdatedOrCreated = true;
+        }
+    }
+
+    if ($isUpdatedOrCreated) {
+        return redirect()->route('all-prediksi')->with('success', 'Data prediksi berhasil ditambahkan atau diperbarui.');
+    } else {
+        return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
+    }
+}
+
     
+
+
 
     public function tambahPrediksi()
     {
@@ -128,53 +208,39 @@ class PrediksiController extends Controller
                     ->first();
     
                 // Hitung Moving Average (MA) menggunakan helper untuk data asli
-                $ma = MovingAverageHelper::calculateMovingAverage($produk->id_produk);
+                $ma = MovingAveragePeriodeTiga::calculateMovingAverage($produk->id_produk);
     
                 // Hitung Moving Average (MA) kedua untuk data yang berbeda
                 $ma2 = MovingAverage::calculateMovingAverage($produk->id_produk);
     
-                // Ambil data prediksi berdasarkan id_produk dan id_periode
-                $existingData = Prediksi::where('id_produk', $dataTerbaru->id_produk)
-                    ->where('id_periode', $periode->id)
-                    ->first();
+                // Cek apakah sudah ada data untuk id_produk dan periode 3
+                $existingDataPeriode3 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
+                    ->where('id_periode', 3)
+                    ->exists();
     
-                // Jika ada data yang sama untuk bulan yang sama, perbarui data tersebut
-                if ($existingData) {
-                    $existingData->update([
-                        'nama' => $dataTerbaru->nama,
-                        'id_kategori' => $dataTerbaru->id_kategori,
-                        'ma' => $ma,
-                    ]);
-                } else {
-                    // Jika tidak ada data yang sama, tambahkan data baru
+                // Jika belum ada, tambahkan data baru untuk periode 3
+                if (!$existingDataPeriode3) {
                     Prediksi::create([
                         'id_produk' => $dataTerbaru->id_produk,
                         'nama' => $dataTerbaru->nama,
                         'id_kategori' => $dataTerbaru->id_kategori,
-                        'id_periode' => $periode->id, // Gunakan kolom id periode yang sesuai
+                        'id_periode' => 3,
                         'ma' => $ma,
                     ]);
                 }
     
-                // Ambil kembali existing data untuk data kedua
-                $existingData2 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
-                    ->where('id_periode', $periode->id)
-                    ->first();
+                // Cek apakah sudah ada data untuk id_produk dan periode 4
+                $existingDataPeriode4 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
+                    ->where('id_periode', 4)
+                    ->exists();
     
-                // Jika ada data yang sama untuk bulan yang sama, perbarui data tersebut untuk data kedua
-                if ($existingData2) {
-                    $existingData2->update([
-                        'nama' => $dataTerbaru->nama,
-                        'id_kategori' => $dataTerbaru->id_kategori,
-                        'ma' => $ma2,
-                    ]);
-                } else {
-                    // Jika tidak ada data yang sama, tambahkan data baru untuk data kedua
+                // Jika belum ada, tambahkan data baru untuk periode 4
+                if (!$existingDataPeriode4) {
                     Prediksi::create([
                         'id_produk' => $dataTerbaru->id_produk,
                         'nama' => $dataTerbaru->nama,
                         'id_kategori' => $dataTerbaru->id_kategori,
-                        'id_periode' => $periode->id, // Gunakan kolom id periode yang sesuai
+                        'id_periode' => 4,
                         'ma' => $ma2,
                     ]);
                 }
@@ -186,7 +252,7 @@ class PrediksiController extends Controller
         }
     }
     
-    
+
     
     public function pilihProduk(Request $request)
     {

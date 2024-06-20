@@ -83,7 +83,7 @@ Route::get('/penjualan-perbulan', [PenjualanController::class, 'indexPeper'])->n
 //prediksi
 Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
 Route::get('/all-prediksi', [PrediksiController::class, 'create'])->name('all-prediksi');
-Route::get('/tambah-prediksi', [PrediksiController::class, 'tambahPrediksi'])->name('tambah-prediksi');
+Route::get('/tambah-prediksi', [PrediksiController::class, 'tambahPrediksi2'])->name('tambah-prediksi');
 Route::post('/pilih-produk', [PrediksiController::class, 'pilihProduk'])->name('pilih-produk');
 Route::get('/testmv', [PrediksiController::class, 'test'])->name('testmv');
 
