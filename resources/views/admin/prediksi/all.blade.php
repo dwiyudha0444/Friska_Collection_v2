@@ -43,11 +43,11 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Kategori</th>
-                                <th scope="col">Periode</th>
                                 <th scope="col">Bulan</th>
+                                <th scope="col">Periode</th>
                                 <th scope="col">MA</th>
-                                <th scope="col">MSE</th>
                                 <th scope="col">MAD</th>
+                                <th scope="col">MSE</th>
                                 <th scope="col">MAPE</th>
                             </tr>
                         </thead>
