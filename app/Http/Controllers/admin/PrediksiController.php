@@ -270,7 +270,9 @@ class PrediksiController extends Controller
         }
 
         // Ambil data berdasarkan id_produk yang dipilih
-        $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)->get();
+        $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         // Lakukan sesuatu dengan data yang dipilih
         // Misalnya, tampilkan data tersebut

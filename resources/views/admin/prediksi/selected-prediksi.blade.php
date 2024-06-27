@@ -24,6 +24,7 @@
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $data->nama }}</td>
+                                    <td>{{ $data->created_at->format('F') }}</td>
                                     <td>{{ $data->kategori->nama }}</td>
                                     <td>{{ $data->ma }}</td>
                                 </tr>
