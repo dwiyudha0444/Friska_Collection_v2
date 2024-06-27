@@ -21,17 +21,17 @@
                                     alt=""></a></figure>
                         <div class="menu-area">
                             <!--Mobile Navigation Toggler-->
-                            <div class="mobile-nav-toggler">
+                            {{-- <div class="mobile-nav-toggler">
                                 <i class="icon-bar"></i>
                                 <i class="icon-bar"></i>
                                 <i class="icon-bar"></i>
-                            </div>
+                            </div> --}}
                             <nav class="main-menu navbar-expand-md navbar-light">
                                 <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
-                                        <li class="current"><a href="{{ route('landingpage') }}">Home</a>
+                                        {{-- <li class="current"><a href="{{ route('landingpage') }}">Home</a>
                                             
-                                        </li>
+                                        </li> --}}
                                         {{-- <li class="dropdown"><a href="index.html">Pages</a>
                                             <ul>
                                                 <li><a href="about.html">About Us</a></li>
@@ -43,12 +43,12 @@
                                         </li> --}}
                                         
                                         
-                                        <li class="dropdown"><a href="index.html">Product</a>
+                                        {{-- <li class="dropdown"><a href="index.html">Product</a>
                                             <ul>
                                                 <li><a href="fashion">Fashion</a></li>
                                                 <li><a href="prabotan">Prabotan</a></li>
                                             </ul>
-                                        </li>
+                                        </li> --}}
                                         <li class="dropdown"><a href="index.html">{{ Auth::user()->name }}</a>
                                             <ul>
                                                 <li><a href="{{ route('logout') }}">logout</a></li>
@@ -59,7 +59,7 @@
                                 </div>
                             </nav>
                         </div>
-                        <ul class="menu-right-content clearfix">
+                        {{-- <ul class="menu-right-content clearfix">
                             <li>
                                 <div class="search-btn">
                                     <button type="button" class="search-toggler"><i
@@ -70,7 +70,7 @@
                             <li class="shop-cart">
                                 <a href="{{ route('keranjang') }}"><i class="flaticon-shopping-cart-1"></i><span>3</span></a>
                             </li>
-                        </ul>
+                        </ul> --}}
                     </div>
                 </div>
             </div>
