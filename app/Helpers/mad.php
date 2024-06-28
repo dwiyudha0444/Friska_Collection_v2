@@ -26,7 +26,7 @@ class mad
         $movingAverage = MovingAverage::calculateMovingAveragePeriodeTiga($productId);
 
         // proses hitung
-        $mad = $latestSales->qty - $movingAverage; // atau beberapa perhitungan lain
+        $mad = abs($latestSales->qty - $movingAverage); // atau beberapa perhitungan lain
 
         return $mad;
     }
@@ -47,7 +47,7 @@ class mad
         $movingAverage = MovingAverage::calculateMovingAverage($productId);
 
         // proses hitung
-        $mad = $latestSales->qty - $movingAverage;
+        $mad = abs($latestSales->qty - $movingAverage);
 
         return $mad;
     }
