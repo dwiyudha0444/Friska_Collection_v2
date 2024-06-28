@@ -6,6 +6,7 @@ namespace App\Helpers;
 
 use App\Helpers\MovingAverage;
 use App\Models\FilterPenjualanPerbulan;
+use App\Models\Prediksi;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -50,6 +51,23 @@ class mad
         $mad = abs($latestSales->qty - $movingAverage);
 
         return $mad;
+    }
+
+    public static function calculateTotalMad($productId, $period = 3)
+    {
+        $sales = Prediksi::where('id_produk', $productId)
+            ->where('id_periode', 3) 
+            ->orderBy('created_at', 'desc')
+            ->take($period)
+            ->get();
+
+        if ($sales->isEmpty()) {
+            return 0;
+        }
+
+        $totalMad = $sales->sum('mad');
+
+        return $totalMad;
     }
 
 }

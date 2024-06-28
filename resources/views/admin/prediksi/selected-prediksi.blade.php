@@ -59,7 +59,11 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Data Prediksi yang Dipilih</h5>
-                    
+                    @foreach ($madValues as $item)
+                        <p>{{ htmlspecialchars($item) }}</p>
+                    @endforeach
+                    {{-- {{$madValues = htmlspecialchars($data['name']);}} --}}
+                    {{-- {{ $madValue }} --}}
                 </div>
             </div>
         </div>
