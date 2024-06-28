@@ -11,6 +11,7 @@ use App\Helpers\MovingAveragePeriodeTiga;
 use App\Helpers\MovingAverage;
 use App\Helpers\mad;
 use App\Helpers\mse;
+use App\Helpers\mape;
 use Carbon\Carbon;
 use DB;
 
@@ -125,7 +126,7 @@ class PrediksiController extends Controller
             ->first();
 
         // Hitung Moving Average
-        $ma = MovingAveragePeriodeTiga::calculateMovingAverage($product->id);
+        $ma = MovingAverage::calculateMovingAveragePeriodeTiga($product->id);
         $ma2 = MovingAverage::calculateMovingAverage($product->id);
         // Hitung MAD
         $mad = mad::calculateMAD($product->id);
@@ -133,7 +134,9 @@ class PrediksiController extends Controller
         // Hitung MSE
         $mse = mse::calculateMSE($product->id);
         $mse2 = mse::calculateMSEPeriodeEmpat($product->id);
-
+        // Hitung MSE
+        $mape = mape::calculateMAPE($product->id);
+        $mape2 = mape::calculateMAPEPeriodeEmpat($product->id);
         if ($prediksi1) {
             // Jika sudah ada, update dengan data yang baru untuk MA pertama
             $prediksi1->update([
@@ -144,6 +147,7 @@ class PrediksiController extends Controller
                 'ma' => $ma,
                 'mad' => $mad,
                 'mse' => $mse,
+                'mape' => $mape,
             ]);
             $isUpdatedOrCreated = true;
         } else {
@@ -156,6 +160,7 @@ class PrediksiController extends Controller
                 'ma' => $ma,
                 'mad' => $mad,
                 'mse' => $mse,
+                'mape' => $mape,
             ]);
             $isUpdatedOrCreated = true;
         }
@@ -170,6 +175,7 @@ class PrediksiController extends Controller
                 'ma' => $ma2,
                 'mad' => $mad2,
                 'mse' => $mse2,
+                'mape' => $mape2,
             ]);
             $isUpdatedOrCreated = true;
         } else {
@@ -182,6 +188,7 @@ class PrediksiController extends Controller
                 'ma' => $ma2,
                 'mad' => $mad2,
                 'mse' => $mse2,
+                'mape' => $mape2,
             ]);
             $isUpdatedOrCreated = true;
         }
