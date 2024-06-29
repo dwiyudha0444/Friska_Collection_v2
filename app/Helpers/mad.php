@@ -70,4 +70,21 @@ class mad
         return $totalMad;
     }
 
+    public static function calculateTotalMadPeriodeEmpat($productId, $period = 4)
+    {
+        $sales = Prediksi::where('id_produk', $productId)
+            ->where('id_periode', 4) 
+            ->orderBy('created_at', 'desc')
+            ->take($period)
+            ->get();
+
+        if ($sales->isEmpty()) {
+            return 0;
+        }
+
+        $totalMad = $sales->sum('mad');
+
+        return $totalMad;
+    }
+
 }

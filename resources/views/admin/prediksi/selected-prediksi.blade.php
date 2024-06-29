@@ -58,16 +58,68 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Data Prediksi yang Dipilih</h5>
-                    @foreach ($madValues as $item)
-                        <p>{{ htmlspecialchars($item) }}</p>
-                    @endforeach
+                    <h5 class="card-title">Data Total Mean Absolute Deviation (MAD) Periode 3</h5>
+
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                @foreach ($selectedDataFirst as $item)
+                                    <th>{{ $item->nama }}</th>
+                                @endforeach
+
+                            </tr>
+                        </thead>
+                        @php $no = 1; @endphp
+                        <tbody>
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            @foreach ($madValues as $item)
+                                <td>{{ htmlspecialchars($item) }}</td>
+                            @endforeach
+                        </tr>
+                        </tbody>
+                    </table>
+
+
                     {{-- {{$madValues = htmlspecialchars($data['name']);}} --}}
                     {{-- {{ $madValue }} --}}
                 </div>
             </div>
         </div>
 
+<div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Data Total Mean Absolute Deviation (MAD) Periode 4</h5>
+
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                @foreach ($selectedDataFirst as $item)
+                                    <th>{{ $item->nama }}</th>
+                                @endforeach
+
+                            </tr>
+                        </thead>
+                        @php $no = 1; @endphp
+                        <tbody>
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            @foreach ($madValuesPeriodeEmpat as $item)
+                                <td>{{ htmlspecialchars($item) }}</td>
+                            @endforeach
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    {{-- {{$madValues = htmlspecialchars($data['name']);}} --}}
+                    {{-- {{ $madValue }} --}}
+                </div>
+            </div>
+        </div>
     </main>
 @endsection
 

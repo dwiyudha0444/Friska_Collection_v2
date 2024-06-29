@@ -299,20 +299,39 @@ class PrediksiController extends Controller
         $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)
             ->orderBy('created_at', 'desc')
             ->get();
-    
+
+        // Ambil data berdasarkan id_produk yang dipilih
+        $selectedDataFirst = Prediksi::whereIn('id_produk', $selectedProductIds)
+            ->selectRaw('MAX(id) as id') // Memilih id terbaru untuk setiap id_produk
+            ->groupBy('id_produk')
+            ->get();
+
+        // Ambil data lengkap berdasarkan id terbaru yang dipilih
+        $selectedDataAll = Prediksi::whereIn('id', $selectedDataFirst->pluck('id'))
+        ->orderBy('created_at', 'desc')
+        ->get();
+        
         // Siapkan array kosong untuk menyimpan nilai MAD
         $madValues = [];
+        $madValuesPeriodeEmpat = [];
     
         // Ambil nilai MAD dari helpermad untuk setiap produk yang dipilih
         foreach ($selectedProductIds as $id_produk) {
-            $madValue = mad::calculateTotalMad($id_produk); // Pastikan nama class helpermad dan method calculateTotalMad sesuai dengan implementasi Anda
+            $madValue = mad::calculateTotalMad($id_produk); 
             $madValues[$id_produk] = $madValue;
+        }
+        // Periode 4
+        foreach ($selectedProductIds as $id_produk) {
+            $madValuePeriodeEmpat = mad::calculateTotalMadPeriodeEmpat($id_produk); 
+            $madValuesPeriodeEmpat[$id_produk] = $madValuePeriodeEmpat;
         }
     
         // Misalnya, tampilkan data tersebut
         return view('admin.prediksi.selected-prediksi', [
-            'selectedData' => $selectedData,
-            'madValues' => $madValues, // Mengirimkan nilai MAD ke tampilan
+            'selectedData' => $selectedData, //menampilkan selurug data berdasarkan data yang dipilih
+            'selectedDataFirst' => $selectedDataAll, //Menampilkan pertama berdasarkan id yang dipilih
+            'madValues' => $madValues, // Menampilkan Nilai Total MAD
+            'madValuesPeriodeEmpat' => $madValuesPeriodeEmpat,
         ]);
     }
     
