@@ -46,7 +46,7 @@
                                     <td>{{ $data->ma }}</td>
                                     <td>{{ $data->mad }}</td>
                                     <td>{{ $data->mse }}</td>
-                                    <td>{{ $data->mape }}</td>
+                                    <td>{{ $data->mape }} %</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -172,6 +172,64 @@
                                 <td>{{ $no++ }}</td>
                                 @foreach ($mseValuesPeriodeEmpat as $item)
                                     <td>{{ htmlspecialchars($item) }}</td>
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Data Total Mean Absolute Percentage Error (MAPE) Periode 3</h5>
+
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                @foreach ($selectedDataFirst as $item)
+                                    <th>{{ $item->nama }}</th>
+                                @endforeach
+
+                            </tr>
+                        </thead>
+                        @php $no = 1; @endphp
+                        <tbody>
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                @foreach ($mapeValues as $item)
+                                    <td>{{ htmlspecialchars($item) }}</td>
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Data Total Mean Absolute Percentage Error (MAPE) Periode 4</h5>
+
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                @foreach ($selectedDataFirst as $item)
+                                    <th>{{ $item->nama }}</th>
+                                @endforeach
+
+                            </tr>
+                        </thead>
+                        @php $no = 1; @endphp
+                        <tbody>
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                @foreach ($mapeValuesPeriodeEmpat as $item)
+                                    <td>{{ htmlspecialchars($item) }} %</td>
                                 @endforeach
                             </tr>
                         </tbody>

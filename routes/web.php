@@ -44,9 +44,13 @@ Route::post('/register-proses', [RegisterController::class, 'register_proses'])-
 
 //home
 Route::get('/landingpage', [HomeController::class, 'index'])->name('landingpage');
+Route::get('/waiting', function () {
+    return view('waiting');
+});
+
 
 //keranjang
-Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang')->middleware('check.status');
 Route::post('/add-to-keranjang', [KeranjangController::class, 'store'])->name('add-to-keranjang');
 Route::post('/hapus-item', [KeranjangController::class, 'hapusItem'])->name('hapus-item');
 Route::post('/update-keranjang', [KeranjangController::class, 'updateKeranjang'])->name('update-keranjang');

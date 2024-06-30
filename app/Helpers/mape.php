@@ -7,6 +7,7 @@ namespace App\Helpers;
 use App\Helpers\MovingAverage;
 use App\Helpers\mad;
 use App\Models\FilterPenjualanPerbulan;
+use App\Models\Prediksi;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -43,5 +44,41 @@ class mape
 
         return $mape;
 
-}
+    }
+
+    public static function calculateTotalMAPE($productId, $period = 3)
+    {
+        $sales = Prediksi::where('id_produk', $productId)
+            ->where('id_periode', 3) 
+            ->orderBy('created_at', 'desc')
+            ->take($period)
+            ->get();
+
+        if ($sales->isEmpty()) {
+            return 0;
+        }
+
+        $getTotalMAPE = $sales->sum('mape');
+        $totalMAPE = $getTotalMAPE / 4;
+        
+        return $totalMAPE;
+    }
+
+    public static function calculateTotalMAPEPeriodeEmpat($productId, $period = 4)
+    {
+        $sales = Prediksi::where('id_produk', $productId)
+            ->where('id_periode', 4) 
+            ->orderBy('created_at', 'desc')
+            ->take($period)
+            ->get();
+
+        if ($sales->isEmpty()) {
+            return 0;
+        }
+
+        $getTotalMAPE = $sales->sum('mape');
+        $totalMAPE = $getTotalMAPE / 4;
+        
+        return $totalMAPE;
+    }
 }

@@ -338,6 +338,16 @@ class PrediksiController extends Controller
             $mseValuePeriodeEmpat = mse::calculateTotalMSEPeriodeEmpat($id_produk); 
             $mseValuesPeriodeEmpat[$id_produk] = $mseValuePeriodeEmpat;
         }
+        // Ambil nilai MAPE dari helpermad untuk setiap produk yang dipilih
+        foreach ($selectedProductIds as $id_produk) {
+            $mapeValue = mape::calculateTotalMAPE($id_produk); 
+            $mapeValues[$id_produk] = $mapeValue;
+        }
+        // Periode 4
+        foreach ($selectedProductIds as $id_produk) {
+            $mapeValuePeriodeEmpat = mape::calculateTotalMAPEPeriodeEmpat($id_produk); 
+            $mapeValuesPeriodeEmpat[$id_produk] = $mapeValuePeriodeEmpat;
+        }
     
         // Misalnya, tampilkan data tersebut
         return view('admin.prediksi.selected-prediksi', [
@@ -347,6 +357,8 @@ class PrediksiController extends Controller
             'madValuesPeriodeEmpat' => $madValuesPeriodeEmpat,
             'mseValues' => $mseValues, // Menampilkan Nilai Total MSE
             'mseValuesPeriodeEmpat' => $mseValuesPeriodeEmpat,
+            'mapeValues' => $mapeValues, // Menampilkan Nilai Total MAPE
+            'mapeValuesPeriodeEmpat' => $mapeValuesPeriodeEmpat,
         ]);
     }
     
