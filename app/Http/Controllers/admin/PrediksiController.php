@@ -314,6 +314,9 @@ class PrediksiController extends Controller
         // Siapkan array kosong untuk menyimpan nilai MAD
         $madValues = [];
         $madValuesPeriodeEmpat = [];
+        // Siapkan array kosong untuk menyimpan nilai MSE
+        $mseValues = [];
+        $mseValuesPeriodeEmpat = [];
     
         // Ambil nilai MAD dari helpermad untuk setiap produk yang dipilih
         foreach ($selectedProductIds as $id_produk) {
@@ -325,6 +328,16 @@ class PrediksiController extends Controller
             $madValuePeriodeEmpat = mad::calculateTotalMadPeriodeEmpat($id_produk); 
             $madValuesPeriodeEmpat[$id_produk] = $madValuePeriodeEmpat;
         }
+        // Ambil nilai MSE dari helpermad untuk setiap produk yang dipilih
+        foreach ($selectedProductIds as $id_produk) {
+            $mseValue = mse::calculateTotalMse($id_produk); 
+            $mseValues[$id_produk] = $mseValue;
+        }
+        // Periode 4
+        foreach ($selectedProductIds as $id_produk) {
+            $mseValuePeriodeEmpat = mse::calculateTotalMSEPeriodeEmpat($id_produk); 
+            $mseValuesPeriodeEmpat[$id_produk] = $mseValuePeriodeEmpat;
+        }
     
         // Misalnya, tampilkan data tersebut
         return view('admin.prediksi.selected-prediksi', [
@@ -332,6 +345,8 @@ class PrediksiController extends Controller
             'selectedDataFirst' => $selectedDataAll, //Menampilkan pertama berdasarkan id yang dipilih
             'madValues' => $madValues, // Menampilkan Nilai Total MAD
             'madValuesPeriodeEmpat' => $madValuesPeriodeEmpat,
+            'mseValues' => $mseValues, // Menampilkan Nilai Total MSE
+            'mseValuesPeriodeEmpat' => $mseValuesPeriodeEmpat,
         ]);
     }
     

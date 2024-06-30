@@ -65,7 +65,8 @@ class mad
             return 0;
         }
 
-        $totalMad = $sales->sum('mad');
+        $getTotalMad = $sales->sum('mad');
+        $totalMad = $getTotalMad / 3;
 
         return $totalMad;
     }
@@ -82,8 +83,9 @@ class mad
             return 0;
         }
 
-        $totalMad = $sales->sum('mad');
-
+        $getTotalMad = $sales->sum('mad');
+        $totalMad = $getTotalMad / 4;
+        
         return $totalMad;
     }
 
