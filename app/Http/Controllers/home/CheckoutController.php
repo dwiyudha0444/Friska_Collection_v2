@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Keranjang;
 use App\Models\Penjualan;
-use App\Models\produk;
+use App\Models\Produk;
+use App\Models\FilterPenjualanPerbulan;
 use DB;
 use Log;
 
@@ -38,7 +39,7 @@ class CheckoutController extends Controller
 
             for ($i = 0; $i < $count; $i++) {
                 // Ambil produk berdasarkan id_produk
-                $produk = produk::findOrFail($request->id_produk[$i]);
+                $produk = Produk::findOrFail($request->id_produk[$i]);
                 Log::info('Produk ditemukan: ', ['produk' => $produk]);
 
                 // Kurangi stok produk dengan qty dari item
@@ -62,6 +63,9 @@ class CheckoutController extends Controller
                 Log::info('Data penjualan disimpan');
             }
 
+            // Hapus semua data dari keranjang (cart)
+            Keranjang::truncate(); //
+
             // Commit transaksi
             DB::commit();
             Log::info('Transaksi berhasil');
@@ -69,8 +73,6 @@ class CheckoutController extends Controller
             // Response sukses
             return redirect('/keranjang')->with('success', 'Berhasil Checkout');
 
-            // Hapus semua data dari keranjang (cart)
-            Keranjang::truncate(); //
         
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
@@ -80,4 +82,60 @@ class CheckoutController extends Controller
             return redirect('/keranjang')->with('error', 'Terjadi kesalahan saat checkout');
         }
     }
+
+
+    public function checkout2(Request $request) {
+        try {
+            foreach ($request->items as $item) {
+                // Cek apakah ada entri dengan id_produk yang sama dalam filter_penjualan_bulanan
+                $filterPenjualan = FilterPenjualanPerbulan::where('id_produk', $item['id_fashion'])
+                    ->whereMonth('created_at', now()->month)
+                    ->whereYear('created_at', now()->year)
+                    ->first();
+    
+                if ($filterPenjualan) {
+                    // Jika sudah ada, tambahkan qty baru ke qty yang sudah ada
+                    $filterPenjualan->qty += $item['qty'];
+                    $filterPenjualan->save();
+                } else {
+                    // Jika belum ada, buat entri baru
+                    FilterPenjualanPerbulan::create([
+                        'id_produk' => $item['id_fashion'],
+                        'nama' => $item['nama'],
+                        'id_kategori' => $item['kategori'], 
+                        'image' => $item['image'],
+                        'harga' => $item['harga'],
+                        'qty' => $item['qty'],
+                    ]);
+                }
+    
+                // Simpan data ke dalam database transaksi
+                Penjualan::create([
+                    'id_produk' => $item['id_fashion'],
+                    'nama' => $item['nama'],
+                    'id_kategori' => $item['kategori'], 
+                    'image' => $item['image'],
+                    'harga' => $item['harga'],
+                    'qty' => $item['qty'],
+                ]);
+    
+                // Kurangi stok produk
+                $produk = Produk::findOrFail($item['id_fashion']); 
+                $produk->stok -= $item['qty'];
+                $produk->save();
+            }
+            
+            // Hapus semua data dari keranjang (cart)
+            Keranjang::truncate(); // Jika menggunakan Eloquent, asumsikan model Cart Anda adalah Cart
+    
+            // Response sukses
+            return redirect('/keranjang')->with('success', 'Berhasil Melakukan Transaksi');
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error dalam menyimpan data atau menghapus data dari keranjang
+            return redirect('/keranjang')->with('error', 'Terjadi kesalahan saat melakukan checkout');
+        }
+    }
+    
+    
+
 }

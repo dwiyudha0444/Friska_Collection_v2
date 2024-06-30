@@ -87,15 +87,21 @@
                             <ul class="list clearfix">
                                 <li>Order Total:<span>{{ $orderTotal }}</span></li>
                             </ul>
-                            <form action="{{ route('checkout') }}" method="POST">
+                            <form action="{{ route('checkout2') }}" method="POST">
                                 @csrf
-                                @foreach ($keranjang as $ker)
-                                    <input type="hidden" name="id_produk[]" value="{{ $ker->id_produk }}">
-                                    <input type="hidden" name="nama[]" value="{{ $ker->nama }}">
-                                    <input type="hidden" name="id_kategori[]" value="{{ $ker->id_kategori }}">
-                                    <input type="hidden" name="image[]" value="{{ $ker->image }}">
-                                    <input type="hidden" name="harga[]" value="{{ $ker->harga }}">
-                                    <input type="hidden" name="qty[]" value="{{ $ker->qty }}">
+                                @foreach ($keranjang as $ca)
+                                    <input type="hidden" name="items[{{ $loop->index }}][id_fashion]"
+                                        value="{{ $ca->id_produk }}">
+                                    <input type="hidden" name="items[{{ $loop->index }}][nama]"
+                                        value="{{ $ca->nama }}">
+                                    <input type="hidden" name="items[{{ $loop->index }}][kategori]"
+                                        value="{{ $ca->id_kategori }}">
+                                    <input type="hidden" name="items[{{ $loop->index }}][image]"
+                                        value="{{ $ca->image }}">
+                                    <input type="hidden" name="items[{{ $loop->index }}][harga]"
+                                        value="{{ $ca->harga }}">
+                                    <input type="hidden" name="items[{{ $loop->index }}][qty]"
+                                        value="{{ $ca->qty }}">
                                 @endforeach
                                 <button type="submit" class="theme-btn-two">Checkout<i
                                         class="flaticon-right-1"></i></button>

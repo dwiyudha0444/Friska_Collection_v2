@@ -73,6 +73,8 @@ Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])-
 
 //checkout
 Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+//checkout
+Route::post('/checkout2', [CheckoutController::class, 'checkout2'])->name('checkout2');
 
 //prediksi
 Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
