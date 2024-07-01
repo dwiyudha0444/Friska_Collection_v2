@@ -26,7 +26,7 @@
 
                 <div class="card-body">
                     <h5 class="card-title">User</span></h5>
-                    <a href="{{ route('register') }}"><svg xmlns="http://www.w3.org/2000/svg" width="30"
+                    <a href="{{ route('store_user') }}"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                             height="30" fill="currentColor" title="Tambah Data Film" class="bi bi-bookmark-plus"
                             viewBox="0 0 16 16">
                             <path
@@ -57,6 +57,7 @@
                                     <td>{{ $use->name }}</td>
                                     <td>{{ $use->email }}</td>
                                     <td>{{ $use->role }}</td>
+                                    @if (Auth::user()->role == 'pemilik')
                                     <td>
 
                                         <form method="POST" action="{{ route('destroy_user', $use->id) }}">
@@ -67,6 +68,7 @@
                                             <a class="custom-btn custom-btn-edit" href="{{ url('form_user_edit', $use->id) }}">Edit</a>
                                         </form>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

@@ -6,6 +6,8 @@
     <title>Waiting</title>
 </head>
 <body>
-    <h1>Akun Anda sedang tidak aktif. Harap tunggu aktivasi oleh admin.</h1>
+    <h1>Akun Anda sedang tidak aktif.</h1> 
+    <p>Harap tunggu aktivasi oleh admin.</p>
+    <a href="{{ route('logout') }}">Kembali ke halaman login</a>
 </body>
 </html>

@@ -96,6 +96,8 @@ Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
     //user
     Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::delete('/destroy_user/{id}', [UserController::class, 'destroy'])->name('destroy_user');
+    Route::get('/form_user', [UserController::class, 'create'])->name('create_user');
+    Route::post('/form_user', [UserController::class, 'store'])->name('store_user');
     Route::get('/form_user_edit/{id}', [UserController::class, 'edit'])->name('edit_user');
     Route::put('/user/update/{id}', [UserController::class, 'update'])->name('update_user');
     

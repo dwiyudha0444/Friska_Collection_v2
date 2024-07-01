@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use DB;
 
@@ -21,6 +23,35 @@ class UserController extends Controller
 
         return view('admin.user.index', compact('users'));
     }
+
+    public function create()
+    {
+        $users = User::orderBy('id','DESC')->get();
+        return view('admin.user.form',compact('users'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:45',
+            'email' => 'required|email',
+            'role' => 'required',
+            'password' => 'required',
+        ]);
+    
+        // Insert data dari request form
+        DB::table('users')->insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => Hash::make($request->password), 
+            'updated_at' => now(),
+            'created_at' => now(),
+        ]);
+    
+        return redirect()->route('user')->with('success', 'Data Berhasil Disimpan');
+    }
+    
 
     public function edit($id)
     {
