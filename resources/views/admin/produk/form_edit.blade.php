@@ -31,6 +31,12 @@
                                 </div>
                             @endif
 
+                            @if ($message = Session::get('success'))
+                                <div class="alert alert-success">
+                                    <p>{{ $message }}</p>
+                                </div>
+                            @endif
+
                             <!-- General Form Elements -->
                             <form method="POST" action="{{ route('update_produk', $produk->id) }}"
                                 enctype="multipart/form-data">

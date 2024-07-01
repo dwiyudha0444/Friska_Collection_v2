@@ -35,7 +35,7 @@ use App\Http\Controllers\admin\PenjualanController;
 
 
 //auth
-Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('checkAuth');
 Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -97,6 +97,8 @@ Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::delete('/destroy_user/{id}', [UserController::class, 'destroy'])->name('destroy_user');
     Route::get('/form_user_edit/{id}', [UserController::class, 'edit'])->name('edit_user');
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('update_user');
+    
 });
 
 //checkout
