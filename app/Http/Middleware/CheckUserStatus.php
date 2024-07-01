@@ -18,7 +18,7 @@ class CheckUserStatus
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && Auth::user()->status == 'nonaktif') {
-            return response()->view('waiting'); // Mengembalikan view 'waiting'
+            return response()->view('waiting'); 
         }
 
         return $next($request);

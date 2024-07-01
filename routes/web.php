@@ -44,10 +44,16 @@ Route::post('/register-proses', [RegisterController::class, 'register_proses'])-
 
 //home
 Route::get('/landingpage', [HomeController::class, 'index'])->name('landingpage');
+
+// halaman tunggu
 Route::get('/waiting', function () {
     return view('waiting');
 });
 
+// Route untuk halaman larangan
+Route::get('/forbidden', function () {
+    return view('forbidden');
+})->name('forbidden');
 
 //keranjang
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang')->middleware('check.status');
@@ -56,42 +62,44 @@ Route::post('/hapus-item', [KeranjangController::class, 'hapusItem'])->name('hap
 Route::post('/update-keranjang', [KeranjangController::class, 'updateKeranjang'])->name('update-keranjang');
 
 
-//admin
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
 
-//produk
-Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
-Route::get('/form_produk', [ProdukController::class, 'create'])->name('create_produk');
-Route::post('/form_produk', [ProdukController::class, 'store'])->name('store_produk');
-Route::get('/form_produk_edit/{id}', [ProdukController::class, 'edit'])->name('edit_produk');
-Route::put('produk/update/{id}', [ProdukController::class, 'update'])->name('update_produk');
-Route::delete('/delete_produk/{id}', [ProdukController::class, 'destroy'])->name('destroy_produk');
+    //admin
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    //produk
+    Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
+    Route::get('/form_produk', [ProdukController::class, 'create'])->name('create_produk');
+    Route::post('/form_produk', [ProdukController::class, 'store'])->name('store_produk');
+    Route::get('/form_produk_edit/{id}', [ProdukController::class, 'edit'])->name('edit_produk');
+    Route::put('produk/update/{id}', [ProdukController::class, 'update'])->name('update_produk');
+    Route::delete('/delete_produk/{id}', [ProdukController::class, 'destroy'])->name('destroy_produk');
 
+    //kategori
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
+    Route::get('/form_kategori', [KategoriController::class, 'create'])->name('create_kategori');
+    Route::post('/form_kategori', [KategoriController::class, 'store'])->name('store_kategori');
+    Route::get('/form_kategori_edit/{id}', [KategoriController::class, 'edit'])->name('edit_kategori');
+    Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('update_kategori');
+    Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])->name('destroy_kategori');
 
-//kategori
-Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
-Route::get('/form_kategori', [KategoriController::class, 'create'])->name('create_kategori');
-Route::post('/form_kategori', [KategoriController::class, 'store'])->name('store_kategori');
-Route::get('/form_kategori_edit/{id}', [KategoriController::class, 'edit'])->name('edit_kategori');
-Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('update_kategori');
-Route::delete('/destroy_kategori/{id}', [KategoriController::class, 'destroy'])->name('destroy_kategori');
+    //penjualan
+    Route::get('/penjualan-perbulan', [PenjualanController::class, 'indexPeper'])->name('penjualan-perbulan');
+    Route::get('/penjualan-peritem', [PenjualanController::class, 'indexPetim'])->name('penjualan-peritem');
+
+    //prediksi
+    Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
+    Route::get('/all-prediksi', [PrediksiController::class, 'create'])->name('all-prediksi');
+    Route::get('/tambah-prediksi', [PrediksiController::class, 'tambahPrediksi2'])->name('tambah-prediksi');
+    Route::post('/pilih-produk', [PrediksiController::class, 'pilihProduk'])->name('pilih-produk');
+    Route::get('/testmv', [PrediksiController::class, 'test'])->name('testmv');
+
+    //user
+    Route::get('/user', [UserController::class, 'index'])->name('user');
+    Route::delete('/destroy_user/{id}', [UserController::class, 'destroy'])->name('destroy_user');
+    Route::get('/form_user_edit/{id}', [UserController::class, 'edit'])->name('edit_user');
+});
 
 //checkout
 Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 //checkout
 Route::post('/checkout2', [CheckoutController::class, 'checkout2'])->name('checkout2');
-
-//penjualan
-Route::get('/penjualan-perbulan', [PenjualanController::class, 'indexPeper'])->name('penjualan-perbulan');
-Route::get('/penjualan-peritem', [PenjualanController::class, 'indexPetim'])->name('penjualan-peritem');
-
-//prediksi
-Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
-Route::get('/all-prediksi', [PrediksiController::class, 'create'])->name('all-prediksi');
-Route::get('/tambah-prediksi', [PrediksiController::class, 'tambahPrediksi2'])->name('tambah-prediksi');
-Route::post('/pilih-produk', [PrediksiController::class, 'pilihProduk'])->name('pilih-produk');
-Route::get('/testmv', [PrediksiController::class, 'test'])->name('testmv');
-
-
-//user
-Route::get('/user', [UserController::class, 'index'])->name('user');
