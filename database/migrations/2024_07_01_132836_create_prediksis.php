@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('id_kategori');
             $table->integer('harga');
             $table->integer('qty');
+            $table->integer('ma')->nullable();
+            $table->integer('mse')->nullable();
+            $table->integer('mad')->nullable();
+            $table->integer('mape')->nullable();
             $table->timestamps();
         });
     }

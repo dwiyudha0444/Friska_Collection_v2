@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\FilterPenjualanPerbulan;
 use App\Models\Prediksi;
+use App\Helpers\MovingAverageHelper;
 use Carbon\Carbon;
 use Log;
 
@@ -37,6 +38,9 @@ class UpdatePredictions extends Command
             ->get();
 
         foreach ($salesData as $data) {
+
+            $movingAverage = MovingAverageHelper::calculateMovingAverage($data->id_produk);
+
             Prediksi::create([
                 'id_produk' => $data->id_produk,
                 'nama' => $data->nama,
@@ -44,6 +48,7 @@ class UpdatePredictions extends Command
                 'image' => $data->image,
                 'harga' => $data->harga,
                 'qty' => $data->qty,
+                'ma' => $movingAverage,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

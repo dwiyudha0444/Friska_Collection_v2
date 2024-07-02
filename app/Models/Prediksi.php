@@ -15,5 +15,9 @@ class Prediksi extends Model
         'id_kategori',
         'harga',
         'qty', 
+        'ma',
+        'mse',
+        'mad',
+        'mape',
     ];
 }
