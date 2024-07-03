@@ -12,7 +12,7 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 table-column">
                     <div class="table-outer">
-                        <form action="{{ route('update-keranjang') }}" method="post">
+                        <form id="update-keranjang-form" action="{{ route('update-keranjang') }}" method="post">
                             @csrf
                             <table class="cart-table">
                                 <thead class="cart-header">
@@ -43,16 +43,15 @@
                                                         <a href="#"><img src="assets/images/resource/shop/cart-3.jpg"
                                                                 alt=""></a>
                                                     </div>
-                                                    <div class="prod-title">
-                                                        {{ $ker->nama }}
-                                                    </div>
+                                                    <div class="prod-title">{{ $ker->nama }}</div>
                                                 </div>
                                             </td>
                                             <td class="price">{{ $ker->harga }}</td>
                                             <td class="qty">
                                                 <div class="item-quantity">
-                                                    <input class="quantity-spinner" type="text"
-                                                        value="{{ $ker->qty }}" name="quantity[]">
+                                                    <input class="quantity-spinner" type="number"
+                                                        value="{{ $ker->qty }}" name="quantity[]"
+                                                        data-id="{{ $ker->id }}">
                                                     <input type="hidden" name="cart_id[]" value="{{ $ker->id }}">
                                                 </div>
                                             </td>
@@ -61,11 +60,37 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="update-btn pull-right">
-                                <button type="submit" class="theme-btn-one">Update Cart<i
-                                        class="flaticon-right-1"></i></button>
-                            </div>
                         </form>
+
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                $('.quantity-spinner').on('change', function() {
+                                    var qty = $(this).val();
+                                    var cartId = $(this).data('id');
+
+                                    $.ajax({
+                                        url: "{{ route('update-keranjang') }}",
+                                        method: "POST",
+                                        data: {
+                                            _token: "{{ csrf_token() }}",
+                                            cart_id: cartId,
+                                            quantity: qty
+                                        },
+                                        success: function(response) {
+                                            // Lakukan sesuatu setelah berhasil diperbarui, misalnya memperbarui subtotal
+                                            location
+                                        .reload(); // Muat ulang halaman untuk memperbarui subtotal dan total
+                                        },
+                                        error: function(xhr) {
+                                            // Tangani kesalahan di sini
+                                            alert('Terjadi kesalahan saat memperbarui keranjang.');
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+
 
                     </div>
                 </div>

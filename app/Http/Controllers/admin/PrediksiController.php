@@ -10,10 +10,22 @@ use DB;
 
 class PrediksiController extends Controller
 {
+    // public function index()
+    // {
+    //     $prediksi = Prediksi::orderBy('id','DESC')->get();
+    //     return view('admin.prediksi.index',compact('prediksi'));
+    // }
+
     public function index()
     {
-        $prediksi = Prediksi::orderBy('id','DESC')->get();
-        return view('admin.prediksi.index',compact('prediksi'));
+        $prediksi = Prediksi::select('id_produk', \DB::raw('MAX(id) as id'))
+                            ->groupBy('id_produk')
+                            ->orderBy('id', 'DESC')
+                            ->get();
+
+        $prediksi = Prediksi::whereIn('id', $prediksi->pluck('id'))->get();
+
+        return view('admin.prediksi.index', compact('prediksi'));
     }
 
     public function test()

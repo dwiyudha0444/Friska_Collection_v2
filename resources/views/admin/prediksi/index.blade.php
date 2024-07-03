@@ -2,7 +2,7 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Product preion</h1>
+            <h1>Product Prediksi</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('admin') }}">admin</a></li>
@@ -22,7 +22,7 @@
                 @endif
 
                 <div class="card-body">
-                    <h5 class="card-title">Prediksi Penjualan</span></h5>
+                    <h5 class="card-title">Prediksi Penjualan</h5>
                     {{-- <a href="{{ route('obat.create') }}"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                             height="30" fill="currentColor" title="Tambah Data Film" class="bi bi-bookmark-plus"
                             viewBox="0 0 16 16">
@@ -31,20 +31,13 @@
                             <path
                                 d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z" />
                         </svg></a> --}}
-                    <table class="table table-borderless datatable ">
+                    <table class="table table-borderless datatable">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">#</th> 
+                                <th scope="col">No</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Kategori</th>
-                                <th scope="col">MA</th>
-                                <th scope="col">MSE</th>
-                                <th scope="col">MAD</th>
-                                <th scope="col">MAPE</th>
-                                <th scope="col">Action</th>
-                                {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'kepala apoteker')
-                                    <th scope="col">Action</th>
-                                @endif --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -53,22 +46,15 @@
                             @endphp
                             @foreach ($prediksi as $pre)
                                 <tr>
+                                    <td><input type="checkbox" name="selected_ids[]" value="{{ $pre->id }}"></td> <!-- Checkbox di setiap baris -->
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
-                                    
                                     <td>{{ $pre->nama }}</td>
                                     <td>{{ $pre->kategori->nama }}</td>
-                                    <td>{{ $pre->ma }}</td>
-                                    <td>{{ $pre->mse }}</td>
-                                    <td>{{ $pre->mad }}</td>
-                                    <td>{{ $pre->mape }}</td>
-                                    
                                     {{-- <td>
-
                                         <form method="POST" action="{{ route('obat.destroy', $pre->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
-
                                             <a class="custom-btn" href="{{ url('obat-edit', $pre->id) }}">Edit</a>
                                         </form>
                                     </td> --}}
@@ -83,3 +69,15 @@
         </div><!-- End Recent Sales -->
     </main>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Checkbox Select All
+        document.getElementById('select-all').addEventListener('click', function (event) {
+            const checkboxes = document.querySelectorAll('input[name="selected_ids[]"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = event.target.checked;
+            });
+        });
+    });
+</script>
