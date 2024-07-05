@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Produk;
 use App\Models\Prediksi;
 use App\Models\Periode;
+use App\Models\FilterPenjualanPerbulan;
 use App\Helpers\MovingAveragePeriodeTiga;
 use App\Helpers\MovingAverage;
 use App\Helpers\mad;
@@ -193,6 +194,23 @@ class PrediksiController extends Controller
             $isUpdatedOrCreated = true;
         }
     }
+
+    // $filter = FilterPenjualanPerbulan::all();
+
+    // $request->validate([
+    //     'qty' => 'required|string|max:255',
+    // ]);
+
+    // // Simpan data ke dalam database Kategori
+    // Prediksi::create([
+    //     'qty' => $request->qty,
+    // ]);
+
+    // $filter = Prediksi::where('qty', $filter->id)
+    // ->whereMonth('created_at', now()->month)
+    // ->whereYear('created_at', now()->year)
+    // ->where('id_periode', 3) // Periode 4 untuk MA kedua
+    // ->first();
 
     if ($isUpdatedOrCreated) {
         return redirect()->route('all-prediksi')->with('success', 'Data prediksi berhasil ditambahkan atau diperbarui.');

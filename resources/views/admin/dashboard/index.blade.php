@@ -13,18 +13,20 @@
         </div><!-- End Page Title -->
 
         <section class="section admin">
-            <div class="row">
-                <div class="container px-4 mx-auto">
+            <div class="container px-4 mx-auto">
 
-                    <div class="p-6 m-20 bg-white rounded shadow">
-                        {!! $chart->container() !!}
-                    </div>
-
+                <div class="p-6 m-20 bg-white rounded shadow">
+                    {!! $chart->container() !!}
                 </div>
 
-                <script src="{{ $chart->cdn() }}"></script>
+            </div>
 
-                {{ $chart->script() }}
+            <script src="{{ $chart->cdn() }}"></script>
+
+            {{ $chart->script() }}
+
+            <div class="row">
+
                 <!-- Left side columns -->
                 <div class="col-lg-12">
                     <div class="row">

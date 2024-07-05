@@ -14,6 +14,7 @@ class Prediksi extends Model
         'nama',
         'id_kategori',
         'id_periode',
+        'qty',
         'ma',
         'mse',
         'mad',
