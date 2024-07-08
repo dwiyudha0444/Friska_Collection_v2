@@ -25,7 +25,7 @@
 
             {{ $chart->script() }}
 
-            <div class="row">
+            {{-- <div class="row">
 
                 <!-- Left side columns -->
                 <div class="col-lg-12">
@@ -186,7 +186,7 @@
                     </div>
                 </div><!-- End Left side columns -->
 
-            </div>
+            </div> --}}
         </section>
 
     </main><!-- End #main -->

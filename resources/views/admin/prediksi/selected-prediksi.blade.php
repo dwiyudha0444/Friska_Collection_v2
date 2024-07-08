@@ -32,7 +32,6 @@
                                 <th>MAD</th>
                                 <th>MSE</th>
                                 <th>MAPE</th>
-                                <!-- Tambahkan kolom lain sesuai kebutuhan -->
                             </tr>
                         </thead>
                         <tbody id="prediksi-table-body">
@@ -51,16 +50,15 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div>Total MAD: <span id="total-mad"></span></div>
+                    <div>Total MSE: <span id="total-mse"></span></div>
+                    <div>Total MAPE: <span id="total-mape"></span></div>
                 </div>
             </div>
         </div>
+    </main>
 
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Data Total Mean Absolute Deviation (MAD) Periode 3</h5>
-
-                    <table class="table ">
+    {{-- <table class="table ">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -83,166 +81,36 @@
 
 
                     {{-- {{$madValues = htmlspecialchars($data['name']);}} --}}
-                    {{-- {{ $madValue }} --}}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Data Total Mean Absolute Deviation (MAD) Periode 4</h5>
-
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                @foreach ($selectedDataFirst as $item)
-                                    <th>{{ $item->nama }}</th>
-                                @endforeach
-
-                            </tr>
-                        </thead>
-                        @php $no = 1; @endphp
-                        <tbody>
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                @foreach ($madValuesPeriodeEmpat as $item)
-                                    <td>{{ htmlspecialchars($item) }}</td>
-                                @endforeach
-                            </tr>
-                        </tbody>
-                    </table>
-
-
-                    {{-- {{$madValues = htmlspecialchars($data['name']);}} --}}
-                    {{-- {{ $madValue }} --}}
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Data Total Mean Squared Error (MSE) Periode 3</h5>
-
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                @foreach ($selectedDataFirst as $item)
-                                    <th>{{ $item->nama }}</th>
-                                @endforeach
-
-                            </tr>
-                        </thead>
-                        @php $no = 1; @endphp
-                        <tbody>
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                @foreach ($mseValues as $item)
-                                    <td>{{ htmlspecialchars($item) }}</td>
-                                @endforeach
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Data Total Mean Squared Error (MSE) Periode 4</h5>
-
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                @foreach ($selectedDataFirst as $item)
-                                    <th>{{ $item->nama }}</th>
-                                @endforeach
-
-                            </tr>
-                        </thead>
-                        @php $no = 1; @endphp
-                        <tbody>
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                @foreach ($mseValuesPeriodeEmpat as $item)
-                                    <td>{{ htmlspecialchars($item) }}</td>
-                                @endforeach
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Data Total Mean Absolute Percentage Error (MAPE) Periode 3</h5>
-
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                @foreach ($selectedDataFirst as $item)
-                                    <th>{{ $item->nama }}</th>
-                                @endforeach
-
-                            </tr>
-                        </thead>
-                        @php $no = 1; @endphp
-                        <tbody>
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                @foreach ($mapeValues as $item)
-                                    <td>{{ htmlspecialchars($item) }}</td>
-                                @endforeach
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Data Total Mean Absolute Percentage Error (MAPE) Periode 4</h5>
-
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                @foreach ($selectedDataFirst as $item)
-                                    <th>{{ $item->nama }}</th>
-                                @endforeach
-
-                            </tr>
-                        </thead>
-                        @php $no = 1; @endphp
-                        <tbody>
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                @foreach ($mapeValuesPeriodeEmpat as $item)
-                                    <td>{{ htmlspecialchars($item) }} %</td>
-                                @endforeach
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
+    {{-- {{ $madValue }} --}}
+    </div>
+    </div>
+    </div> --}}
 @endsection
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Filter berdasarkan id_periode
+        function calculateTotals() {
+            const rows = document.querySelectorAll('#prediksi-table-body tr');
+            let totalMAD = 0;
+            let totalMSE = 0;
+            let totalMAPE = 0;
+            let count = 0;
+
+            rows.forEach(row => {
+                if (row.style.display !== 'none') {
+                    totalMAD += parseFloat(row.children[6].textContent) || 0;
+                    totalMSE += parseFloat(row.children[7].textContent) || 0;
+                    totalMAPE += parseFloat(row.children[8].textContent) || 0;
+                    count++;
+                }
+            });
+
+            document.getElementById('total-mad').textContent = count > 0 ? (totalMAD / count).toFixed(2) : 0;
+            document.getElementById('total-mse').textContent = count > 0 ? (totalMSE / count).toFixed(2) : 0;
+            document.getElementById('total-mape').textContent = count > 0 ? (totalMAPE / count).toFixed(2) +
+                ' %' : '0 %';
+        }
+
         document.getElementById('filter-periode').addEventListener('change', function(event) {
             const periode = event.target.value;
             const rows = document.querySelectorAll('#prediksi-table-body tr');
@@ -253,6 +121,9 @@
                     row.style.display = 'none';
                 }
             });
+            calculateTotals();
         });
+
+        calculateTotals();
     });
 </script>

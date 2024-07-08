@@ -105,119 +105,110 @@ class PrediksiController extends Controller
     // }
     
     public function tambahPrediksi2()
-{
-    // Mengambil semua produk
-    $products = Produk::all();
+    {
+        // Mengambil semua produk
+        $products = Produk::all();
+        $filters = FilterPenjualanPerbulan::all();
+    
+        $isUpdatedOrCreated = false;
+    
 
-    $isUpdatedOrCreated = false;
-
-    foreach ($products as $product) {
-        // Cek apakah ada entri dengan id_produk yang sama dalam prediksi untuk MA pertama
-        $prediksi1 = Prediksi::where('id_produk', $product->id)
-            ->whereMonth('created_at', now()->month)
-            ->whereYear('created_at', now()->year)
-            ->where('id_periode', 3) // Periode 3 untuk MA pertama
-            ->first();
+    
+        foreach ($products as $product) {
+            // Cek apakah ada entri dengan id_produk yang sama dalam prediksi untuk MA pertama
+            $prediksi1 = Prediksi::where('id_produk', $product->id)
+                ->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->where('id_periode', 3) // Periode 3 untuk MA pertama
+                ->first();
+                
+            // Cek apakah ada entri dengan id_produk yang sama dalam prediksi untuk MA kedua
+            $prediksi2 = Prediksi::where('id_produk', $product->id)
+                ->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->where('id_periode', 4) // Periode 4 untuk MA kedua
+                ->first();
+    
+            // Hitung Moving Average
+            $ma = MovingAverage::calculateMovingAveragePeriodeTiga($product->id);
+            $ma2 = MovingAverage::calculateMovingAverage($product->id);
             
-        // Cek apakah ada entri dengan id_produk yang sama dalam prediksi untuk MA kedua
-        $prediksi2 = Prediksi::where('id_produk', $product->id)
-            ->whereMonth('created_at', now()->month)
-            ->whereYear('created_at', now()->year)
-            ->where('id_periode', 4) // Periode 4 untuk MA kedua
-            ->first();
-
-        // Hitung Moving Average
-        $ma = MovingAverage::calculateMovingAveragePeriodeTiga($product->id);
-        $ma2 = MovingAverage::calculateMovingAverage($product->id);
-        // Hitung MAD
-        $mad = mad::calculateMAD($product->id);
-        $mad2 = mad::calculateMADPeriodeEmpat($product->id);
-        // Hitung MSE
-        $mse = mse::calculateMSE($product->id);
-        $mse2 = mse::calculateMSEPeriodeEmpat($product->id);
-        // Hitung MSE
-        $mape = mape::calculateMAPE($product->id);
-        $mape2 = mape::calculateMAPEPeriodeEmpat($product->id);
-        if ($prediksi1) {
-            // Jika sudah ada, update dengan data yang baru untuk MA pertama
-            $prediksi1->update([
-                'id_produk' => $product->id,
-                'nama' => $product->nama,
-                'id_kategori' => $product->id_kategori,
-                'id_periode' => 3,
-                'ma' => $ma,
-                'mad' => $mad,
-                'mse' => $mse,
-                'mape' => $mape,
-            ]);
-            $isUpdatedOrCreated = true;
-        } else {
-            // Jika belum ada, buat entri baru untuk MA pertama
-            Prediksi::create([
-                'id_produk' => $product->id,
-                'nama' => $product->nama,
-                'id_kategori' => $product->id_kategori,
-                'id_periode' => 3,
-                'ma' => $ma,
-                'mad' => $mad,
-                'mse' => $mse,
-                'mape' => $mape,
-            ]);
-            $isUpdatedOrCreated = true;
+            // Hitung MAD
+            $mad = mad::calculateMAD($product->id);
+            $mad2 = mad::calculateMADPeriodeEmpat($product->id);
+            
+            // Hitung MSE
+            $mse = mse::calculateMSE($product->id);
+            $mse2 = mse::calculateMSEPeriodeEmpat($product->id);
+            
+            // Hitung MAPE
+            $mape = mape::calculateMAPE($product->id);
+            $mape2 = mape::calculateMAPEPeriodeEmpat($product->id);
+            
+            if ($prediksi1) {
+                // Jika sudah ada, update dengan data yang baru untuk MA pertama
+                $prediksi1->update([
+                    'id_produk' => $product->id,
+                    'nama' => $product->nama,
+                    'id_kategori' => $product->id_kategori,
+                    'id_periode' => 3,
+                    'ma' => $ma,
+                    'mad' => $mad,
+                    'mse' => $mse,
+                    'mape' => $mape,
+                ]);
+                $isUpdatedOrCreated = true;
+            } else {
+                // Jika belum ada, buat entri baru untuk MA pertama
+                Prediksi::create([
+                    'id_produk' => $product->id,
+                    'nama' => $product->nama,
+                    'id_kategori' => $product->id_kategori,
+                    'id_periode' => 3,
+                    'ma' => $ma,
+                    'mad' => $mad,
+                    'mse' => $mse,
+                    'mape' => $mape,
+                ]);
+                $isUpdatedOrCreated = true;
+            }
+    
+            if ($prediksi2) {
+                // Jika sudah ada, update dengan data yang baru untuk MA kedua
+                $prediksi2->update([
+                    'id_produk' => $product->id,
+                    'nama' => $product->nama,
+                    'id_kategori' => $product->id_kategori,
+                    'id_periode' => 4,
+                    'ma' => $ma2,
+                    'mad' => $mad2,
+                    'mse' => $mse2,
+                    'mape' => $mape2,
+                ]);
+                $isUpdatedOrCreated = true;
+            } else {
+                // Jika belum ada, buat entri baru untuk MA kedua
+                Prediksi::create([
+                    'id_produk' => $product->id,
+                    'nama' => $product->nama,
+                    'id_kategori' => $product->id_kategori,
+                    'id_periode' => 4,
+                    'ma' => $ma2,
+                    'mad' => $mad2,
+                    'mse' => $mse2,
+                    'mape' => $mape2,
+                ]);
+                $isUpdatedOrCreated = true;
+            }
         }
-
-        if ($prediksi2) {
-            // Jika sudah ada, update dengan data yang baru untuk MA kedua
-            $prediksi2->update([
-                'id_produk' => $product->id,
-                'nama' => $product->nama,
-                'id_kategori' => $product->id_kategori,
-                'id_periode' => 4,
-                'ma' => $ma2,
-                'mad' => $mad2,
-                'mse' => $mse2,
-                'mape' => $mape2,
-            ]);
-            $isUpdatedOrCreated = true;
+    
+        if ($isUpdatedOrCreated) {
+            return redirect()->route('all-prediksi')->with('success', 'Data prediksi berhasil ditambahkan atau diperbarui.');
         } else {
-            // Jika belum ada, buat entri baru untuk MA kedua
-            Prediksi::create([
-                'id_produk' => $product->id,
-                'nama' => $product->nama,
-                'id_kategori' => $product->id_kategori,
-                'id_periode' => 4,
-                'ma' => $ma2,
-                'mad' => $mad2,
-                'mse' => $mse2,
-                'mape' => $mape2,
-            ]);
-            $isUpdatedOrCreated = true;
+            return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
         }
     }
-
-    // $filter = FilterPenjualanPerbulan::all();
-
-    // $request->validate([
-    //     'qty' => 'required|string|max:255',
-    // ]);
-
-    // // Simpan data ke dalam database Kategori
-    // Prediksi::create([
-    //     'qty' => $request->qty,
-    // ]);
-
-    // $filter = Prediksi::where('qty', $filter->id)
-    // ->whereMonth('created_at', now()->month)
-    // ->whereYear('created_at', now()->year)
-    // ->where('id_periode', 3) // Periode 4 untuk MA kedua
-    // ->first();
-
-    if ($isUpdatedOrCreated) {
-        return redirect()->route('all-prediksi')->with('success', 'Data prediksi berhasil ditambahkan atau diperbarui.');
-    } else {
-        return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
-    }
-}
+    
 
     
 

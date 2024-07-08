@@ -53,7 +53,7 @@ class MonthlyUsersChart
         return $this->chart->lineChart()
             ->setTitle('Sales during 2021.')
             ->setSubtitle('Physical sales vs Predicted sales.')
-            ->addData('Physical sales', $physicalSales)
+            // ->addData('Physical sales', $physicalSales)
             ->addData('Predicted sales', $physicalSalesMa)
             ->setXAxis($months); // Set label bulan ke sumbu X
     }
