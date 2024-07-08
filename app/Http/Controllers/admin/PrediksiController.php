@@ -288,8 +288,34 @@ class PrediksiController extends Controller
     }
     
 
-    
     public function pilihProduk(Request $request)
+    {
+        $selectedIds = $request->input('selected_ids');
+    
+        // Buat array kosong untuk menyimpan id_produk yang dipilih
+        $selectedProductIds = [];
+    
+        // Ambil id_produk dari data yang dipilih
+        foreach ($selectedIds as $id) {
+            $prediksi = Prediksi::find($id);
+            if ($prediksi) {
+                $selectedProductIds[] = $prediksi->id_produk;
+            }
+        }
+    
+        // Ambil data berdasarkan id_produk yang dipilih dan kelompokkan
+        $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy('id_produk'); // Kelompokkan berdasarkan id_produk
+    
+        // Tampilkan data tersebut
+        return view('admin.prediksi.selected-prediksi', [
+            'groupedData' => $selectedData, // Kirim data yang sudah dikelompokkan ke view
+        ]);    
+    }
+    
+    public function pilihProduk2(Request $request)
     {
         $selectedIds = $request->input('selected_ids');
     
