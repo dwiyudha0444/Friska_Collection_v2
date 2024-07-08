@@ -13,6 +13,7 @@ use App\Helpers\MovingAverage;
 use App\Helpers\mad;
 use App\Helpers\mse;
 use App\Helpers\mape;
+use App\Helpers\DataPenjualan;
 use Carbon\Carbon;
 use DB;
 
@@ -108,7 +109,6 @@ class PrediksiController extends Controller
     {
         // Mengambil semua produk
         $products = Produk::all();
-        $filters = FilterPenjualanPerbulan::all();
     
         $isUpdatedOrCreated = false;
     
@@ -144,11 +144,15 @@ class PrediksiController extends Controller
             // Hitung MAPE
             $mape = mape::calculateMAPE($product->id);
             $mape2 = mape::calculateMAPEPeriodeEmpat($product->id);
+
+            // Data Penjualan
+            $data_penjualan = DataPenjualan::dataPenjualan($product->id);
             
             if ($prediksi1) {
                 // Jika sudah ada, update dengan data yang baru untuk MA pertama
                 $prediksi1->update([
                     'id_produk' => $product->id,
+                    'id_filter' => $data_penjualan,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 3,
@@ -162,6 +166,7 @@ class PrediksiController extends Controller
                 // Jika belum ada, buat entri baru untuk MA pertama
                 Prediksi::create([
                     'id_produk' => $product->id,
+                    'id_filter' => $data_penjualan,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 3,
@@ -177,6 +182,7 @@ class PrediksiController extends Controller
                 // Jika sudah ada, update dengan data yang baru untuk MA kedua
                 $prediksi2->update([
                     'id_produk' => $product->id,
+                    'id_filter' => $data_penjualan,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 4,
@@ -190,6 +196,7 @@ class PrediksiController extends Controller
                 // Jika belum ada, buat entri baru untuk MA kedua
                 Prediksi::create([
                     'id_produk' => $product->id,
+                    'id_filter' => $data_penjualan,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 4,
@@ -208,84 +215,80 @@ class PrediksiController extends Controller
             return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
         }
     }
-    
-
-    
 
 
+    // public function tambahPrediksi()
+    // {
+    //     // Ambil periode terbaru
+    //     $periode = Periode::latest()->first();
+    
+    //     // Pastikan ada periode yang ditemukan sebelum melanjutkan
+    //     if (!$periode) {
+    //         return redirect()->route('all-prediksi')->with('error', 'Periode tidak ditemukan.');
+    //     }
+    
+    //     // Ambil semua produk terbaru
+    //     $produkTerbaru = DB::table('filter_penjualan_perbulan')
+    //         ->select('id_produk')
+    //         ->distinct()
+    //         ->get();
+    
+    //     // Pastikan ada produk terbaru
+    //     if ($produkTerbaru->isNotEmpty()) {
+    //         foreach ($produkTerbaru as $produk) {
+    //             // Ambil data penjualan terbaru untuk produk tertentu
+    //             $dataTerbaru = DB::table('filter_penjualan_perbulan')
+    //                 ->where('id_produk', $produk->id_produk)
+    //                 ->orderBy('created_at', 'desc')
+    //                 ->first();
+    
+    //             // Hitung Moving Average (MA) menggunakan helper untuk data asli
+    //             $ma = MovingAverage::calculateMovingAveragePeriodeTiga($produk->id_produk);
+    
+    //             // Hitung Moving Average (MA) kedua untuk data yang berbeda
+    //             $ma2 = MovingAverage::calculateMovingAverage($produk->id_produk);
+    
+    //             $mad = mad::calculateMAD($produk->id_produk);
 
-    public function tambahPrediksi()
-    {
-        // Ambil periode terbaru
-        $periode = Periode::latest()->first();
+    //             // Cek apakah sudah ada data untuk id_produk dan periode 3
+    //             $existingDataPeriode3 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
+    //                 ->where('id_periode', 3)
+    //                 ->exists();
     
-        // Pastikan ada periode yang ditemukan sebelum melanjutkan
-        if (!$periode) {
-            return redirect()->route('all-prediksi')->with('error', 'Periode tidak ditemukan.');
-        }
+    //             // Jika belum ada, tambahkan data baru untuk periode 3
+    //             if (!$existingDataPeriode3) {
+    //                 Prediksi::create([
+    //                     'id_produk' => $dataTerbaru->id_produk,
+    //                     'nama' => $dataTerbaru->nama,
+    //                     'id_kategori' => $dataTerbaru->id_kategori,
+    //                     'id_periode' => 3,
+    //                     'ma' => $ma,
+    //                     'mad' => $mad,
+    //                 ]);
+    //             }
     
-        // Ambil semua produk terbaru
-        $produkTerbaru = DB::table('filter_penjualan_perbulan')
-            ->select('id_produk')
-            ->distinct()
-            ->get();
+    //             // Cek apakah sudah ada data untuk id_produk dan periode 4
+    //             $existingDataPeriode4 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
+    //                 ->where('id_periode', 4)
+    //                 ->exists();
     
-        // Pastikan ada produk terbaru
-        if ($produkTerbaru->isNotEmpty()) {
-            foreach ($produkTerbaru as $produk) {
-                // Ambil data penjualan terbaru untuk produk tertentu
-                $dataTerbaru = DB::table('filter_penjualan_perbulan')
-                    ->where('id_produk', $produk->id_produk)
-                    ->orderBy('created_at', 'desc')
-                    ->first();
+    //             // Jika belum ada, tambahkan data baru untuk periode 4
+    //             if (!$existingDataPeriode4) {
+    //                 Prediksi::create([
+    //                     'id_produk' => $dataTerbaru->id_produk,
+    //                     'nama' => $dataTerbaru->nama,
+    //                     'id_kategori' => $dataTerbaru->id_kategori,
+    //                     'id_periode' => 4,
+    //                     'ma' => $ma2,
+    //                 ]);
+    //             }
+    //         }
     
-                // Hitung Moving Average (MA) menggunakan helper untuk data asli
-                $ma = MovingAverage::calculateMovingAveragePeriodeTiga($produk->id_produk);
-    
-                // Hitung Moving Average (MA) kedua untuk data yang berbeda
-                $ma2 = MovingAverage::calculateMovingAverage($produk->id_produk);
-    
-                $mad = mad::calculateMAD($produk->id_produk);
-
-                // Cek apakah sudah ada data untuk id_produk dan periode 3
-                $existingDataPeriode3 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
-                    ->where('id_periode', 3)
-                    ->exists();
-    
-                // Jika belum ada, tambahkan data baru untuk periode 3
-                if (!$existingDataPeriode3) {
-                    Prediksi::create([
-                        'id_produk' => $dataTerbaru->id_produk,
-                        'nama' => $dataTerbaru->nama,
-                        'id_kategori' => $dataTerbaru->id_kategori,
-                        'id_periode' => 3,
-                        'ma' => $ma,
-                        'mad' => $mad,
-                    ]);
-                }
-    
-                // Cek apakah sudah ada data untuk id_produk dan periode 4
-                $existingDataPeriode4 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
-                    ->where('id_periode', 4)
-                    ->exists();
-    
-                // Jika belum ada, tambahkan data baru untuk periode 4
-                if (!$existingDataPeriode4) {
-                    Prediksi::create([
-                        'id_produk' => $dataTerbaru->id_produk,
-                        'nama' => $dataTerbaru->nama,
-                        'id_kategori' => $dataTerbaru->id_kategori,
-                        'id_periode' => 4,
-                        'ma' => $ma2,
-                    ]);
-                }
-            }
-    
-            return redirect()->route('all-prediksi')->with('success', 'Data prediksi berhasil ditambahkan atau diperbarui.');
-        } else {
-            return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
-        }
-    }
+    //         return redirect()->route('all-prediksi')->with('success', 'Data prediksi berhasil ditambahkan atau diperbarui.');
+    //     } else {
+    //         return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
+    //     }
+    // }
     
 
     public function pilihProduk(Request $request)
@@ -312,90 +315,91 @@ class PrediksiController extends Controller
         // Tampilkan data tersebut
         return view('admin.prediksi.selected-prediksi', [
             'groupedData' => $selectedData, // Kirim data yang sudah dikelompokkan ke view
-        ]);    
-    }
-    
-    public function pilihProduk2(Request $request)
-    {
-        $selectedIds = $request->input('selected_ids');
-    
-        // Buat array kosong untuk menyimpan id_produk yang dipilih
-        $selectedProductIds = [];
-    
-        // Ambil id_produk dari data yang dipilih
-        foreach ($selectedIds as $id) {
-            $prediksi = Prediksi::find($id);
-            if ($prediksi) {
-                $selectedProductIds[] = $prediksi->id_produk;
-            }
-        }
-    
-        // Ambil data berdasarkan id_produk yang dipilih
-        $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        // Ambil data berdasarkan id_produk yang dipilih
-        $selectedDataFirst = Prediksi::whereIn('id_produk', $selectedProductIds)
-            ->selectRaw('MAX(id) as id') // Memilih id terbaru untuk setiap id_produk
-            ->groupBy('id_produk')
-            ->get();
-
-        // Ambil data lengkap berdasarkan id terbaru yang dipilih
-        $selectedDataAll = Prediksi::whereIn('id', $selectedDataFirst->pluck('id'))
-        ->orderBy('created_at', 'desc')
-        ->get();
-        
-        // Siapkan array kosong untuk menyimpan nilai MAD
-        $madValues = [];
-        $madValuesPeriodeEmpat = [];
-        // Siapkan array kosong untuk menyimpan nilai MSE
-        $mseValues = [];
-        $mseValuesPeriodeEmpat = [];
-    
-        // Ambil nilai MAD dari helpermad untuk setiap produk yang dipilih
-        foreach ($selectedProductIds as $id_produk) {
-            $madValue = mad::calculateTotalMad($id_produk); 
-            $madValues[$id_produk] = $madValue;
-        }
-        // Periode 4
-        foreach ($selectedProductIds as $id_produk) {
-            $madValuePeriodeEmpat = mad::calculateTotalMadPeriodeEmpat($id_produk); 
-            $madValuesPeriodeEmpat[$id_produk] = $madValuePeriodeEmpat;
-        }
-        // Ambil nilai MSE dari helpermad untuk setiap produk yang dipilih
-        foreach ($selectedProductIds as $id_produk) {
-            $mseValue = mse::calculateTotalMse($id_produk); 
-            $mseValues[$id_produk] = $mseValue;
-        }
-        // Periode 4
-        foreach ($selectedProductIds as $id_produk) {
-            $mseValuePeriodeEmpat = mse::calculateTotalMSEPeriodeEmpat($id_produk); 
-            $mseValuesPeriodeEmpat[$id_produk] = $mseValuePeriodeEmpat;
-        }
-        // Ambil nilai MAPE dari helpermad untuk setiap produk yang dipilih
-        foreach ($selectedProductIds as $id_produk) {
-            $mapeValue = mape::calculateTotalMAPE($id_produk); 
-            $mapeValues[$id_produk] = $mapeValue;
-        }
-        // Periode 4
-        foreach ($selectedProductIds as $id_produk) {
-            $mapeValuePeriodeEmpat = mape::calculateTotalMAPEPeriodeEmpat($id_produk); 
-            $mapeValuesPeriodeEmpat[$id_produk] = $mapeValuePeriodeEmpat;
-        }
-    
-        // Misalnya, tampilkan data tersebut
-        return view('admin.prediksi.selected-prediksi', [
-            'selectedData' => $selectedData, //menampilkan selurug data berdasarkan data yang dipilih
-            'selectedDataFirst' => $selectedDataAll, //Menampilkan pertama berdasarkan id yang dipilih
-            'madValues' => $madValues, // Menampilkan Nilai Total MAD
-            'madValuesPeriodeEmpat' => $madValuesPeriodeEmpat,
-            'mseValues' => $mseValues, // Menampilkan Nilai Total MSE
-            'mseValuesPeriodeEmpat' => $mseValuesPeriodeEmpat,
-            'mapeValues' => $mapeValues, // Menampilkan Nilai Total MAPE
-            'mapeValuesPeriodeEmpat' => $mapeValuesPeriodeEmpat,
         ]);
+    
     }
+    
+    // public function pilihProduk2(Request $request)
+    // {
+    //     $selectedIds = $request->input('selected_ids');
+    
+    //     // Buat array kosong untuk menyimpan id_produk yang dipilih
+    //     $selectedProductIds = [];
+    
+    //     // Ambil id_produk dari data yang dipilih
+    //     foreach ($selectedIds as $id) {
+    //         $prediksi = Prediksi::find($id);
+    //         if ($prediksi) {
+    //             $selectedProductIds[] = $prediksi->id_produk;
+    //         }
+    //     }
+    
+    //     // Ambil data berdasarkan id_produk yang dipilih
+    //     $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
+
+    //     // Ambil data berdasarkan id_produk yang dipilih
+    //     $selectedDataFirst = Prediksi::whereIn('id_produk', $selectedProductIds)
+    //         ->selectRaw('MAX(id) as id') // Memilih id terbaru untuk setiap id_produk
+    //         ->groupBy('id_produk')
+    //         ->get();
+
+    //     // Ambil data lengkap berdasarkan id terbaru yang dipilih
+    //     $selectedDataAll = Prediksi::whereIn('id', $selectedDataFirst->pluck('id'))
+    //     ->orderBy('created_at', 'desc')
+    //     ->get();
+        
+    //     // Siapkan array kosong untuk menyimpan nilai MAD
+    //     $madValues = [];
+    //     $madValuesPeriodeEmpat = [];
+    //     // Siapkan array kosong untuk menyimpan nilai MSE
+    //     $mseValues = [];
+    //     $mseValuesPeriodeEmpat = [];
+    
+    //     // Ambil nilai MAD dari helpermad untuk setiap produk yang dipilih
+    //     foreach ($selectedProductIds as $id_produk) {
+    //         $madValue = mad::calculateTotalMad($id_produk); 
+    //         $madValues[$id_produk] = $madValue;
+    //     }
+    //     // Periode 4
+    //     foreach ($selectedProductIds as $id_produk) {
+    //         $madValuePeriodeEmpat = mad::calculateTotalMadPeriodeEmpat($id_produk); 
+    //         $madValuesPeriodeEmpat[$id_produk] = $madValuePeriodeEmpat;
+    //     }
+    //     // Ambil nilai MSE dari helpermad untuk setiap produk yang dipilih
+    //     foreach ($selectedProductIds as $id_produk) {
+    //         $mseValue = mse::calculateTotalMse($id_produk); 
+    //         $mseValues[$id_produk] = $mseValue;
+    //     }
+    //     // Periode 4
+    //     foreach ($selectedProductIds as $id_produk) {
+    //         $mseValuePeriodeEmpat = mse::calculateTotalMSEPeriodeEmpat($id_produk); 
+    //         $mseValuesPeriodeEmpat[$id_produk] = $mseValuePeriodeEmpat;
+    //     }
+    //     // Ambil nilai MAPE dari helpermad untuk setiap produk yang dipilih
+    //     foreach ($selectedProductIds as $id_produk) {
+    //         $mapeValue = mape::calculateTotalMAPE($id_produk); 
+    //         $mapeValues[$id_produk] = $mapeValue;
+    //     }
+    //     // Periode 4
+    //     foreach ($selectedProductIds as $id_produk) {
+    //         $mapeValuePeriodeEmpat = mape::calculateTotalMAPEPeriodeEmpat($id_produk); 
+    //         $mapeValuesPeriodeEmpat[$id_produk] = $mapeValuePeriodeEmpat;
+    //     }
+    
+    //     // Misalnya, tampilkan data tersebut
+    //     return view('admin.prediksi.selected-prediksi', [
+    //         'selectedData' => $selectedData, //menampilkan selurug data berdasarkan data yang dipilih
+    //         'selectedDataFirst' => $selectedDataAll, //Menampilkan pertama berdasarkan id yang dipilih
+    //         'madValues' => $madValues, // Menampilkan Nilai Total MAD
+    //         'madValuesPeriodeEmpat' => $madValuesPeriodeEmpat,
+    //         'mseValues' => $mseValues, // Menampilkan Nilai Total MSE
+    //         'mseValuesPeriodeEmpat' => $mseValuesPeriodeEmpat,
+    //         'mapeValues' => $mapeValues, // Menampilkan Nilai Total MAPE
+    //         'mapeValuesPeriodeEmpat' => $mapeValuesPeriodeEmpat,
+    //     ]);
+    // }
     
     
 

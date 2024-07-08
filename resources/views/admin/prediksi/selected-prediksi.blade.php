@@ -28,6 +28,7 @@
                                     <th>Nama</th>
                                     <th>Bulan</th>
                                     <th>Kategori</th>
+                                    <th>Qty</th>
                                     <th>Periode</th>
                                     <th>MA</th>
                                     <th>MAD</th>
@@ -42,6 +43,7 @@
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->created_at->format('F') }}</td>
                                         <td>{{ $data->kategori->nama }}</td>
+                                        <td>{{ $data->id_filter }}</td>
                                         <td>{{ $data->id_periode }}</td>
                                         <td>{{ $data->ma }}</td>
                                         <td>{{ $data->mad }}</td>

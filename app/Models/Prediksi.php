@@ -14,7 +14,7 @@ class Prediksi extends Model
         'nama',
         'id_kategori',
         'id_periode',
-        'qty',
+        'id_filter',
         'ma',
         'mse',
         'mad',
@@ -29,5 +29,10 @@ class Prediksi extends Model
     public function periode()
     {
         return $this->belongsTo(Periode::class,'id_periode');
+    }
+
+    public function filter()
+    {
+        return $this->belongsTo(FilterPenjualanPerbulan::class,'id_filter');
     }
 }

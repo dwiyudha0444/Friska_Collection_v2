@@ -10,6 +10,7 @@ class FilterPenjualanPerbulan extends Model
     protected $table = 'filter_penjualan_perbulan'; 
     
     protected $fillable = [
+        'id',
         'id_produk',
         'nama',
         'id_kategori',
@@ -17,6 +18,13 @@ class FilterPenjualanPerbulan extends Model
         'image',
         'qty', 
     ];
+
+    public function prediksi()
+    {
+        return $this->hasMany(Prediksi::class, 'id_produk', 'id');
+    }
+    
+    
 
     public function kategori()
     {
