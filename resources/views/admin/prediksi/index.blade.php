@@ -36,7 +36,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">
-                                        <input type="checkbox" id="select-all">
+                                        #{{-- <input type="checkbox" id="select-all"> --}}
                                     </th>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
