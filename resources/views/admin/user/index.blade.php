@@ -39,8 +39,9 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">email</th>
-                                <th scope="col">role</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Status</th>
                                 @if (Auth::user()->role == 'pemilik')
                                     <th scope="col">Action</th>
                                 @endif
@@ -57,6 +58,7 @@
                                     <td>{{ $use->name }}</td>
                                     <td>{{ $use->email }}</td>
                                     <td>{{ $use->role }}</td>
+                                    <td>{{ $use->status }}</td>
                                     @if (Auth::user()->role == 'pemilik')
                                     <td>
 

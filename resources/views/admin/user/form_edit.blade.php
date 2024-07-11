@@ -64,10 +64,10 @@
 
 
                                 <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">Kategori</label>
+                                    <label class="col-sm-2 col-form-label">Status</label>
                                     <div class="col-sm-10">
                                         <select class="form-select" name="status">
-                                            <option>-- Pilih Kategori --</option>
+                                            <option>-- Pilih Status --</option>
                                             <option value="aktif" {{ $users->status == 'aktif' ? 'selected' : '' }}>Aktif
                                             </option>
                                             <option value="nonaktif" {{ $users->status == 'nonaktif' ? 'selected' : '' }}>
