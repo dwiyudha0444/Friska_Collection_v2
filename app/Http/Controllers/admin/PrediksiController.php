@@ -27,14 +27,19 @@ class PrediksiController extends Controller
 
     public function index()
     {
+        // Ambil data prediksi terbaru berdasarkan id_produk
         $prediksi = Prediksi::select('id_produk', \DB::raw('MAX(id) as id'))
-                            ->groupBy('id_produk')
-                            ->orderBy('id', 'DESC')
-                            ->get();
-
+            ->groupBy('id_produk')
+            ->orderBy('id', 'DESC')
+            ->get();
+    
         $prediksi = Prediksi::whereIn('id', $prediksi->pluck('id'))->get();
-
-        return view('admin.prediksi.index', compact('prediksi'));
+    
+        // Ambil semua periode
+        $periode = Periode::all(); // Gantilah 'Periode' dengan model yang sesuai jika berbeda
+    
+        // Kirim data prediksi dan periode ke view
+        return view('admin.prediksi.index', compact('prediksi', 'periode'));
     }
 
     public function test()
@@ -294,6 +299,7 @@ class PrediksiController extends Controller
     public function pilihProduk(Request $request)
     {
         $selectedIds = $request->input('selected_ids');
+        $idPeriode = $request->input('id_periode'); // Ambil id_periode dari request
     
         // Buat array kosong untuk menyimpan id_produk yang dipilih
         $selectedProductIds = [];
@@ -306,8 +312,9 @@ class PrediksiController extends Controller
             }
         }
     
-        // Ambil data berdasarkan id_produk yang dipilih dan kelompokkan
+        // Ambil data berdasarkan id_produk yang dipilih dan id_periode, kemudian kelompokkan
         $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)
+            ->where('id_periode', $idPeriode) // Tambahkan filter id_periode
             ->orderBy('created_at', 'desc')
             ->get()
             ->groupBy('id_produk'); // Kelompokkan berdasarkan id_produk
@@ -316,8 +323,8 @@ class PrediksiController extends Controller
         return view('admin.prediksi.selected-prediksi', [
             'groupedData' => $selectedData, // Kirim data yang sudah dikelompokkan ke view
         ]);
-    
     }
+    
     
     // public function pilihProduk2(Request $request)
     // {
