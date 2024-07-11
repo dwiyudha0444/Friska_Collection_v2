@@ -12,3 +12,5 @@
 
 <!-- Template Main JS File -->
 <script src="{{ asset('admin/assets/js/main.js')}}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

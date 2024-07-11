@@ -1,4 +1,3 @@
-
 @extends('admin.index')
 
 @section('content')
@@ -53,7 +52,7 @@
                                     <th>Bulan</th>
                                     <th>Kategori</th>
                                     <th>Qty</th>
-                                    <th  class="hidden">Periode</th>
+                                    <th class="hidden">Periode</th>
                                     <th>MA</th>
                                     <th>MAD</th>
                                     <th>MSE</th>
@@ -216,12 +215,110 @@
                             </div><!-- End Left side columns -->
 
                         </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <canvas id="chart-{{ $id_produk }}"></canvas>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         @endforeach
     </main>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fungsi untuk menggambar grafik berdasarkan data yang ditampilkan di tabel
+        function drawChart(produkId) {
+            const ctx = document.getElementById(`chart-${produkId}`).getContext('2d');
+            const rows = document.querySelectorAll(`.prediksi-table-body[data-produk='${produkId}'] tr`);
+
+            const labels = [];
+            const qtyData = [];
+            const maData = [];
+
+            rows.forEach(row => {
+                if (row.style.display !== 'none') {
+                    const bulan = row.children[2].textContent;
+                    const qty = parseFloat(row.children[4].textContent) || 0;
+                    const ma = parseFloat(row.children[6].textContent) || 0;
+
+                    labels.push(bulan);
+                    qtyData.push(qty);
+                    maData.push(ma);
+                }
+            });
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Qty',
+                            data: qtyData,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderWidth: 4,
+                        },
+                        {
+                            label: 'MA',
+                            data: maData,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            borderWidth: 4,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                        },
+                        y: {
+                            beginAtZero: true,
+                        }
+                    }
+                }
+            });
+        }
+
+        document.querySelectorAll('.filter-periode').forEach(select => {
+            select.addEventListener('change', function(event) {
+                const produkId = event.target.getAttribute('data-produk');
+                const periode = event.target.value;
+                const rows = document.querySelectorAll(`.prediksi-table-body[data-produk='${produkId}'] tr`);
+                rows.forEach(row => {
+                    if (periode === 'all' || row.getAttribute('data-periode') === periode) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                calculateTotals(produkId);
+                drawChart(produkId); // Menggambar ulang grafik setelah perubahan filter
+            });
+        });
+
+        document.querySelectorAll('.start-date, .end-date').forEach(input => {
+            input.addEventListener('change', function(event) {
+                const produkId = event.target.getAttribute('data-produk');
+                filterByDateRange(produkId);
+                drawChart(produkId); // Menggambar ulang grafik setelah perubahan filter
+            });
+        });
+
+        // Gambar grafik untuk setiap produk ketika halaman dimuat
+        document.querySelectorAll('.filter-periode').forEach(select => {
+            drawChart(select.getAttribute('data-produk'));
+        });
+    });
+</script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
