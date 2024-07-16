@@ -103,23 +103,31 @@
               </a>
               <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
+                      <a href="{{ url('prediksi_hitung') }}">
+                          <i class="bi bi-circle"></i><span>Hitung Prediksi</span>
+                      </a>
+                  </li>
+
+              </ul>
+              <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
                       <a href="{{ url('prediksi') }}">
-                          <i class="bi bi-circle"></i><span>Prediksi</span>
+                          <i class="bi bi-circle"></i><span>Riwayat Prediksi</span>
                       </a>
                   </li>
 
               </ul>
           </li><!-- End Icons Nav -->
-          
-              <li class="nav-heading">User</li>
 
-              <li class="nav-item">
-                  <a class="nav-link collapsed" href="{{ url('user') }}">
-                      <i class="bi bi-person"></i>
-                      <span>Kelola User</span>
-                  </a>
-              </li><!-- End Profile Page Nav -->
-          
+          <li class="nav-heading">User</li>
+
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="{{ url('user') }}">
+                  <i class="bi bi-person"></i>
+                  <span>Kelola User</span>
+              </a>
+          </li><!-- End Profile Page Nav -->
+
       </ul>
 
   </aside><!-- End Sidebar-->
