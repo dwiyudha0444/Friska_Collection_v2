@@ -89,6 +89,7 @@ Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
     //prediksi
     Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
     Route::get('/all-prediksi', [PrediksiController::class, 'create'])->name('all-prediksi');
+    Route::get('/all-prediksi_riwayat', [PrediksiController::class, 'createAll'])->name('all-prediksi_riwayat');
     Route::get('/tambah-prediksi', [PrediksiController::class, 'tambahPrediksi2'])->name('tambah-prediksi');
     Route::post('/pilih-produk', [PrediksiController::class, 'pilihProduk'])->name('pilih-produk');
     Route::get('/testmv', [PrediksiController::class, 'test'])->name('testmv');

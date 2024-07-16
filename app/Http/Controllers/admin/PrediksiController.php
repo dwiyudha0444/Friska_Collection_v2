@@ -49,8 +49,20 @@ class PrediksiController extends Controller
 
     public function create()
     {
-        $prediksi = Prediksi::orderBy('id','DESC')->get();
+            // Ambil bulan saat ini
+        $currentMonth = Carbon::now()->month;
+
+        // Ambil data prediksi berdasarkan bulan saat ini
+        $prediksi = Prediksi::whereMonth('created_at', $currentMonth)
+            ->orderBy('id', 'DESC')
+            ->get();
         return view('admin.prediksi.all',compact('prediksi'));
+    }
+
+    public function createAll()
+    {
+        $prediksi = Prediksi::orderBy('id','DESC')->get();
+        return view('admin.prediksi.allriwayat',compact('prediksi'));
     }
 
     // public function tambahPrediksi()
