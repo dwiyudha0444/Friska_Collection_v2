@@ -17,6 +17,7 @@
         <div class="col-12">
             <div class="card recent-sales overflow-auto">
 
+
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
                         <p>{{ $message }}</p>

@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     </br>
-                    <button type="submit" class="btn btn-primary">Mulai Aksi</button>
+                    <button type="submit" class="btn btn-primary">Hitung</button>
                     </br>
                     <table class="table table-borderless datatable">
                         <thead>

@@ -90,6 +90,9 @@ Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
     //prediksi
     Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');
     Route::get('/prediksi_hitung', [HitungPrediksiController::class, 'index'])->name('prdiksi_hitung');
+    Route::get('/prediksi_hitung_bulandepan', [HitungPrediksiController::class, 'indexBulanDepan'])->name('prediksi_hitung_bulandepan');
+    Route::get('/prediksi_hitung_bulanSebelumnya', [HitungPrediksiController::class, 'indexBulanSebelumnya'])->name('prediksi_hitung_bulansebelumnya');
+    Route::get('/hasil_prediksi', [HitungPrediksiController::class, 'indexHasil'])->name('hasil_prediksi');
     Route::get('/all-prediksi', [PrediksiController::class, 'create'])->name('all-prediksi');
     Route::get('/all-prediksi_riwayat', [PrediksiController::class, 'createAll'])->name('all-prediksi_riwayat');
     Route::get('/tambah-prediksi', [PrediksiController::class, 'tambahPrediksi2'])->name('tambah-prediksi');

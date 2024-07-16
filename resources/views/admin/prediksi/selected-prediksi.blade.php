@@ -6,11 +6,20 @@
             <h1>Data Prediksi yang Dipilih</h1>
         </div>
 
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Prediksi Penjualan Bulan Depan</h5>
+
+                </div>
+            </div>
+        </div>
+
         @foreach ($groupedData as $id_produk => $dataGroup)
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Data Prediksi untuk Produk ID: {{ $dataGroup[0]->nama }}</h5>
+                        <h5 class="card-title">Riwayat Data Prediksi untuk Produk ID: {{ $dataGroup[0]->nama }}</h5>
 
                         <style>
                             .hidden {
@@ -256,8 +265,7 @@
                 type: 'line',
                 data: {
                     labels: labels,
-                    datasets: [
-                        {
+                    datasets: [{
                             label: 'Qty',
                             data: qtyData,
                             borderColor: 'rgba(255, 99, 132, 1)',
@@ -291,9 +299,11 @@
             select.addEventListener('change', function(event) {
                 const produkId = event.target.getAttribute('data-produk');
                 const periode = event.target.value;
-                const rows = document.querySelectorAll(`.prediksi-table-body[data-produk='${produkId}'] tr`);
+                const rows = document.querySelectorAll(
+                    `.prediksi-table-body[data-produk='${produkId}'] tr`);
                 rows.forEach(row => {
-                    if (periode === 'all' || row.getAttribute('data-periode') === periode) {
+                    if (periode === 'all' || row.getAttribute('data-periode') ===
+                        periode) {
                         row.style.display = '';
                     } else {
                         row.style.display = 'none';
