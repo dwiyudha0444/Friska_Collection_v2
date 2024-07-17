@@ -6,14 +6,49 @@
             <h1>Data Prediksi yang Dipilih</h1>
         </div>
 
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Prediksi Penjualan Bulan Depan</h5>
-
+        @foreach ($groupedData as $id_produk => $dataGroup)
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Prediksi Penjualan Bulan Depan {{ $dataGroup[0]->nama }} </h5>
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Bulan</th>
+                                    <th>Kategori</th>
+                                    <th>Qty</th>
+                                    <th class="hidden">Periode</th>
+                                    <th>MA</th>
+                                    <th>MAD</th>
+                                    <th>MSE</th>
+                                    <th>MAPE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="prediksi-table-body" data-produk="{{ $id_produk }}">
+                                @foreach ($dataGroup as $index => $data)
+                                    <tr data-periode="{{ $data->id_periode }}"
+                                        data-bulan="{{ $data->created_at->format('Y-m') }}">
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $data->nama }}</td>
+                                        <td>{{ $data->created_at->format('F Y') }}</td>
+                                        <td>{{ $data->kategori->nama }}</td>
+                                        <td>{{ $data->id_filter }}</td>
+                                        <td class="hidden">{{ $data->id_periode }}</td>
+                                        <td>{{ $data->ma }}</td>
+                                        <td>{{ $data->mad }}</td>
+                                        <td>{{ $data->mse }}</td>
+                                        <td>{{ $data->mape }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
+
 
         @foreach ($groupedData as $id_produk => $dataGroup)
             <div class="col-12">

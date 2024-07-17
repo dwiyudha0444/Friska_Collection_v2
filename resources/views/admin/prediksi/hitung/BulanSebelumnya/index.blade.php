@@ -23,8 +23,7 @@
             <div class="card-body">
                 <h5 class="card-title">Prediksi Penjualan</h5>
 
-                
-                <form method="POST" action="{{ route('hasil_prediksi') }}">
+                <form method="POST" action="{{ route('riwayat_hasil_prediksi') }}">
                     @csrf
                     <div class="form-group">
                         <label for="id_periode">Pilih Periode:</label>
@@ -34,9 +33,28 @@
                             @endforeach
                         </select>
                     </div>
-                    </br>
+                    <br/>
+                    <div class="form-group">
+                        <label for="bulan">Pilih Bulan:</label>
+                        <select name="bulan" id="bulan" class="form-control">
+                            <option value="1">Januari</option>
+                            <option value="2">Februari</option>
+                            <option value="3">Maret</option>
+                            <option value="4">April</option>
+                            <option value="5">Mei</option>
+                            <option value="6">Juni</option>
+                            <option value="7">Juli</option>
+                            <option value="8">Agustus</option>
+                            <option value="9">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                    </div>
+                    
+                    <br/>
                     <button type="submit" class="btn btn-primary">Hitung</button>
-                    </br>
+                    <br/>
                     <table class="table table-borderless datatable">
                         <thead>
                             <tr>

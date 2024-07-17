@@ -64,63 +64,6 @@ class PrediksiController extends Controller
         $prediksi = Prediksi::orderBy('id','DESC')->get();
         return view('admin.prediksi.allriwayat',compact('prediksi'));
     }
-
-    // public function tambahPrediksi()
-    // {
-    //     // Definisikan periode yang ingin digunakan untuk menghitung moving average
-    //     $periodes = [3, 6, 12]; // contoh periode: 3 bulan, 6 bulan, 12 bulan
-    
-    //     // Ambil semua produk terbaru
-    //     $produkTerbaru = DB::table('filter_penjualan_perbulan')
-    //         ->select('id_produk')
-    //         ->distinct()
-    //         ->get();
-    
-    //     // Pastikan ada produk yang terbaru
-    //     if ($produkTerbaru->isNotEmpty()) {
-    //         foreach ($produkTerbaru as $produk) {
-    //             // Ambil data penjualan terbaru untuk produk tertentu
-    //             $dataTerbaru = DB::table('filter_penjualan_perbulan')
-    //                 ->where('id_produk', $produk->id_produk)
-    //                 ->orderBy('created_at', 'desc')
-    //                 ->first();
-    
-    //             foreach ($periodes as $periode) {
-    //                 // Hitung Moving Average (MA) menggunakan helper untuk setiap periode
-    //                 $ma = MovingAverageHelper::calculateMovingAverage($produk->id_produk, $periode);
-    
-    //                 // Cek apakah sudah ada data untuk bulan yang sama dan periode yang sama dalam prediksi
-    //                 $existingData = Prediksi::where('id_produk', $dataTerbaru->id_produk)
-    //                     ->whereYear('created_at', Carbon::now()->year)
-    //                     ->whereMonth('created_at', Carbon::now()->month)
-    //                     ->where('id_periode', $periode)
-    //                     ->first();
-    
-    //                 // Jika ada data yang sama untuk bulan yang sama dan periode yang sama, perbarui data tersebut
-    //                 if ($existingData) {
-    //                     $existingData->update([
-    //                         'nama' => $dataTerbaru->nama,
-    //                         'id_kategori' => $dataTerbaru->id_kategori,
-    //                         'ma' => $ma,
-    //                     ]);
-    //                 } else {
-    //                     // Jika tidak ada data yang sama, tambahkan data baru
-    //                     Prediksi::create([
-    //                         'id_produk' => $dataTerbaru->id_produk,
-    //                         'nama' => $dataTerbaru->nama,
-    //                         'id_kategori' => $dataTerbaru->id_kategori,
-    //                         'id_periode' => $periode,
-    //                         'ma' => $ma,
-    //                     ]);
-    //                 }
-    //             }
-    //         }
-    
-    //         return redirect()->route('all-prediksi')->with('success', 'Data prediksi berhasil ditambahkan atau diperbarui.');
-    //     } else {
-    //         return redirect()->route('all-prediksi')->with('error', 'Tidak ada data terbaru yang ditemukan.');
-    //     }
-    // }
     
     public function tambahPrediksi2()
     {
