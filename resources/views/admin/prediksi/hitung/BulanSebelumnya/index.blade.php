@@ -51,7 +51,15 @@
                             <option value="12">Desember</option>
                         </select>
                     </div>
-                    
+                    <br/>
+                    <div class="form-group">
+                        <label for="tahun">Pilih Tahun:</label>
+                        <select name="tahun" id="tahun" class="form-control">
+                            @for ($i = date('Y'); $i >= 2000; $i--)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
                     <br/>
                     <button type="submit" class="btn btn-primary">Hitung</button>
                     <br/>

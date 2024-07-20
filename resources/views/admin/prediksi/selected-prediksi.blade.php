@@ -6,12 +6,29 @@
             <h1>Data Prediksi yang Dipilih</h1>
         </div>
 
-        @foreach ($groupedData as $id_produk => $dataGroup)
+         @foreach ($groupedData as $id_produk => $dataGroup)
+            @php
+                // Sort the dataGroup by created_at in descending order
+                $sortedData = $dataGroup->sortByDesc('created_at');
+                // Get the latest entry
+                $latestData = $sortedData->first();
+
+                // Determine which set of data to use based on id_periode
+                if ($latestData->id_periode == 3) {
+                    $nextEntries = $sortedData->slice(1, 3); // Use $nextThreeLatestData
+                } elseif ($latestData->id_periode == 4) {
+                    $nextEntries = $sortedData->slice(1, 4); // Use $nextThreeLatestData4
+                } else {
+                    // Default to showing four entries if id_periode is neither 3 nor 4
+                    $nextEntries = $sortedData->slice(1, 4);
+                }
+            @endphp
+
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Prediksi Penjualan Bulan Depan {{ $dataGroup[0]->nama }} </h5>
-                        <table class="table ">
+                        <h5 class="card-title">Prediksi Penjualan Bulan Depan {{ $latestData->nama }} </h5>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -27,12 +44,44 @@
                                 </tr>
                             </thead>
                             <tbody class="prediksi-table-body" data-produk="{{ $id_produk }}">
-                                @foreach ($dataGroup as $index => $data)
+                                <tr data-periode="{{ $latestData->id_periode }}"
+                                    data-bulan="{{ $latestData->created_at->format('Y-m') }}">
+                                    <td>1</td>
+                                    <td>{{ $latestData->nama }}</td>
+                                    <td>{{ $latestData->created_at->addMonth()->format('F Y') }}</td>
+                                    <td>{{ $latestData->kategori->nama }}</td>
+                                    <td>{{ $latestData->id_filter }}</td>
+                                    <td class="hidden">{{ $latestData->id_periode }}</td>
+                                    <td>{{ $latestData->ma }}</td>
+                                    <td>{{ $latestData->mad }}</td>
+                                    <td>{{ $latestData->mse }}</td>
+                                    <td>{{ $latestData->mape }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h5 class="card-title mt-4">{{ count($nextEntries) }} Data Periode</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Bulan</th>
+                                    <th>Kategori</th>
+                                    <th>Qty</th>
+                                    <th class="hidden">Periode</th>
+                                    <th>MA</th>
+                                    <th>MAD</th>
+                                    <th>MSE</th>
+                                    <th>MAPE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="prediksi-table-body" data-produk="{{ $id_produk }}">
+                                @foreach ($nextEntries as $index => $data)
                                     <tr data-periode="{{ $data->id_periode }}"
                                         data-bulan="{{ $data->created_at->format('Y-m') }}">
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $index + 1 }}</td> <!-- Adjusting index to start from 2 -->
                                         <td>{{ $data->nama }}</td>
-                                        <td>{{ $data->created_at->format('F Y') }}</td>
+                                        <td>{{ $data->created_at->addMonth()->format('F Y') }}</td>
                                         <td>{{ $data->kategori->nama }}</td>
                                         <td>{{ $data->id_filter }}</td>
                                         <td class="hidden">{{ $data->id_periode }}</td>
@@ -49,12 +98,11 @@
             </div>
         @endforeach
 
-
         @foreach ($groupedData as $id_produk => $dataGroup)
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Riwayat Data Prediksi untuk Produk ID: {{ $dataGroup[0]->nama }}</h5>
+                        <h5 class="card-title">Riwayat Data Prediksi untuk Produk: {{ $dataGroup[0]->nama }}</h5>
 
                         <style>
                             .hidden {
@@ -109,7 +157,7 @@
                                         data-bulan="{{ $data->created_at->format('Y-m') }}">
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $data->nama }}</td>
-                                        <td>{{ $data->created_at->format('F Y') }}</td>
+                                        <td>{{ $data->created_at->addMonth()->format('F Y') }}</td>
                                         <td>{{ $data->kategori->nama }}</td>
                                         <td>{{ $data->id_filter }}</td>
                                         <td class="hidden">{{ $data->id_periode }}</td>
@@ -213,7 +261,8 @@
 
                                                 <div class="d-flex align-items-center">
                                                     <div class="ps-3">
-                                                        <h4><span class="avg-mse" data-produk="{{ $id_produk }}"></span>
+                                                        <h4><span class="avg-mse"
+                                                                data-produk="{{ $id_produk }}"></span>
                                                         </h4>
                                                     </div>
                                                 </div>

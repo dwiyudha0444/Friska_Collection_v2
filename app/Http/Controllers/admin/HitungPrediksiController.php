@@ -65,34 +65,69 @@ class HitungPrediksiController extends Controller
     }
 
     public function indexHasilSb(Request $request)
+    
     {
         $selectedIds = $request->input('selected_ids');
-        $idPeriode = $request->input('id_periode'); // Ambil id_periode dari request
-    
+        $idPeriode = $request->input('id_periode');
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+
         // Buat array kosong untuk menyimpan id_produk yang dipilih
         $selectedProductIds = [];
-    
+
         // Ambil id_produk dari data yang dipilih
-        foreach ($selectedIds as $id) {
-            $prediksi = Prediksi::find($id);
-            if ($prediksi) {
-                $selectedProductIds[] = $prediksi->id_produk;
+        if ($selectedIds) {
+            foreach ($selectedIds as $id) {
+                $prediksi = Prediksi::find($id);
+                if ($prediksi) {
+                    $selectedProductIds[] = $prediksi->id_produk;
+                }
             }
         }
-    
-        // Ambil data berdasarkan id_produk yang dipilih dan id_periode, kemudian kelompokkan
-        $selectedData = Prediksi::whereIn('id_produk', $selectedProductIds)
-            ->where('id_periode', $idPeriode) // Tambahkan filter id_periode
+
+        // Ambil data berdasarkan id_produk yang dipilih, id_periode, bulan, dan tahun
+        $query = Prediksi::query();
+
+        if (!empty($selectedProductIds)) {
+            $query->whereIn('id_produk', $selectedProductIds);
+        }
+
+        // Filter berdasarkan periode, bulan, dan tahun
+        $selectedData = $query->where('id_periode', $idPeriode)
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
             ->orderBy('created_at', 'desc')
             ->get()
             ->groupBy('id_produk'); // Kelompokkan berdasarkan id_produk
-    
+
+        // Ambil data bulan-bulan sebelumnya
+        $monthsToRetrieve = ($idPeriode == 3) ? 3 : 4; // Sesuaikan dengan kondisi Anda
+        $previousMonthsData = collect();
+
+        for ($i = 1; $i <= $monthsToRetrieve; $i++) {
+            $previousMonth = Carbon::now()->subMonths($i)->month;
+            $previousYear = Carbon::now()->subMonths($i)->year;
+
+            $previousMonthData = Prediksi::query()
+                ->whereIn('id_produk', $selectedProductIds)
+                ->where('id_periode', $idPeriode)
+                ->whereMonth('created_at', $previousMonth)
+                ->whereYear('created_at', $previousYear)
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->groupBy('id_produk');
+
+            $previousMonthsData = $previousMonthsData->merge($previousMonthData);
+        }
+
         // Tampilkan data tersebut
         return view('admin.prediksi.hitung.BulanSebelumnya.hasil', [
-            'groupedData' => $selectedData, // Kirim data yang sudah dikelompokkan ke view
+            'selectedData' => $selectedData,
+            'previousMonthsData' => $previousMonthsData,
         ]);
-        
     }
+        
+    
 
     public function indexHasil(Request $request)
     {

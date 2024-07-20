@@ -20,6 +20,8 @@ use App\Http\Controllers\admin\PrediksiController;
 use App\Http\Controllers\admin\PenjualanController;
 use App\Http\Controllers\admin\HitungPrediksiController;
 
+use App\Http\Controllers\admin\CrudController;
+
 
 
 /*
@@ -108,6 +110,8 @@ Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
     Route::get('/form_user_edit/{id}', [UserController::class, 'edit'])->name('edit_user');
     Route::put('/user/update/{id}', [UserController::class, 'update'])->name('update_user');
     
+    Route::get('/crud', [CrudController::class, 'index'])->name('crud');
+
 });
 
 //checkout
