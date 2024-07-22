@@ -107,12 +107,15 @@ class PrediksiController extends Controller
 
             // Data Penjualan
             $data_penjualan = DataPenjualan::dataPenjualan($product->id);
+
+            $data_penjualanStok = DataPenjualan::dataPenjualanStok($product->id);
             
             if ($prediksi1) {
                 // Jika sudah ada, update dengan data yang baru untuk MA pertama
                 $prediksi1->update([
                     'id_produk' => $product->id,
                     'id_filter' => $data_penjualan,
+                    'sisa_stok' => $data_penjualanStok,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 3,
@@ -127,6 +130,7 @@ class PrediksiController extends Controller
                 Prediksi::create([
                     'id_produk' => $product->id,
                     'id_filter' => $data_penjualan,
+                    'sisa_stok' => $data_penjualanStok,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 3,
@@ -143,6 +147,7 @@ class PrediksiController extends Controller
                 $prediksi2->update([
                     'id_produk' => $product->id,
                     'id_filter' => $data_penjualan,
+                    'sisa_stok' => $data_penjualanStok,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 4,
@@ -157,6 +162,7 @@ class PrediksiController extends Controller
                 Prediksi::create([
                     'id_produk' => $product->id,
                     'id_filter' => $data_penjualan,
+                    'sisa_stok' => $data_penjualanStok,
                     'nama' => $product->nama,
                     'id_kategori' => $product->id_kategori,
                     'id_periode' => 4,

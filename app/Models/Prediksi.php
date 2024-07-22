@@ -15,6 +15,7 @@ class Prediksi extends Model
         'id_kategori',
         'id_periode',
         'id_filter',
+        'sisa_stok',
         'ma',
         'mse',
         'mad',
