@@ -7,7 +7,8 @@
         </div>
 
         @foreach ($groupedData as $id_produk => $dataGroup)
-            @php
+
+        @php
                 // Sort the dataGroup by created_at in descending order
                 $sortedData = $dataGroup->sortByDesc('created_at');
                 // Get the latest entry
@@ -38,7 +39,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody class="prediksi-table-body" data-produk="{{ $id_produk }}">
+                            <tbody class="prediksi-table-body" >
                                 <tr data-periode="{{ $latestData->id_periode }}"
                                     data-bulan="{{ $latestData->created_at->format('Y-m') }}">
                                     <td>1</td>
@@ -61,12 +62,11 @@
                             <!-- Left side columns -->
                             <div class="col-lg-12">
                                 <div class="row">
-
-
+                                    <!-- Hasil Prediksi (moving average) Card -->
                                     <div class="col-xxl-12 col-xl-12">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
-                                                <h5 class="card-title">MA</h5>
+                                                <h5 class="card-title">Hasil Prediksi (moving average)</h5>
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     <div class="ps-3">
                                                         <h4><span>{{ $latestData->ma }}</span></h4>
@@ -76,77 +76,121 @@
                                         </div>
                                     </div>
 
-                                    <!-- Revenue Card -->
-                                    <div class="col-xxl-4 col-md-6">
+                                    <!-- Accuracy Cards -->
+                                    <div class="col-xxl-12 col-xl-12 mb-1">
                                         <div class="card info-card revenue-card">
-
                                             <div class="card-body">
-                                                <h5 class="card-title">MAD</span></h5>
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="ps-3">
-                                                        <h4><span>{{ $latestData->mad }}</span></h4>
+                                                <h5 class="card-title">Keakuratan Hasil Peramalan</h5>
+                                                <div class="row">
+                                                    <!-- MAD Card -->
+                                                    <div class="col-xxl-4 col-xl-4 mb-1">
+                                                        <div class="card info-card revenue-card">
+                                                            <div class="card-body text-center">
+                                                                <h5 class="card-title">MAD</h5>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-center">
+                                                                    <div class="ps-3">
+                                                                        <h4><span>{{ $latestData->mad }}</span></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div><!-- End Revenue Card -->
-
-                                    <!-- Sales Card -->
-                                    <div class="col-xxl-4 col-md-6">
-                                        <div class="card info-card sales-card">
-
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">MSE</span></h5>
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="ps-3">
-                                                        <h4><span>{{ $latestData->mse }}</span></h4>
+                                                    <!-- MSE Card -->
+                                                    <div class="col-xxl-4 col-xl-4 mb-1">
+                                                        <div class="card info-card sales-card">
+                                                            <div class="card-body text-center">
+                                                                <h5 class="card-title">MSE</h5>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-center">
+                                                                    <div class="ps-3">
+                                                                        <h4><span>{{ $latestData->mse }}</span></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div><!-- End Sales Card -->
-
-                                    <!-- Revenue Card -->
-                                    <div class="col-xxl-4 col-md-6">
-                                        <div class="card info-card revenue-card">
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">MAPE</span></h5>
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="ps-3">
-                                                        <h4><span>{{ $latestData->mape }}</span>
-                                                        </h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div><!-- End Revenue Card -->
-
-                                    <div class="col-xxl-12 col-xl-12">
-                                        <div class="card info-card customers-card">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">Selisih Stok dan Penjualan</h5>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <div class="ps-3">
-                                                        <h4><span>{{ $latestData->sisa_stok - $latestData->qty }}</span></h4>
+                                                    <!-- MAPE Card -->
+                                                    <div class="col-xxl-4 col-xl-4 mb-1">
+                                                        <div class="card info-card revenue-card">
+                                                            <div class="card-body text-center">
+                                                                <h5 class="card-title">MAPE</h5>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-center">
+                                                                    <div class="ps-3">
+                                                                        <h4><span>{{ $latestData->mape }}</span></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <div class="col-xxl-6 col-xl-6 mb-4">
+                                        <div class="card info-card customers-card">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Sisa Stok</h5>
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <div class="ps-3">
+                                                        <h4><span>{{ $latestData->sisa_stok }}</span>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-xxl-6 col-xl-6 mb-4">
+                                        <div class="card info-card customers-card">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Total Penjualan</h5>
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <div class="ps-3">
+                                                        <h4><span>{{ $latestData->id_filter }}</span>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Selisih Stok dan Penjualan Card -->
+                                    <div class="col-xxl-12 col-xl-12 mb-4">
+                                        <div class="card info-card customers-card">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Selisih Stok dan Penjualan</h5>
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <div class="ps-3">
+                                                        <h4><span>{{ $latestData->id_filter - $latestData->sisa_stok }}</span>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Selisih Stok dan Penjualan Card -->
+                                    <div class="col-xxl-12 col-xl-12 mb-4">
+                                        <div class="card info-card customers-card">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Saran stok penjualan untuk bulan depan</h5>
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <div class="ps-3">
+                                                        <h4><span>{{ $latestData->ma - ($latestData->sisa_stok - $latestData->qty) }}</span>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div><!-- End Left side columns -->
 
                         </div>
+
                         <h5 class="card-title mt-4">{{ count($nextEntries) }} Data Periode</h5>
                         <table class="table">
                             <thead>
@@ -163,7 +207,7 @@
                                     <th>MAPE</th>
                                 </tr>
                             </thead>
-                            <tbody class="prediksi-table-body" data-produk="{{ $id_produk }}">
+                            <tbody class="prediksi-table-body">
                                 @foreach ($nextEntries as $index => $data)
                                     <tr data-periode="{{ $data->id_periode }}"
                                         data-bulan="{{ $data->created_at->format('Y-m') }}">
@@ -185,9 +229,6 @@
                     </div>
                 </div>
             </div>
-        @endforeach
-
-        @foreach ($groupedData as $id_produk => $dataGroup)
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
