@@ -7,8 +7,7 @@
         </div>
 
         @foreach ($groupedData as $id_produk => $dataGroup)
-
-        @php
+            @php
                 // Sort the dataGroup by created_at in descending order
                 $sortedData = $dataGroup->sortByDesc('created_at');
                 // Get the latest entry
@@ -39,7 +38,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody class="prediksi-table-body" >
+                            <tbody class="prediksi-table-body">
                                 <tr data-periode="{{ $latestData->id_periode }}"
                                     data-bulan="{{ $latestData->created_at->format('Y-m') }}">
                                     <td>1</td>
@@ -63,13 +62,23 @@
                             <div class="col-lg-12">
                                 <div class="row">
                                     <!-- Hasil Prediksi (moving average) Card -->
-                                    <div class="col-xxl-12 col-xl-12">
+                                    <div class="col-xxl-6 col-xl-6">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Hasil Prediksi (moving average)</h5>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <div class="ps-3">
-                                                        <h4><span>{{ $latestData->ma }}</span></h4>
+                                                <div class="row">
+                                                    <div class="col-xxl-12 col-xl-12 mb-1">
+                                                        <div class="card info-card revenue-card">
+                                                            <div class="card-body text-center">
+                                                                <h5 class="card-title">MAD</h5>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-center">
+                                                                    <div class="ps-3">
+                                                                        <h4><span>{{ $latestData->ma }}</span></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -77,7 +86,7 @@
                                     </div>
 
                                     <!-- Accuracy Cards -->
-                                    <div class="col-xxl-12 col-xl-12 mb-1">
+                                    <div class="col-xxl-6 col-xl-6 mb-1">
                                         <div class="card info-card revenue-card">
                                             <div class="card-body">
                                                 <h5 class="card-title">Keakuratan Hasil Peramalan</h5>
@@ -129,7 +138,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xxl-6 col-xl-6 mb-4">
+                                    <div class="col-xxl-3 col-xl-3 mb-1">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Sisa Stok</h5>
@@ -143,7 +152,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xxl-6 col-xl-6 mb-4">
+                                    <div class="col-xxl-3 col-xl-3 mb-1">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Total Penjualan</h5>
@@ -158,7 +167,7 @@
                                     </div>
 
                                     <!-- Selisih Stok dan Penjualan Card -->
-                                    <div class="col-xxl-12 col-xl-12 mb-4">
+                                    <div class="col-xxl-3 col-xl-3 mb-1">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Selisih Stok dan Penjualan</h5>
@@ -173,10 +182,10 @@
                                     </div>
 
                                     <!-- Selisih Stok dan Penjualan Card -->
-                                    <div class="col-xxl-12 col-xl-12 mb-4">
+                                    <div class="col-xxl-3 col-xl-3 mb-1">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
-                                                <h5 class="card-title">Saran stok penjualan untuk bulan depan</h5>
+                                                <h5 class="card-title">Saran stok penjualan</h5>
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     <div class="ps-3">
                                                         <h4><span>{{ $latestData->ma - ($latestData->sisa_stok - $latestData->qty) }}</span>
@@ -254,12 +263,14 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="start-date-{{ $id_produk }}" class="col-sm-2 col-form-label">Dari Bulan:</label>
+                            <label for="start-date-{{ $id_produk }}" class="col-sm-2 col-form-label">Dari
+                                Bulan:</label>
                             <div class="col-sm-4">
-                                <input type="month" id="start-date-{{ $id_produk }}" class="form-control start-date"
-                                    data-produk="{{ $id_produk }}">
+                                <input type="month" id="start-date-{{ $id_produk }}"
+                                    class="form-control start-date" data-produk="{{ $id_produk }}">
                             </div>
-                            <label for="end-date-{{ $id_produk }}" class="col-sm-2 col-form-label">Sampai Bulan:</label>
+                            <label for="end-date-{{ $id_produk }}" class="col-sm-2 col-form-label">Sampai
+                                Bulan:</label>
                             <div class="col-sm-4">
                                 <input type="month" id="end-date-{{ $id_produk }}" class="form-control end-date"
                                     data-produk="{{ $id_produk }}">
