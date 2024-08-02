@@ -2,11 +2,11 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Kelola Penjualan</h1>
+            <h1>Transaksi</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('admin') }}">admin</a></li>
-                    <li class="breadcrumb-item active">Kelola Penjualan</li>
+                    <li class="breadcrumb-item active">Transaksi</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -23,7 +23,7 @@
                 @endif
 
                 <div class="card-body">
-                    <h5 class="card-title">Penjualan Perbulan</span></h5>
+                    <h5 class="card-title">Transaksi Perbulan</span></h5>
                     {{-- <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                             fill="currentColor" title="Tambah Data Film" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
                             <path

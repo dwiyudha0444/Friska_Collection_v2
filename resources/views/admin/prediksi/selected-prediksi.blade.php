@@ -65,16 +65,17 @@
                                     <div class="col-xxl-6 col-xl-6">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
-                                                <h5 class="card-title">Hasil Prediksi (moving average)</h5>
+                                                <h5 class="card-title">Prediksi Penjualan</h5>
                                                 <div class="row">
                                                     <div class="col-xxl-12 col-xl-12 mb-1">
                                                         <div class="card info-card revenue-card">
                                                             <div class="card-body text-center">
-                                                                <h5 class="card-title">MAD</h5>
+                                                                <h5 class="card-title">MA (moving average)</h5>
                                                                 <div
                                                                     class="d-flex align-items-center justify-content-center">
                                                                     <div class="ps-3">
-                                                                        <h4><span>{{ $latestData->ma }}</span></h4>
+                                                                        <h4><span>{{ number_format($latestData->ma) }}</span>
+                                                                        </h4>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -138,7 +139,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xxl-3 col-xl-3 mb-1">
+                                    <div class="col-xxl-6 col-xl-6 mb-1">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Sisa Stok</h5>
@@ -152,7 +153,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xxl-3 col-xl-3 mb-1">
+                                    {{-- <div class="col-xxl-3 col-xl-3 mb-1">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Total Penjualan</h5>
@@ -164,37 +165,106 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <!-- Selisih Stok dan Penjualan Card -->
+                                    {{-- <!-- Selisih Stok dan Penjualan Card -->
                                     <div class="col-xxl-3 col-xl-3 mb-1">
                                         <div class="card info-card customers-card">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title">Selisih Stok dan Penjualan</h5>
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     <div class="ps-3">
-                                                        <h4><span>{{ $latestData->id_filter - $latestData->sisa_stok }}</span>
+                                                        <h4><span>{{ abs($latestData->sisa_stok - $latestData->id_filter) }}</span></h4>
                                                         </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+                                    <!-- Selisih Stok dan Penjualan Card -->
+                                    <div class="col-xxl-6 col-xl-6 mb-1">
+                                        @if ($latestData->sisa_stok > $latestData->ma)
+                                            <div class="card info-card customers-card"
+                                                style="background-color: #28a745; color: #ffffff;">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title color">Rekomendasi Restok</h5>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <div class="ps-3">
+                                                            <h4><span>Stok Aman</span>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="card info-card customers-card"
+                                                style="background-color: #ff0000; color: #ffffff;">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title color">Rekomendasi Restok</h5>
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <div class="ps-3">
+                                                            <h4><span>{{ number_format(abs($latestData->ma - $latestData->sisa_stok)) }}</span>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-xxl-12 col-xl-12">
+                                        <div class="card info-card customers-card">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Catatan</h5>
+                                                <div class="row">
+                                                    <div class="col-xxl-6 col-xl-6 mb-1">
+                                                        <div class="card info-card revenue-card">
+                                                            <div class="card-body text-center">
+                                                                <h5 class="card-title">Mape</h5>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-center">
+                                                                    <div class="ps-3 text-start">
+                                                                        <p>• Jika nilai MAPE kurang dari 10%, maka kemampuan
+                                                                            model peramalan sangat baik.</p>
+                                                                        <p>• Jika nilai MAPE antara 10% - 20%, maka
+                                                                            kemampuan model peramalan baik.</p>
+                                                                        <p>• Jika nilai MAPE kisaran 20% - 50%, maka
+                                                                            kemampuan model peramalan layak.</p>
+                                                                        <p>• Jika nilai MAPE kisaran lebih dari 50%, maka
+                                                                            kemampuan model peramalan buruk.</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6 col-xl-6 mb-1">
+                                                        <div class="card info-card revenue-card">
+                                                            <div class="card-body text-center">
+                                                                <h5 class="card-title">MSE dan MAD</h5>
+                                                                <div
+                                                                    class="d-flex align-items-center justify-content-center">
+                                                                    <div class="ps-3 text-start">
+                                                                        <p>• MSE (Mean Squared Error): Mengukur rata-rata
+                                                                            kuadrat selisih antara nilai prediksi dan nilai
+                                                                            aktual. Semakin kecil MSE, semakin dekat
+                                                                            prediksi model dengan nilai aktual.</p>
+
+                                                                        <p>• MAD Mean Absolute Deviation Mengukur rata-rata
+                                                                            selisih absolut antara nilai prediksi dan nilai
+                                                                            aktual. Nilai MAD yang kecil menunjukkan bahwa
+                                                                            prediksi model lebih mendekati nilai aktual.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Selisih Stok dan Penjualan Card -->
-                                    <div class="col-xxl-3 col-xl-3 mb-1">
-                                        <div class="card info-card customers-card">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">Saran stok penjualan</h5>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <div class="ps-3">
-                                                        <h4><span>{{ $latestData->ma - ($latestData->sisa_stok - $latestData->qty) }}</span>
-                                                        </h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div><!-- End Left side columns -->
 
@@ -298,7 +368,7 @@
                                         data-bulan="{{ $data->created_at->format('Y-m') }}">
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $data->nama }}</td>
-                                        <td>{{ $data->created_at->addMonth()->format('F Y') }}</td>
+                                        <td>{{ $data->created_at->format('F Y') }}</td>
                                         <td>{{ $data->kategori->nama }}</td>
                                         <td>{{ $data->id_filter }}</td>
                                         <td class="hidden">{{ $data->id_periode }}</td>

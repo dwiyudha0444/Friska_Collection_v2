@@ -52,6 +52,15 @@
                                 </div>
 
                                 <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">Kode</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="kode" class="form-control"
+                                            value="{{ $produk->kode }}" readonly>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">Kategori</label>
                                     <div class="col-sm-10">
                                         <select class="form-select" name="id_kategori">
@@ -87,8 +96,6 @@
                                             value="{{ $produk->stok }}">
                                     </div>
                                 </div>
-
-
 
                                 <div class="row mb-3">
                                     <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>

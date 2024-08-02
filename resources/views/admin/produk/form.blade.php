@@ -42,15 +42,25 @@
                                 </div>
 
                                 <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">Kode</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="kode" class="form-control"
+                                            value="{{ old('PR', $kode) }}" readonly>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">Kategori</label>
                                     <div class="col-sm-10">
                                         <select class="form-select" name="id_kategori">
                                             <option selected>-- Pilih Kategori --</option>
-                                            @foreach($rel_kategori as $ob)
-                                            @php
-                                            $sel2 = (old('id_kategori') == $ob->id)? 'selected':'';
-                                            @endphp
-                                            <option value="{{ $ob->id }}" {{ $sel2 }}>{{ $ob->nama }}</option>
+                                            @foreach ($rel_kategori as $ob)
+                                                @php
+                                                    $sel2 = old('id_kategori') == $ob->id ? 'selected' : '';
+                                                @endphp
+                                                <option value="{{ $ob->id }}" {{ $sel2 }}>{{ $ob->nama }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -62,15 +72,13 @@
                                         <input type="text" name="harga" class="form-control">
                                     </div>
                                 </div>
-                                
+
                                 <div class="row mb-3">
                                     <label for="inputDate" class="col-sm-2 col-form-label">Stok</label>
                                     <div class="col-sm-10">
                                         <input type="text" name="stok" class="form-control">
                                     </div>
                                 </div>
-                                
-
 
                                 <div class="row mb-3">
                                     <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>

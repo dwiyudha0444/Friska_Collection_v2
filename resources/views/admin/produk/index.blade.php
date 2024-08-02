@@ -35,10 +35,11 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Kode</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Harga</th>
-                                <th scope="col">Image</th>
+                                {{-- <th scope="col">Image</th> --}}
                                 <th scope="col">Stok</th>
                                 <th scope="col">Action</th>
                                 {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'kepala apoteker')
@@ -54,6 +55,7 @@
                                 <tr>
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
                                     
+                                    <td>{{ $pro->kode }}</td>
                                     <td>{{ $pro->nama }}</td>
 
                                     @empty($pro->kategori->nama)
@@ -63,7 +65,7 @@
                                     @endempty
 
                                     <td>{{ $pro->harga }}</td>
-                                    <td>{{ $pro->image }}</td>
+                                    {{-- <td>{{ $pro->image }}</td> --}}
                                     <td>{{ $pro->stok }}</td>
                                     
                                     <td>

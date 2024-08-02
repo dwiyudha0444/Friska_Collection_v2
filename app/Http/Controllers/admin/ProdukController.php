@@ -19,13 +19,17 @@ class ProdukController extends Controller
     public function create()
     {
         $rel_kategori = Kategori::orderBy('id','DESC')->get();
-        return view('admin.produk.form',compact('rel_kategori'));
+        $nextId = Produk::max('id') + 1;
+        $kode = 'KD-' . $nextId;
+
+        return view('admin.produk.form',compact('rel_kategori','kode'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|max:45',
+            'kode' => 'required',
             'id_kategori' => 'required',
             'harga' => 'required',
             'stok' => 'required',
@@ -45,6 +49,7 @@ class ProdukController extends Controller
             DB::table('produks')->insert(
                 [
                     'nama' => $request->nama,
+                    'kode' => $request->kode,
                     'id_kategori' => $request->id_kategori,
                     'harga' => $request->harga,
                     'stok' => $request->stok,
@@ -67,6 +72,7 @@ class ProdukController extends Controller
     {
         $request->validate([
             'nama' => 'required|max:45',
+            'kode' => 'required',
             'id_kategori' => 'required',
             'harga' => 'required',
             'stok' => 'required',
@@ -94,6 +100,7 @@ class ProdukController extends Controller
             DB::table('produks')->where('id',$id)->update(
                 [
                     'nama' => $request->nama,
+                    'kode' => $request->kode,
                     'id_kategori' => $request->id_kategori,
                     'harga' => $request->harga,
                     'stok' => $request->stok,

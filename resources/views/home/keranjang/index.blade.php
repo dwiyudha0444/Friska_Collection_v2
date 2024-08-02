@@ -22,6 +22,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Kategori</th>
                                 <th>Harga</th>
                                 <th>Aksi</th>
                             </tr>
@@ -34,6 +35,7 @@
                                 <tr style="display: none;">
                                     <td class="text-center">{{ $no++ }}</td>
                                     <td class="text-center">{{ $pro->nama }}</td>
+                                    <td class="text-center">{{ $pro->kategori->nama }}</td>
                                     <td class="text-center">{{ $pro->harga }}</td>
                                     <td class="text-center">
                                         <form action="{{ route('add-to-keranjang') }}" method="post">
