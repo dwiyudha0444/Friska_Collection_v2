@@ -24,39 +24,42 @@ class UpdatePredictions extends Command
         $this->info('Updating prediction data...');
         Log::info('Starting prediction update.');
 
-        if (Carbon::now()->day != 2) {
-            $this->info('Today is not the 2nd of the month. Skipping update.');
-            Log::info('Today is not the 2nd of the month. Skipping update.');
-            return;
-        }
-
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
 
-        $salesData = FilterPenjualanPerbulan::whereMonth('created_at', $currentMonth)
+        // Ambil id_produk yang unik dari entri terbaru dalam FilterPenjualanPerbulan
+        $latestEntries = FilterPenjualanPerbulan::select('id_produk')
+            ->whereMonth('created_at', $currentMonth)
             ->whereYear('created_at', $currentYear)
-            ->get();
+            ->distinct() // Ambil id_produk yang unik
+            ->pluck('id_produk'); // Ambil id_produk saja
 
-        foreach ($salesData as $data) {
+        foreach ($latestEntries as $productId) {
+            // Ambil data terbaru untuk setiap id_produk dan tambahkan jika belum ada
+            $latestSale = FilterPenjualanPerbulan::where('id_produk', $productId)
+                ->whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->latest()
+                ->first();
 
-            $movingAverage = MovingAverageHelper::calculateMovingAverage($data->id_produk);
+            // Hitung rata-rata pergerakan
+            $movingAverage = MovingAverageHelper::calculateMovingAverage($latestSale->id_produk);
 
+            // Buat entri prediksi
             Prediksi::create([
-                'id_produk' => $data->id_produk,
-                'nama' => $data->nama,
-                'id_kategori' => $data->id_kategori,
-                'image' => $data->image,
-                'harga' => $data->harga,
-                'qty' => $data->qty,
+                'id_produk' => $latestSale->id_produk,
+                'nama' => $latestSale->nama,
+                'id_kategori' => $latestSale->id_kategori,
+                'periode' => 3,
                 'ma' => $movingAverage,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
-            Log::info('Created new prediction entry for product: ' . $data->id_produk);
+
+            Log::info('Created new prediction entry for product: ' . $latestSale->id_produk);
         }
 
         Log::info('Prediction data updated successfully.');
         $this->info('Prediction data updated successfully.');
     }
 }
-

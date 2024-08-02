@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:monthly-sales')->monthlyOn(1, '00:00');
 
         // Jadwalkan UpdatePredictions untuk dijalankan setiap bulan pada tanggal 2
-        $schedule->command('update:predictions')->monthlyOn(2, '00:00');
+        $schedule->command('update:predictions')->monthlyOn(1, '00:00');
     }
 
     /**

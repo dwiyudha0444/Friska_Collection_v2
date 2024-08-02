@@ -109,7 +109,7 @@ class CheckoutController extends Controller
                     ]);
                 }
     
-                // Simpan data ke dalam database transaksi
+                // Simpan data ke dalam database filter
                 Penjualan::create([
                     'id_produk' => $item['id_fashion'],
                     'nama' => $item['nama'],

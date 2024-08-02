@@ -13,8 +13,6 @@ class Prediksi extends Model
         'id_produk',
         'nama',
         'id_kategori',
-        'harga',
-        'qty', 
         'ma',
         'mse',
         'mad',

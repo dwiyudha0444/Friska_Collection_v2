@@ -16,8 +16,6 @@ return new class extends Migration
             $table->bigInteger('id_produk')->unsigned()->nullable();
             $table->string('nama');
             $table->string('id_kategori');
-            $table->integer('harga');
-            $table->integer('qty');
             $table->integer('ma')->nullable();
             $table->integer('mse')->nullable();
             $table->integer('mad')->nullable();
