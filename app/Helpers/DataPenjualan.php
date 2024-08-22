@@ -30,15 +30,15 @@ class DataPenjualan
     public static function dataPenjualanStok($productId)
     {
         // Ambil data penjualan terbaru per bulan untuk produk tertentu
-        $latestSales = Produk::where('id', $productId)
+        $latestSales = \App\Models\Produk::where('id', $productId)
             ->orderBy('created_at', 'desc')
             ->first();
-    
+
         if (!$latestSales) {
             return 0; // Atau sesuaikan dengan logika penanganan jika data tidak ditemukan
         }
-    
-        return $latestSales->stok; // Mengembalikan nilai qty dari data penjualan terbaru
+
+        return $latestSales->stok; // Mengembalikan nilai stok dari data penjualan terbaru
     }
     
 }

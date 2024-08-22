@@ -30,6 +30,7 @@ class KeranjangController extends Controller
             'id_kategori' => 'required',
             'image' => 'required',
             'harga' => 'required',
+            'stok' => 'required',
             'qty' => 'required',
         ]);
 
@@ -40,6 +41,7 @@ class KeranjangController extends Controller
             'id_kategori' => $request->id_kategori,
             'image' => $request->image,
             'harga' => $request->harga,
+            'stok' => $request->stok,
             'qty' => $request->qty,
         ]);
 

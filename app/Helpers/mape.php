@@ -20,13 +20,20 @@ class mape
             ->orderBy('created_at', 'desc')
             ->first();
 
-            // ambil data mad
+        // ambil data mad
         $mad = mad::calculateMAD($productId);
 
-        // proses hitung
-        $mape = $mad / $latestSales->qty * 100 ; 
+        // cek jika qty tidak nol
+        if ($latestSales && $latestSales->qty != 0) {
+            // proses hitung MAPE
+            $mape = $mad / $latestSales->qty * 100;
+        } else {
+            // tentukan nilai yang ingin dikembalikan jika qty = 0
+            $mape = null; // atau bisa juga 0, atau pesan tertentu
+        }
 
         return $mape;
+
     }
 
     public static function calculateMAPEPeriodeEmpat($productId)
@@ -36,11 +43,17 @@ class mape
             ->orderBy('created_at', 'desc')
             ->first();
 
-            // ambil data mad
-        $mad = mad::calculateMADPeriodeEmpat($productId);
+        // ambil data mad
+        $mad = mad::calculateMAD($productId);
 
-        // proses hitung
-        $mape = $mad / $latestSales->qty * 100 ; 
+        // cek jika qty tidak nol
+        if ($latestSales && $latestSales->qty != 0) {
+            // proses hitung MAPE
+            $mape = $mad / $latestSales->qty * 100;
+        } else {
+           
+            $mape = null; 
+        }
 
         return $mape;
 

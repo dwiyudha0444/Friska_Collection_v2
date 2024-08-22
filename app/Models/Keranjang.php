@@ -15,6 +15,7 @@ class Keranjang extends Model
         'id_kategori',
         'harga',
         'image',
+        'stok',
         'qty', 
     ];
 }

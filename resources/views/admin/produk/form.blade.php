@@ -87,6 +87,13 @@
                                     </div>
                                 </div>
 
+                                <div class="row mb-3">
+                                    <label for="inputDate" class="col-sm-2 col-form-label">Tanggal</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" name="tgl" class="form-control">
+                                    </div>
+                                </div>
+
 
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">Simpan</label>

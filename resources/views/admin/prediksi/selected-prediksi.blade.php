@@ -8,6 +8,7 @@
 
         @foreach ($groupedData as $id_produk => $dataGroup)
             @php
+            
                 // Sort the dataGroup by created_at in descending order
                 $sortedData = $dataGroup->sortByDesc('created_at');
                 // Get the latest entry

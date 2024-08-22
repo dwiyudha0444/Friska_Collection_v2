@@ -15,6 +15,7 @@ class Produk extends Model
         'harga',
         'image',
         'stok', 
+        'tgl', 
     ];
 
     public function kategori()

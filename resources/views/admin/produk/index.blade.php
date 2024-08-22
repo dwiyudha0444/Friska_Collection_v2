@@ -41,6 +41,7 @@
                                 <th scope="col">Harga</th>
                                 {{-- <th scope="col">Image</th> --}}
                                 <th scope="col">Stok</th>
+                                <th scope="col">Tanggal</th>
                                 {{-- <th scope="col">Keterangan</th> --}}
                                 <th scope="col">Action</th>
                                 {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'kepala apoteker')
@@ -69,6 +70,9 @@
                                     {{-- <td>{{ $pro->image }}</td> --}}
                                     <td>{{ $pro->stok }}</td>
                                     {{-- <td>{{ $pro->stok }}</td> --}}
+
+                                    <td>{{ $pro->tgl }}</td>
+
                                     
                                     <td>
 

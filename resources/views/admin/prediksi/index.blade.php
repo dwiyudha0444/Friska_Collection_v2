@@ -55,7 +55,7 @@
                         </div>
 
                         </br>
-                        <button type="submit" class="btn btn-primary">Hitung</button>
+                        <button type="submit" class="btn btn-primary">Cek</button>
                         </br>
                         <table class="table table-borderless datatable">
                             <thead>

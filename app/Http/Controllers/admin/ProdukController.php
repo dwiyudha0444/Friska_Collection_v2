@@ -33,7 +33,8 @@ class ProdukController extends Controller
             'id_kategori' => 'required',
             'harga' => 'required',
             'stok' => 'required',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg'
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg',
+            'tgl' => 'required',
             ]);
             //Film::create($request->all());
             //---apakah user ingin upload image
@@ -54,6 +55,7 @@ class ProdukController extends Controller
                     'harga' => $request->harga,
                     'stok' => $request->stok,
                     'image' => $fileName,
+                    'tgl' => $request->tgl,
                     'created_at' => now(),
               ]);
                 
