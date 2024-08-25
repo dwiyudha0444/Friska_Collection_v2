@@ -16,6 +16,8 @@ use App\Helpers\mape;
 use App\Helpers\DataPenjualan;
 use Carbon\Carbon;
 use DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class PrediksiController extends Controller
 {
@@ -280,10 +282,24 @@ class PrediksiController extends Controller
             ->get()
             ->groupBy('id_produk'); // Kelompokkan berdasarkan id_produk
     
+                // Cek apakah user meminta untuk download PDF
+        if ($request->has('download_pdf')) {
+            // Buat PDF dengan data yang sudah diambil dan dikelompokkan
+            $pdf = Pdf::loadView('admin.prediksi.selected-prediksi-pdf', [
+                'groupedData' => $selectedData,
+            ]);
+
+            // Download PDF
+            return $pdf->download('laporan_prediksi.pdf');
+        }
+
         // Tampilkan data tersebut
         return view('admin.prediksi.selected-prediksi', [
-            'groupedData' => $selectedData, // Kirim data yang sudah dikelompokkan ke view
+            'groupedData' => $selectedData, // Data yang sudah dikelompokkan
+            'selectedIds' => $selectedIds,  // Pastikan untuk mengirimkan $selectedIds ke view
+            'idPeriode' => $idPeriode,      // Kirim juga id_periode ke view jika diperlukan
         ]);
+        
     }
     
     

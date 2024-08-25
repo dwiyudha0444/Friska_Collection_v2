@@ -82,6 +82,7 @@
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
 
                                             <a class="custom-btn custom-btn-edit" href="{{ url('/form_produk_edit', $pro->id) }}">Edit</a>
+                                            <a class="custom-btn custom-btn-edit" href="{{ url('/form_produk_tambah', $pro->id) }}">Tambah</a>
                                         </form>
                                     </td>
                                 </tr>

@@ -77,6 +77,11 @@ Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
     Route::put('produk/update/{id}', [ProdukController::class, 'update'])->name('update_produk');
     Route::delete('/delete_produk/{id}', [ProdukController::class, 'destroy'])->name('destroy_produk');
 
+    Route::get('/form_produk_tambah/{id}', [ProdukController::class, 'tambah'])->name('tambah_produk');
+    Route::post('/form_produk_tambah/{id}', [ProdukController::class, 'tambahDanUpdateProduk'])->name('tambah_produk_add');
+
+    Route::put('/form_produk_update/{id}', [ProdukController::class, 'tambahupdate'])->name('tambahup');
+    
     //kategori
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
     Route::get('/form_kategori', [KategoriController::class, 'create'])->name('create_kategori');
@@ -118,3 +123,5 @@ Route::middleware(['auth', 'checkAdminPemilik'])->group(function () {
 Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 //checkout
 Route::post('/checkout2', [CheckoutController::class, 'checkout2'])->name('checkout2');
+
+Route::get('/generate-prediction-pdf', [PrediksiController::class, 'pilihProduk'])->name('generate.prediction.pdf');

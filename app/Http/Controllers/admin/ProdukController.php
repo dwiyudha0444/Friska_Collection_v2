@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use App\Models\Kategori;
+use App\Models\Restok;
 use DB;
 
 class ProdukController extends Controller
@@ -113,6 +114,78 @@ class ProdukController extends Controller
             return redirect('/produk')
             ->with('success','Data Berhasil Diubah');
     }
+
+    public function tambah($id)
+    {
+        $produk = Produk::find($id);
+        $rel_kategori = Kategori::orderBy('id', 'DESC')->get();
+        return view('admin.produk.tambah_produk', compact('produk', 'rel_kategori'));
+    }
+
+    public function tambahDanUpdateProduk(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'nama' => 'required|max:45',
+        'kode' => 'required',
+        'id_kategori' => 'required',
+        'harga' => 'required',
+        'stok' => 'required',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg',
+    ]);
+
+    // Proses upload gambar jika ada
+    if (!empty($request->image)) {
+        $fileName = $request->nama . '.' . $request->image->extension();
+        $request->image->move(public_path('admin/assets/image'), $fileName);
+    } else {
+        $fileName = '';
+    }
+
+    // Insert data ke tabel 'restok'
+    DB::table('restok')->insert([
+        'nama' => $request->nama,
+        'kode' => $request->kode,
+        'id_kategori' => $request->id_kategori,
+        'harga' => $request->harga,
+        'stok' => $request->stok,
+        'image' => $fileName,
+        'created_at' => now(),
+    ]);
+
+    // Periksa apakah produk dengan kode tersebut sudah ada di tabel 'produks'
+    $produk = DB::table('produks')->where('kode', $request->kode)->first();
+
+    if ($produk) {
+        // Jika produk sudah ada, tambahkan stoknya dengan stok dari restok
+        $newStok = $produk->stok + $request->stok;
+
+        DB::table('produks')->where('kode', $request->kode)->update([
+            'nama' => $request->nama,
+            'id_kategori' => $request->id_kategori,
+            
+            'stok' => $newStok,
+            'image' => $fileName ? $fileName : $produk->image,
+            'updated_at' => now(),
+        ]);
+    } else {
+        // Jika produk belum ada, tambahkan produk baru
+        DB::table('produks')->insert([
+            'nama' => $request->nama,
+            'kode' => $request->kode,
+            'id_kategori' => $request->id_kategori,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+            'image' => $fileName,
+            'created_at' => now(),
+        ]);
+    }
+
+    return redirect('/produk')->with('success', 'Data Berhasil Ditambahkan dan Stok Diupdate');
+}
+
+    
+    
 
     public function destroy($id)
     {
