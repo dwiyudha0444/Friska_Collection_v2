@@ -88,7 +88,7 @@ class CheckoutController extends Controller
         try {
             foreach ($request->items as $item) {
                 // Cek apakah ada entri dengan id_produk yang sama dalam filter_penjualan_bulanan
-                $filterPenjualan = FilterPenjualanPerbulan::where('id_produk', $item['id_fashion'])
+                $filterPenjualan = FilterPenjualanPerbulan::where('id_produk', $item['id_produk'])
                     ->whereMonth('created_at', now()->month)
                     ->whereYear('created_at', now()->year)
                     ->first();
@@ -100,9 +100,9 @@ class CheckoutController extends Controller
                 } else {
                     // Jika belum ada, buat entri baru
                     FilterPenjualanPerbulan::create([
-                        'id_produk' => $item['id_fashion'],
+                        'id_produk' => $item['id_produk'],
                         'nama' => $item['nama'],
-                        'id_kategori' => $item['kategori'], 
+                        'id_kategori' => $item['id_kategori'], 
                         'image' => $item['image'],
                         'harga' => $item['harga'],
                         'qty' => $item['qty'],
@@ -111,16 +111,16 @@ class CheckoutController extends Controller
     
                 // Simpan data ke dalam database filter
                 Penjualan::create([
-                    'id_produk' => $item['id_fashion'],
+                    'id_produk' => $item['id_produk'],
                     'nama' => $item['nama'],
-                    'id_kategori' => $item['kategori'], 
+                    'id_kategori' => $item['id_kategori'], 
                     'image' => $item['image'],
                     'harga' => $item['harga'],
                     'qty' => $item['qty'],
                 ]);
     
                 // Kurangi stok produk
-                $produk = Produk::findOrFail($item['id_fashion']); 
+                $produk = Produk::findOrFail($item['id_produk']); 
                 $produk->stok -= $item['qty'];
                 $produk->save();
             }

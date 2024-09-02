@@ -90,11 +90,11 @@
                             <form action="{{ route('checkout2') }}" method="POST">
                                 @csrf
                                 @foreach ($keranjang as $ca)
-                                    <input type="hidden" name="items[{{ $loop->index }}][id_fashion]"
+                                    <input type="hidden" name="items[{{ $loop->index }}][id_produk]"
                                         value="{{ $ca->id_produk }}">
                                     <input type="hidden" name="items[{{ $loop->index }}][nama]"
                                         value="{{ $ca->nama }}">
-                                    <input type="hidden" name="items[{{ $loop->index }}][kategori]"
+                                    <input type="hidden" name="items[{{ $loop->index }}][id_kategori]"
                                         value="{{ $ca->id_kategori }}">
                                     <input type="hidden" name="items[{{ $loop->index }}][image]"
                                         value="{{ $ca->image }}">
