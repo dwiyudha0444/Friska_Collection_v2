@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(Users::class);
         $this->call(Kategoris::class);
         $this->call(Produks::class);
+        $this->call(FilterPenjualanPerbulan::class);
     }
 }

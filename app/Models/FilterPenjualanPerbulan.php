@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FilterPenjualanPerbulan extends Model
 {
-    protected $table = 'filter_penjualan_perbulan'; // Perbaiki penulisan tabel di sini
+    protected $table = 'filter_penjualan_perbulan'; 
     
     protected $fillable = [
         'id_produk',

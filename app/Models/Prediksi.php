@@ -11,7 +11,6 @@ class Prediksi extends Model
     
     protected $fillable = [
         'id_produk',
-        'id_filter_penjualan_perbulan',
         'nama',
         'id_kategori',
         'harga',

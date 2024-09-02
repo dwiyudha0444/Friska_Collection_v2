@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('prediksis', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_produk')->unsigned()->nullable();
-            $table->bigInteger('id_filter_penjualan_perbulan')->unsigned()->nullable();
             $table->string('nama');
             $table->string('id_kategori');
             $table->integer('harga');
