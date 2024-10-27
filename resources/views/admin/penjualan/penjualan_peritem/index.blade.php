@@ -50,24 +50,24 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @foreach ($penjualan_perbulan as $peper)
+                            @foreach ($penjualan as $petim)
                                 <tr>
                                     <th scope="row"><a href="#">{{ $no++ }}</a></th>
 
-                                    <td>{{ $peper->nama }}</td>
-                                    <td>{{ $peper->kategori->nama }}</td>
-                                    <td>{{ $peper->created_at->format('F') }}</td>
-                                    <td>{{ $peper->harga }}</td>
-                                    <td>{{ $peper->qty }}</td>
+                                    <td>{{ $petim->nama }}</td>
+                                    <td>{{ $petim->kategori->nama }}</td>
+                                    <td>{{ $petim->created_at->format('F') }}</td>
+                                    <td>{{ $petim->harga }}</td>
+                                    <td>{{ $petim->qty }}</td>
 
 
                                     {{-- <td>
 
-                                        <form method="POST" action="{{ route('destroy_Penjualan', $peper->id) }}">
+                                        <form method="POST" action="{{ route('destroy_Penjualan', $petim->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="custom-btn custom-btn-merah">Hapus</button>
-                                            <a class="custom-btn custom-btn-edit" href="{{ url('form_Penjualan_edit', $peper->id) }}">Edit</a>
+                                            <a class="custom-btn custom-btn-edit" href="{{ url('form_Penjualan_edit', $petim->id) }}">Edit</a>
                                         </form>
 
                                     </td> --}}

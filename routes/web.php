@@ -79,6 +79,7 @@ Route::post('/checkout2', [CheckoutController::class, 'checkout2'])->name('check
 
 //penjualan
 Route::get('/penjualan-perbulan', [PenjualanController::class, 'indexPeper'])->name('penjualan-perbulan');
+Route::get('/penjualan-peritem', [PenjualanController::class, 'indexPetim'])->name('penjualan-peritem');
 
 //prediksi
 Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prdiksi');

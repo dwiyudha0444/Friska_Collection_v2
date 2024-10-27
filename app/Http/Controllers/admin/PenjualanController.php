@@ -15,4 +15,10 @@ class PenjualanController extends Controller
         $penjualan_perbulan = FilterPenjualanPerbulan::orderBy('id','DESC')->get();
         return view('admin.penjualan.penjualan_perbulan.index',compact('penjualan_perbulan'));
     }
+
+    public function indexPetim()
+    {
+        $penjualan = Penjualan::orderBy('id','DESC')->get();
+        return view('admin.penjualan.penjualan_peritem.index',compact('penjualan'));
+    }
 }

@@ -27,4 +27,9 @@ class Kategori extends Model
     {
         return $this->hasMany(FilterPenjualanPerbulan::class);
     }
+
+    public function penjualan()
+    {
+        return $this->hasMany(Penjualan::class);
+    }
 }

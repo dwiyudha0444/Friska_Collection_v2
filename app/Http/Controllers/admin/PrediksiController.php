@@ -208,7 +208,7 @@ class PrediksiController extends Controller
                     ->first();
     
                 // Hitung Moving Average (MA) menggunakan helper untuk data asli
-                $ma = MovingAveragePeriodeTiga::calculateMovingAverage($produk->id_produk);
+                $ma = MovingAverage::calculateMovingAveragePeriodeTiga($produk->id_produk);
     
                 // Hitung Moving Average (MA) kedua untuk data yang berbeda
                 $ma2 = MovingAverage::calculateMovingAverage($produk->id_produk);
