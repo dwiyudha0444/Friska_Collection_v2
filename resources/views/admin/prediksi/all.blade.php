@@ -63,6 +63,9 @@
                                     <td>{{ $pre->created_at->format('F') }}</td>
                                     <td>{{ $pre->id_periode }}</td>
                                     <td>{{ $pre->ma }}</td>
+                                    <td>{{ $pre->mad }}</td>
+                                    <td>{{ $pre->mse }}</td>
+                                    <td>{{ $pre->mape }}</td>
                                     {{-- <td>
                                         <form method="POST" action="{{ route('obat.destroy', $pre->id) }}">
                                             @csrf

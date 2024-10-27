@@ -9,6 +9,7 @@ use App\Models\Prediksi;
 use App\Models\Periode;
 use App\Helpers\MovingAveragePeriodeTiga;
 use App\Helpers\MovingAverage;
+use App\Helpers\mad;
 use Carbon\Carbon;
 use DB;
 
@@ -125,6 +126,9 @@ class PrediksiController extends Controller
         // Hitung Moving Average
         $ma = MovingAveragePeriodeTiga::calculateMovingAverage($product->id);
         $ma2 = MovingAverage::calculateMovingAverage($product->id);
+        // Hitung MAD
+        $mad = mad::calculateMAD($product->id);
+        $mad2 = mad::calculateMADPeriodeEmpat($product->id);
 
         if ($prediksi1) {
             // Jika sudah ada, update dengan data yang baru untuk MA pertama
@@ -134,6 +138,7 @@ class PrediksiController extends Controller
                 'id_kategori' => $product->id_kategori,
                 'id_periode' => 3,
                 'ma' => $ma,
+                'mad' => $mad,
             ]);
             $isUpdatedOrCreated = true;
         } else {
@@ -144,6 +149,7 @@ class PrediksiController extends Controller
                 'id_kategori' => $product->id_kategori,
                 'id_periode' => 3,
                 'ma' => $ma,
+                'mad' => $mad,
             ]);
             $isUpdatedOrCreated = true;
         }
@@ -156,6 +162,7 @@ class PrediksiController extends Controller
                 'id_kategori' => $product->id_kategori,
                 'id_periode' => 4,
                 'ma' => $ma2,
+                'mad' => $mad2,
             ]);
             $isUpdatedOrCreated = true;
         } else {
@@ -166,6 +173,7 @@ class PrediksiController extends Controller
                 'id_kategori' => $product->id_kategori,
                 'id_periode' => 4,
                 'ma' => $ma2,
+                'mad' => $mad2,
             ]);
             $isUpdatedOrCreated = true;
         }
@@ -213,6 +221,8 @@ class PrediksiController extends Controller
                 // Hitung Moving Average (MA) kedua untuk data yang berbeda
                 $ma2 = MovingAverage::calculateMovingAverage($produk->id_produk);
     
+                $mad = mad::calculateMAD($produk->id_produk);
+
                 // Cek apakah sudah ada data untuk id_produk dan periode 3
                 $existingDataPeriode3 = Prediksi::where('id_produk', $dataTerbaru->id_produk)
                     ->where('id_periode', 3)
@@ -226,6 +236,7 @@ class PrediksiController extends Controller
                         'id_kategori' => $dataTerbaru->id_kategori,
                         'id_periode' => 3,
                         'ma' => $ma,
+                        'mad' => $mad,
                     ]);
                 }
     
