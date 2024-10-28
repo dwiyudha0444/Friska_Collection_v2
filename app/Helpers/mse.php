@@ -14,22 +14,22 @@ class mse
 {
     public static function calculateMSE($productId)
     {
+        // ambil data mad
         $mad = mad::calculateMAD($productId);
 
-        // Misalkan $mad adalah hasil dari beberapa perhitungan yang akan Anda lakukan
-        // Gantilah logika ini dengan logika perhitungan MAD yang sebenarnya
-        $mse = $mad * $mad; // atau beberapa perhitungan lain
+        // proses hitung
+        $mse = $mad * $mad; 
 
         return $mse;
     }
 
     public static function calculateMSEPeriodeEmpat($productId)
     {
+        // ambil data mad
         $mad = mad::calculateMADPeriodeEmpat($productId);
 
-        // Misalkan $mad adalah hasil dari beberapa perhitungan yang akan Anda lakukan
-        // Gantilah logika ini dengan logika perhitungan MAD yang sebenarnya
-        $mse = $mad * $mad; // atau beberapa perhitungan lain
+        // proses hitung
+        $mse = $mad * $mad; 
 
         return $mse;
     }

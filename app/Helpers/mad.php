@@ -18,15 +18,14 @@ class mad
             ->orderBy('created_at', 'desc')
             ->first();
 
-
         if (!$latestSales) {
             return 0;
         }
 
+        // ambil data ma
         $movingAverage = MovingAverage::calculateMovingAveragePeriodeTiga($productId);
 
-        // Misalkan $mad adalah hasil dari beberapa perhitungan yang akan Anda lakukan
-        // Gantilah logika ini dengan logika perhitungan MAD yang sebenarnya
+        // proses hitung
         $mad = $latestSales->qty - $movingAverage; // atau beberapa perhitungan lain
 
         return $mad;
@@ -44,11 +43,11 @@ class mad
             return 0;
         }
 
+        // ambil data ma
         $movingAverage = MovingAverage::calculateMovingAverage($productId);
 
-        // Misalkan $mad adalah hasil dari beberapa perhitungan yang akan Anda lakukan
-        // Gantilah logika ini dengan logika perhitungan MAD yang sebenarnya
-        $mad = $latestSales->qty - $movingAverage; // atau beberapa perhitungan lain
+        // proses hitung
+        $mad = $latestSales->qty - $movingAverage;
 
         return $mad;
     }
