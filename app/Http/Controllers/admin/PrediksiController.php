@@ -10,6 +10,7 @@ use App\Models\Periode;
 use App\Helpers\MovingAveragePeriodeTiga;
 use App\Helpers\MovingAverage;
 use App\Helpers\mad;
+use App\Helpers\mse;
 use Carbon\Carbon;
 use DB;
 
@@ -129,6 +130,9 @@ class PrediksiController extends Controller
         // Hitung MAD
         $mad = mad::calculateMAD($product->id);
         $mad2 = mad::calculateMADPeriodeEmpat($product->id);
+        // Hitung MSE
+        $mse = mse::calculateMSE($product->id);
+        $mse2 = mse::calculateMSEPeriodeEmpat($product->id);
 
         if ($prediksi1) {
             // Jika sudah ada, update dengan data yang baru untuk MA pertama
@@ -139,6 +143,7 @@ class PrediksiController extends Controller
                 'id_periode' => 3,
                 'ma' => $ma,
                 'mad' => $mad,
+                'mse' => $mse,
             ]);
             $isUpdatedOrCreated = true;
         } else {
@@ -150,6 +155,7 @@ class PrediksiController extends Controller
                 'id_periode' => 3,
                 'ma' => $ma,
                 'mad' => $mad,
+                'mse' => $mse,
             ]);
             $isUpdatedOrCreated = true;
         }
@@ -163,6 +169,7 @@ class PrediksiController extends Controller
                 'id_periode' => 4,
                 'ma' => $ma2,
                 'mad' => $mad2,
+                'mse' => $mse2,
             ]);
             $isUpdatedOrCreated = true;
         } else {
@@ -174,6 +181,7 @@ class PrediksiController extends Controller
                 'id_periode' => 4,
                 'ma' => $ma2,
                 'mad' => $mad2,
+                'mse' => $mse2,
             ]);
             $isUpdatedOrCreated = true;
         }
