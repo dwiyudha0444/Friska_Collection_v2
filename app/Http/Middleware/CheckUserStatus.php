@@ -15,13 +15,18 @@ class CheckUserStatus
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
      * @return \Illuminate\Http\Response
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->status == 'nonaktif') {
-            return response()->view('waiting'); 
+        if (Auth::check()) {
+            if (Auth::user()->status == 'nonaktif') {
+                return response()->view('waiting');
+            }
+        } else {
+            return redirect()->route('login'); // Redirect to login if not authenticated
         }
-
+    
         return $next($request);
     }
+    
 }
 

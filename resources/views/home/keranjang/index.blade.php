@@ -71,6 +71,10 @@
                     <table class="cart-table">
                         <thead class="cart-header">
                             <tr>
+                            @php
+                                $no1 = 1;
+                            @endphp
+                            <th class="no">No</th>
                                 <th colspan="4" class="prod-column">Nama</th>
                                 <th class="price">Harga</th>
                                 <th class="quantity">Jumlah</th>
@@ -80,6 +84,7 @@
                         <tbody>
                             @foreach ($keranjang as $ker)
                                 <tr>
+                                <td class="no">{{ $no1++ }}</td>
                                     <td colspan="4" class="prod-column">
                                         <div class="column-box">
                                             <div class="remove-btn">

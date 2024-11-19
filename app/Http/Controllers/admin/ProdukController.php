@@ -108,7 +108,7 @@ class ProdukController extends Controller
                     'updated_at' => now(),
               ]);
             
-            return redirect('/form_produk_edit'.'/'.$id)
+            return redirect('/produk')
             ->with('success','Data Berhasil Diubah');
     }
 
