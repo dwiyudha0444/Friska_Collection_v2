@@ -19,9 +19,16 @@ Website Prediksi Penjualan Menggunakan Metode Moving Average
 ## Instalasi
 
 ### Prasyarat
-1. PHP 8
+1. PHP 8.1.10
 
 ### Langkah Instalasi
-1. Clone repositori:
+1. copy file '.env.example' kemudian rename menjadi '.env'. Masuk ke dalam file '.env' dan cari kata 'DB_DATABASE' kemudian rubah isinya yang awalnya 'laravel' ubah menjadi nama database yang telah dibuat.
+2. 
    ```bash
-   git clone https://github.com/username/nama-repo.git
+   php artisan key:generate
+3. Composer Install
+   ```bash
+   composer install
+5. Composer Update
+    ```bash
+    composer update
